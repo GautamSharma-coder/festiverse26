@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Protocols | Festiverse'26</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent: #818cf8; }
+    body { font-family: 'Inter', sans-serif; background: #020617; }
+    .font-title { font-family: 'Syncopate', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    
+    /* Filter Button Styles */
+    .filter-btn { transition: all 0.3s ease; }
+    .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 0 20px rgba(129, 140, 248, 0.4); }
+    
+    /* Card Styles */
+    .event-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .event-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+    .event-card:hover .event-img { transform: scale(1.1); }
+    
+    .hidden-card { display: none; }
+    .show-card { display: block; animation: fadeIn 0.5s ease forwards; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="text-slate-200 antialiased bg-[radial-gradient(ellipse_at_top_right,_#1e1b4b,_#020617)]">
+
+<nav class="fixed w-full z-50 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="glass rounded-full px-8 py-3 flex justify-between items-center">
+      <h1 class="font-title text-xl font-bold tracking-tighter text-white">
+        <a href="/">FESTIVERSE<span class="text-indigo-400">'26</span></a>
+      </h1>
+      <ul class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+        <li class="hover:text-white transition"><a href="/">Home</a></li>
+        <li class="text-white">Events</li>
+        <li class="hover:text-white transition"><a href="schedule.html">Schedule</a></li>
+        <li class="hover:text-white transition"><a href="register.html">Register</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+  
+  <div class="text-center mb-16">
+    <span class="text-indigo-400 font-bold text-xs tracking-[0.3em] uppercase">Select Your Frequency</span>
+    <h2 class="font-title text-4xl md:text-5xl font-bold text-white mt-4">MISSION PROTOCOLS</h2>
+    
+    <div class="flex flex-wrap justify-center gap-3 mt-10">
+      <button onclick="filterEvents('all')" class="filter-btn active px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">All</button>
+      <button onclick="filterEvents('dance')" class="filter-btn px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">Dance</button>
+      <button onclick="filterEvents('music')" class="filter-btn px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">Music</button>
+      <button onclick="filterEvents('art')" class="filter-btn px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">Art</button>
+      <button onclick="filterEvents('lit')" class="filter-btn px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">Literary</button>
+      <button onclick="filterEvents('drama')" class="filter-btn px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">Drama</button>
+      <button onclick="filterEvents('media')" class="filter-btn px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">Media</button>
+      <button onclick="filterEvents('fun')" class="filter-btn px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5">Fun</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-dance">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=800&q=80" alt="Solo Dance" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-fuchsia-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Dance</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Solo Dance</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Unleash your rhythm. One stage, one spotlight.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-dance">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?auto=format&fit=crop&w=800&q=80" alt="Group Dance" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-fuchsia-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Dance</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Group Dance</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Synchronized choreography. The ultimate squad goals.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 4-10</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-dance">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?auto=format&fit=crop&w=800&q=80" alt="Battle Dance" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-fuchsia-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Dance</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Battle Dance</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Face off in an impromptu dance battle. Survival of the fittest.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-music">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1516280440614-6697288d5d38?auto=format&fit=crop&w=800&q=80" alt="Solo Singing" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-indigo-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Music</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Solo Singing</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Let your voice echo through the void.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-music">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=800&q=80" alt="Rap Battle" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-indigo-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Music</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Rap Battle</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Drop bars, not mics. Lyrical warfare begins now.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1560421683-6856ea585c78?auto=format&fit=crop&w=800&q=80" alt="Painting" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Painting</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Canvas your imagination.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80" alt="Sketching" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Sketching</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Shades of grey that tell a story.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1582560475093-d09dc3341ad2?auto=format&fit=crop&w=800&q=80" alt="Madhubani" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Madhubani Painting</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Traditional folk art with a modern twist.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1558025137-08e6307505d1?auto=format&fit=crop&w=800&q=80" alt="Face Painting" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Face Painting</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Wear your art. Theme based competition.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 2</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&w=800&q=80" alt="Rangoli" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Rangoli</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Colors on the floor, creativity soaring.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 2-3</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1596236561571-08f3259871f3?auto=format&fit=crop&w=800&q=80" alt="Mehendi" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Mehendi</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Intricate designs, traditional vibes.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1527668752968-14dc70a27c73?auto=format&fit=crop&w=800&q=80" alt="Paper Craft" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Paper Craft</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Fold, cut, create. Origami and beyond.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-art">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" alt="Salad Decoration" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-pink-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Art</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Salad Decoration</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Culinary art at its finest. Make it look delicious.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1-2</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-lit">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80" alt="Story Writing" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-cyan-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Lit</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Story Writing</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Pen down your imagination. The best plot wins.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-lit">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80" alt="Debate" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-cyan-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Lit</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Debate</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">War of words. Defend your stance.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 2</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-lit">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=800&q=80" alt="Quiz" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-cyan-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Lit</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Quiz</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Test your wits across multiple domains.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 2-3</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-drama">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1503095392269-271ff144862a?auto=format&fit=crop&w=800&q=80" alt="Drama" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-orange-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Drama</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Drama</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">The stage is yours. Act, express, impress.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 5-10</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-drama">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1519671482538-3071a233d474?auto=format&fit=crop&w=800&q=80" alt="Fancy Dress" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-orange-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Drama</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Fancy Dress</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Dress to impress. Be anyone you want to be.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-media">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" alt="Photography" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-emerald-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Media</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Photography</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Capture the moment. Frame the festival.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-media">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80" alt="Reel Making" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-emerald-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Media</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Reel Making</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Create the viral vibe of Festiverse.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1-2</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card glass rounded-3xl overflow-hidden border-t border-white/10 group category-fun">
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?auto=format&fit=crop&w=800&q=80" alt="Fun Games" class="event-img w-full h-full object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-80"></div>
+        <div class="absolute top-4 right-4">
+           <span class="text-[10px] font-bold bg-yellow-600/80 backdrop-blur-md text-white px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Fun</span>
+        </div>
+      </div>
+      <div class="p-8 pt-4">
+        <h3 class="text-2xl font-bold text-white mb-2">Fun Games</h3>
+        <p class="text-slate-400 text-sm mb-6 h-10">Mini games, maxi fun. Just for the thrill.</p>
+        <div class="flex justify-end items-center text-xs font-bold text-slate-300 border-t border-white/5 pt-4 mb-6">
+          <span>👥 Team: 1</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 py-3 border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all">Rules</button>
+          <a href="register.html" class="flex-1 py-3 bg-white text-black hover:bg-indigo-400 hover:text-white rounded-xl text-center text-xs font-bold uppercase tracking-widest transition-all">Register</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  function filterEvents(category) {
+    // 1. Update Buttons
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // 2. Filter Cards
+    const cards = document.querySelectorAll('.event-card');
+    cards.forEach(card => {
+      if (category === 'all') {
+        card.style.display = 'block';
+        card.classList.add('show-card');
+      } else {
+        if (card.classList.contains(`category-${category}`)) {
+          card.style.display = 'block';
+          card.classList.add('show-card');
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('show-card');
+        }
+      }
+    });
+  }
+</script>
+
+<footer class="py-10 border-t border-white/5 text-center">
+  <p class="font-title text-[10px] tracking-[0.3em] text-slate-600 uppercase">
+    Protocol Updated: 2026 // Ready for Launch
+  </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Team | Festiverse'26</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent: #818cf8; }
+    body { font-family: 'Inter', sans-serif; background: #020617; }
+    .font-title { font-family: 'Syncopate', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    
+    /* Card Animations */
+    .team-card { position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .team-card img { transition: transform 0.7s scale; filter: grayscale(100%) contrast(120%); }
+    .team-card:hover img { transform: scale(1.1); filter: grayscale(0%) contrast(100%); }
+    .team-card:hover { border-color: var(--accent); box-shadow: 0 0 30px rgba(129, 140, 248, 0.15); }
+    
+    .social-overlay {
+      background: linear-gradient(to top, rgba(2, 6, 23, 0.95), transparent);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .team-card:hover .social-overlay { transform: translateY(0); }
+  </style>
+</head>
+
+<body class="text-slate-200 antialiased bg-[radial-gradient(circle_at_top,_#1e1b4b,_#020617)]">
+
+<nav class="fixed w-full z-50 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="glass rounded-full px-8 py-3 flex justify-between items-center">
+      <h1 class="font-title text-xl font-bold tracking-tighter text-white">
+        <a href="index.html">FESTIVERSE<span class="text-indigo-400">'26</span></a>
+      </h1>
+      <ul class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+        <li class="hover:text-white transition"><a href="index.html">Home</a></li>
+        <li class="hover:text-white transition"><a href="schedule.html">Schedule</a></li>
+        <li class="text-white">Team</li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+  
+  <div class="text-center mb-20">
+    <span class="text-indigo-400 font-bold text-xs tracking-[0.3em] uppercase">UDAAN Cultural Club</span>
+    <h2 class="font-title text-5xl md:text-6xl font-bold text-white mt-4">THE CREW</h2>
+    <p class="text-slate-400 mt-4 max-w-2xl mx-auto font-light">
+      Meet the visionaries and the operators making the universe spin.
+    </p>
+  </div>
+
+  <section class="mb-24">
+    <div class="flex items-center gap-4 mb-10">
+      <div class="h-px bg-indigo-500 w-12"></div>
+      <h3 class="font-title text-2xl font-bold text-white tracking-widest">SENIOR COORDINATORS</h3>
+      <div class="h-px bg-slate-800 flex-1"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="team-card glass rounded-3xl aspect-[3/4] group">
+        <div class="absolute inset-0 bg-slate-800 flex items-center justify-center">
+          <span class="text-slate-700 font-title text-8xl opacity-20">01</span>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-8">
+          <h3 class="text-2xl font-bold text-white">Alex Rivera</h3>
+          <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest mt-1">Club President</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-3xl aspect-[3/4] group border-indigo-500/30 shadow-[0_0_50px_-12px_rgba(79,70,229,0.2)]">
+        <div class="absolute inset-0 bg-slate-800 flex items-center justify-center">
+          <span class="text-slate-700 font-title text-8xl opacity-20">02</span>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-8">
+          <h3 class="text-2xl font-bold text-white">Samantha Lee</h3>
+          <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest mt-1">Vice President</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-3xl aspect-[3/4] group">
+        <div class="absolute inset-0 bg-slate-800 flex items-center justify-center">
+          <span class="text-slate-700 font-title text-8xl opacity-20">03</span>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-8">
+          <h3 class="text-2xl font-bold text-white">Rohan Das</h3>
+          <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest mt-1">General Secretary</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="flex items-center gap-4 mb-10">
+      <div class="h-px bg-fuchsia-500 w-12"></div>
+      <h3 class="font-title text-2xl font-bold text-white tracking-widest">COORDINATORS</h3>
+      <div class="h-px bg-slate-800 flex-1"></div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      
+      <div class="team-card glass rounded-2xl aspect-square group">
+        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
+           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
+          <h4 class="text-lg font-bold text-white leading-none">Priya S.</h4>
+          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Logistics</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-2xl aspect-square group">
+        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
+           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
+          <h4 class="text-lg font-bold text-white leading-none">Arjun K.</h4>
+          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Technical</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-2xl aspect-square group">
+        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
+           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
+          <h4 class="text-lg font-bold text-white leading-none">Neha M.</h4>
+          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Creative</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-2xl aspect-square group">
+        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
+           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
+          <h4 class="text-lg font-bold text-white leading-none">Dev P.</h4>
+          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Sponsorship</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-2xl aspect-square group">
+        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
+           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
+          <h4 class="text-lg font-bold text-white leading-none">Tara L.</h4>
+          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Stage</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-2xl aspect-square group">
+        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
+           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
+          <h4 class="text-lg font-bold text-white leading-none">Kabir S.</h4>
+          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Security</p>
+        </div>
+      </div>
+
+      <div class="team-card glass rounded-2xl aspect-square group">
+        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
+           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
+        </div>
+        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
+          <h4 class="text-lg font-bold text-white leading-none">Zoya A.</h4>
+          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Hospitality</p>
+        </div>
+      </div>
+
+      <a href="#" class="glass rounded-2xl aspect-square flex flex-col items-center justify-center border border-dashed border-slate-700 hover:border-indigo-500 hover:bg-white/5 transition-all group cursor-pointer">
+        <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white mb-3 group-hover:scale-110 transition-transform">+</div>
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400 group-hover:text-white">Join Us</span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="py-10 border-t border-white/5 text-center">
+  <p class="font-title text-[10px] tracking-[0.3em] text-slate-600 uppercase">
+    UDAAN Cultural Club // 2026
+  </p>
+</footer>
+
+</body>
+</html>

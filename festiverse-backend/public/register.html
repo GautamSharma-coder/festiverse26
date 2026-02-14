@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Festiverse'26</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent: #818cf8; --glow: rgba(129, 140, 248, 0.3); }
+    body { font-family: 'Inter', sans-serif; background: #020617; }
+    .font-title { font-family: 'Syncopate', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; }
+    .input-field:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.1); }
+  </style>
+</head>
+
+<body class="text-slate-200 antialiased bg-[radial-gradient(circle_at_bottom_left,_#1e1b4b,_#020617)]">
+
+<nav class="fixed w-full z-50 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="glass rounded-full px-8 py-3 flex justify-between items-center">
+      <h1 class="font-title text-xl font-bold tracking-tighter text-white">
+        <a href="index.html">FESTIVERSE<span class="text-indigo-400">'26</span></a>
+      </h1>
+      <a href="index.html" class="text-xs font-semibold uppercase tracking-widest text-slate-400 hover:text-white transition">← Back to Orbit</a>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2">
+      <div class="glass rounded-3xl p-8 md:p-12">
+        <h2 class="font-title text-3xl font-bold text-white mb-2">SECURE YOUR SLOT</h2>
+        <p class="text-slate-400 mb-10">Fill in your coordinates to join the cultural vanguard.</p>
+        
+        <form class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-widest text-indigo-400 mb-2">Full Name</label>
+              <input type="text" placeholder="John Doe" class="input-field w-full px-6 py-4 rounded-xl text-white">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-widest text-indigo-400 mb-2">University ID</label>
+              <input type="text" placeholder="U-2026-XYZ" class="input-field w-full px-6 py-4 rounded-xl text-white">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-indigo-400 mb-2">Primary Interest</label>
+            <select class="input-field w-full px-6 py-4 rounded-xl text-slate-400">
+              <option>Mainstage Dance</option>
+              <option>Vocal Wars</option>
+              <option>E-Sports (Valorant/BGMI)</option>
+              <option>Fashion Odyssey</option>
+              <option>General Spectator</option>
+            </select>
+          </div>
+
+          <button type="submit" class="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 uppercase tracking-widest">
+            Confirm Registration
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="space-y-8">
+      <div class="glass border-indigo-500/50 rounded-3xl p-8 relative overflow-hidden group">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-600/20 rounded-full blur-2xl"></div>
+        <span class="text-[10px] bg-indigo-500 text-white px-3 py-1 rounded-full font-bold tracking-tighter">POPULAR</span>
+        <h3 class="text-2xl font-bold text-white mt-4">Cosmic Pass</h3>
+        <p class="text-slate-400 text-sm mt-2">All-access to workshops, mainstage events, and the after-party.</p>
+        <div class="mt-6 text-3xl font-title font-bold text-white">$25</div>
+      </div>
+
+      <div class="glass rounded-3xl p-8 hover:border-slate-500 transition-colors">
+        <h3 class="text-2xl font-bold text-white">Voyager Lite</h3>
+        <p class="text-slate-400 text-sm mt-2">Entry to E-Sports arena and day-time cultural exhibits.</p>
+        <div class="mt-6 text-3xl font-title font-bold text-white">$12</div>
+      </div>
+
+      <div class="p-8 rounded-3xl bg-gradient-to-br from-indigo-900/40 to-fuchsia-900/20 border border-white/5">
+        <h4 class="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-4">Venue Intel</h4>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg glass flex items-center justify-center text-xl">📍</div>
+            <p class="text-sm text-slate-300">Grand Orion Arena, Sector 7</p>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg glass flex items-center justify-center text-xl">📅</div>
+            <p class="text-sm text-slate-300">April 8-10, 2026</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="py-10 border-t border-white/5 text-center">
+  <p class="font-title text-[10px] tracking-[0.3em] text-slate-600">
+    SYSTEM STATUS: READY // REGISTRATION OPEN
+  </p>
+</footer>
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Stop page from reloading
+
+    // 1. Gather Data
+    const formData = {
+        name: document.querySelector('input[placeholder="John Doe"]').value,
+        universityId: document.querySelector('input[placeholder="U-2026-XYZ"]').value,
+        // I added an email field to the backend, make sure to add an input for email in your HTML if missing
+        email: "student@university.edu", // Placeholder if you haven't added an email input yet
+        interest: document.querySelector('select').value
+    };
+
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "Transmitting...";
+    
+    try {
+        // 2. Send to Backend
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(`SUCCESS: ${result.message}\nTicket ID: ${result.ticketId}`);
+            document.querySelector('form').reset();
+        } else {
+            alert(`ERROR: ${result.message}`);
+        }
+    } catch (error) {
+        alert("CRITICAL FAILURE: Unable to reach Mission Control.");
+        console.error(error);
+    } finally {
+        submitBtn.innerText = originalText;
+    }
+});
+</script>
+</body>
+</html>

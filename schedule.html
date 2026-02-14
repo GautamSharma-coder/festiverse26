@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline | Festiverse'26</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent: #818cf8; }
+    body { font-family: 'Inter', sans-serif; background: #020617; }
+    .font-title { font-family: 'Syncopate', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .timeline-line { background: linear-gradient(to bottom, transparent, var(--accent), transparent); }
+    .day-pill.active { background: #818cf8; color: white; }
+  </style>
+</head>
+
+<body class="text-slate-200 antialiased bg-[radial-gradient(ellipse_at_top_left,_#1e1b4b,_#020617)]">
+
+<nav class="fixed w-full z-50 top-0 left-0">
+  <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="glass rounded-full px-8 py-3 flex justify-between items-center">
+      <h1 class="font-title text-xl font-bold tracking-tighter text-white">
+        <a href="index.html">FESTIVERSE<span class="text-indigo-400">'26</span></a>
+      </h1>
+      <ul class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+        <li class="hover:text-white transition"><a href="index.html">Home</a></li>
+        <li class="text-white">Schedule</li>
+        <li class="hover:text-white transition"><a href="register.html">Register</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+  <div class="text-center mb-16">
+    <h2 class="font-title text-4xl md:text-5xl font-bold text-white mb-6">THE TIMELINE</h2>
+    <div class="flex justify-center gap-4">
+      <button class="day-pill active px-6 py-2 rounded-full border border-white/10 text-xs font-bold uppercase tracking-widest transition">Day 01</button>
+      <button class="day-pill px-6 py-2 rounded-full border border-white/10 text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition">Day 02</button>
+      <button class="day-pill px-6 py-2 rounded-full border border-white/10 text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition">Day 03</button>
+    </div>
+  </div>
+
+  <div class="relative">
+    <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-px timeline-line opacity-30"></div>
+
+    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
+      <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+        <div class="glass p-6 rounded-2xl border-l-4 border-l-indigo-500">
+          <span class="text-indigo-400 font-bold text-xs tracking-widest">10:00 AM</span>
+          <h3 class="text-xl font-bold text-white mt-1">Cosmic Opening</h3>
+          <p class="text-slate-400 text-sm mt-2">The official launch of Festiverse'26 at the Main Arena.</p>
+        </div>
+      </div>
+      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(129,140,248,0.8)] z-10 hidden md:block"></div>
+      <div class="md:w-1/2 md:pl-12"></div>
+    </div>
+
+    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
+      <div class="md:w-1/2 md:pr-12"></div>
+      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-slate-700 z-10 hidden md:block"></div>
+      <div class="md:w-1/2 md:pl-12">
+        <div class="glass p-6 rounded-2xl border-r-4 border-r-fuchsia-500">
+          <span class="text-fuchsia-400 font-bold text-xs tracking-widest">01:30 PM</span>
+          <h3 class="text-xl font-bold text-white mt-1">Vocal Wars: Prelims</h3>
+          <p class="text-slate-400 text-sm mt-2">Solo and group vocalists battle for a spot in the finale.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
+      <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+        <div class="glass p-6 rounded-2xl border-l-4 border-l-indigo-500">
+          <span class="text-indigo-400 font-bold text-xs tracking-widest">04:00 PM</span>
+          <h3 class="text-xl font-bold text-white mt-1">E-Sports Arena Opens</h3>
+          <p class="text-slate-400 text-sm mt-2">Valorant & BGMI heat-up matches begin in the Tech Lab.</p>
+        </div>
+      </div>
+      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-slate-700 z-10 hidden md:block"></div>
+      <div class="md:w-1/2 md:pl-12"></div>
+    </div>
+
+    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
+      <div class="md:w-1/2 md:pr-12"></div>
+      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(129,140,248,0.8)] z-10 hidden md:block"></div>
+      <div class="md:w-1/2 md:pl-12">
+        <div class="glass p-6 rounded-2xl border-r-4 border-r-fuchsia-500">
+          <span class="text-fuchsia-400 font-bold text-xs tracking-widest">08:00 PM</span>
+          <h3 class="text-xl font-bold text-white mt-1">Starlight Social</h3>
+          <p class="text-slate-400 text-sm mt-2">Networking, snacks, and a DJ set to end Day 01.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="py-10 border-t border-white/5 text-center">
+  <p class="font-title text-[10px] tracking-[0.3em] text-slate-600 uppercase">
+    All times are in GST // Schedule subject to celestial shifts
+  </p>
+</footer>
+
+</body>
+</html>
