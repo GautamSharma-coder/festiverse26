@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comms Station | Festiverse'26</title>
+  <title>Contact Us | Festiverse'26</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -12,17 +12,43 @@
     .font-title { font-family: 'Syncopate', sans-serif; }
     .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
     
-    /* Accordion Styles */
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-    .faq-btn.active .arrow { transform: rotate(180deg); }
-    .faq-btn.active { border-color: var(--accent); background: rgba(255,255,255,0.05); }
+    /* Input Animations */
+    .input-group { position: relative; }
+    .input-field {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      color: white;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .input-field:focus { border-color: var(--accent); background: rgba(129, 140, 248, 0.05); }
+    .input-label {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      color: #94a3b8;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      font-size: 0.875rem;
+    }
+    .input-field:focus ~ .input-label,
+    .input-field:not(:placeholder-shown) ~ .input-label {
+      top: -0.75rem;
+      left: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: #020617;
+      padding: 0 0.5rem;
+    }
 
-    .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; }
-    .input-field:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.1); }
+    /* Button Hover */
+    .btn-glow:hover { box-shadow: 0 0 30px rgba(129, 140, 248, 0.4); }
   </style>
 </head>
 
-<body class="text-slate-200 antialiased bg-[radial-gradient(circle_at_bottom_right,_#1e1b4b,_#020617)]">
+<body class="text-slate-200 antialiased bg-[radial-gradient(circle_at_top_right,_#1e1b4b,_#020617)]">
 
 <nav class="fixed w-full z-50 top-0 left-0">
   <div class="max-w-7xl mx-auto px-6 py-4">
@@ -32,7 +58,8 @@
       </h1>
       <ul class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
         <li class="hover:text-white transition"><a href="index.html">Home</a></li>
-        <li class="hover:text-white transition"><a href="events.html">Events</a></li>
+        <li class="hover:text-white transition"><a href="schedule.html">Schedule</a></li>
+        <li class="hover:text-white transition"><a href="team.html">Team</a></li>
         <li class="text-white">Contact</li>
       </ul>
     </div>
@@ -41,115 +68,96 @@
 
 <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
   
-  <div class="text-center mb-16">
-    <span class="text-indigo-400 font-bold text-xs tracking-[0.3em] uppercase">Help Center</span>
-    <h2 class="font-title text-4xl md:text-5xl font-bold text-white mt-4">COMMS STATION</h2>
+  <div class="text-center mb-20">
+    <span class="text-indigo-400 font-bold text-xs tracking-[0.3em] uppercase">Establish Comms</span>
+    <h2 class="font-title text-5xl md:text-6xl font-bold text-white mt-4">GET IN TOUCH</h2>
+    <p class="text-slate-400 mt-4 max-w-2xl mx-auto font-light">
+      Have a query? Want to sponsor? Or just want to say hi? We are listening.
+    </p>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
     
-    <div>
-      <h3 class="font-title text-xl font-bold text-white mb-6 border-l-4 border-indigo-500 pl-4">FREQUENTLY ASKED</h3>
+    <div class="flex flex-col gap-8">
       
-      <div class="space-y-4">
-        <div class="glass rounded-2xl overflow-hidden">
-          <button onclick="toggleFaq(this)" class="faq-btn w-full p-6 text-left flex justify-between items-center transition-colors hover:bg-white/5">
-            <span class="font-bold text-slate-200">How do I register for multiple events?</span>
-            <span class="arrow text-indigo-400 transition-transform">▼</span>
-          </button>
-          <div class="faq-answer px-6 text-slate-400 text-sm leading-relaxed">
-            <div class="pb-6 pt-2">
-              You can add multiple events during the checkout process on the Registration page. If you've already registered, simply use your University ID to add more slots.
-            </div>
-          </div>
-        </div>
+      <div class="glass p-8 rounded-3xl border-l-4 border-indigo-500">
+        <h3 class="font-title text-xl text-white mb-2">HEADQUARTERS</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+          UDAAN Cultural Club Office,<br>
+          Student Activity Center, Block A,<br>
+          University Campus, New Delhi - 110001
+        </p>
+        <a href="#" class="text-indigo-400 text-xs font-bold uppercase tracking-widest hover:text-white transition-colors">View on Map →</a>
+      </div>
 
-        <div class="glass rounded-2xl overflow-hidden">
-          <button onclick="toggleFaq(this)" class="faq-btn w-full p-6 text-left flex justify-between items-center transition-colors hover:bg-white/5">
-            <span class="font-bold text-slate-200">Is accommodation provided?</span>
-            <span class="arrow text-indigo-400 transition-transform">▼</span>
-          </button>
-          <div class="faq-answer px-6 text-slate-400 text-sm leading-relaxed">
-            <div class="pb-6 pt-2">
-              Yes, for outstation participants. We have partnered with nearby hostels. You can select the "Accommodation Required" checkbox while registering (extra charges apply).
-            </div>
-          </div>
-        </div>
-
-        <div class="glass rounded-2xl overflow-hidden">
-          <button onclick="toggleFaq(this)" class="faq-btn w-full p-6 text-left flex justify-between items-center transition-colors hover:bg-white/5">
-            <span class="font-bold text-slate-200">Can I refund my pass?</span>
-            <span class="arrow text-indigo-400 transition-transform">▼</span>
-          </button>
-          <div class="faq-answer px-6 text-slate-400 text-sm leading-relaxed">
-            <div class="pb-6 pt-2">
-              Refunds are only processed if the event is cancelled. However, you can transfer your pass to another student up to 48 hours before the event starts.
-            </div>
-          </div>
-        </div>
-        
-        <div class="glass rounded-2xl overflow-hidden">
-          <button onclick="toggleFaq(this)" class="faq-btn w-full p-6 text-left flex justify-between items-center transition-colors hover:bg-white/5">
-            <span class="font-bold text-slate-200">Are on-spot registrations available?</span>
-            <span class="arrow text-indigo-400 transition-transform">▼</span>
-          </button>
-          <div class="faq-answer px-6 text-slate-400 text-sm leading-relaxed">
-            <div class="pb-6 pt-2">
-              Limited spots will be available at the "Grand Orion Arena" desk, but prices will be 20% higher than online rates. We recommend booking early.
-            </div>
-          </div>
+      <div class="glass p-8 rounded-3xl border-l-4 border-fuchsia-500">
+        <h3 class="font-title text-xl text-white mb-2">DIRECT LINE</h3>
+        <div class="flex flex-col gap-2 mt-4">
+          <a href="mailto:hello@festiverse.com" class="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
+            <span class="text-lg">✉️</span> hello@festiverse.com
+          </a>
+          <a href="tel:+919876543210" class="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
+            <span class="text-lg">📞</span> +91 987 654 3210
+          </a>
         </div>
       </div>
+
+      <div class="glass p-8 rounded-3xl border-l-4 border-emerald-500">
+        <h3 class="font-title text-xl text-white mb-4">FOLLOW THE HYPE</h3>
+        <div class="flex gap-4">
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-500 hover:text-white transition-all">IG</a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all">TW</a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all">YT</a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-700 hover:text-white transition-all">LN</a>
+        </div>
+      </div>
+
     </div>
 
-    <div class="space-y-8">
+    <div class="glass p-8 md:p-10 rounded-3xl relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/20 blur-[60px] rounded-full pointer-events-none"></div>
       
-      <div class="glass rounded-3xl p-8 border-t border-white/10">
-        <h3 class="font-title text-xl font-bold text-white mb-6">SEND TRANSMISSION</h3>
-        <form class="space-y-4">
-          <input type="text" placeholder="Your Name" class="input-field w-full px-6 py-4 rounded-xl text-white text-sm">
-          <input type="email" placeholder="Your Email" class="input-field w-full px-6 py-4 rounded-xl text-white text-sm">
-          <textarea rows="4" placeholder="Message Protocol..." class="input-field w-full px-6 py-4 rounded-xl text-white text-sm"></textarea>
-          <button class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all uppercase tracking-widest text-xs shadow-lg shadow-indigo-500/20">
-            Send Signal
-          </button>
-        </form>
-      </div>
+      <form class="space-y-6 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="input-group">
+            <input type="text" id="name" class="input-field rounded-xl" placeholder=" " required>
+            <label for="name" class="input-label">Your Name</label>
+          </div>
+          <div class="input-group">
+            <input type="email" id="email" class="input-field rounded-xl" placeholder=" " required>
+            <label for="email" class="input-label">Email Address</label>
+          </div>
+        </div>
 
-      <div class="grid grid-cols-2 gap-4">
-        <a href="mailto:hello@festiverse.com" class="glass p-6 rounded-2xl hover:bg-white/5 transition-colors text-center group">
-          <div class="text-2xl mb-2 group-hover:scale-110 transition-transform">📧</div>
-          <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Email Us</div>
-        </a>
-        <a href="tel:+919876543210" class="glass p-6 rounded-2xl hover:bg-white/5 transition-colors text-center group">
-          <div class="text-2xl mb-2 group-hover:scale-110 transition-transform">📞</div>
-          <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Call Base</div>
-        </a>
-      </div>
+        <div class="input-group">
+          <select id="subject" class="input-field rounded-xl appearance-none text-slate-400">
+            <option>General Inquiry</option>
+            <option>Sponsorship</option>
+            <option>Technical Issue</option>
+            <option>Feedback</option>
+          </select>
+          <label for="subject" class="input-label">Subject</label>
+          <div class="absolute right-4 top-4 text-slate-500 pointer-events-none">▼</div>
+        </div>
 
+        <div class="input-group">
+          <textarea id="message" rows="5" class="input-field rounded-xl resize-none" placeholder=" " required></textarea>
+          <label for="message" class="input-label">Your Message</label>
+        </div>
+
+        <button type="submit" class="btn-glow w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl tracking-widest uppercase transition-all">
+          Transmit Message
+        </button>
+      </form>
     </div>
 
   </div>
+
 </main>
-
-<script>
-  function toggleFaq(button) {
-    // Toggle Active Class
-    button.classList.toggle('active');
-    
-    // Toggle Content Height
-    const content = button.nextElementSibling;
-    if (button.classList.contains('active')) {
-      content.style.maxHeight = content.scrollHeight + "px";
-    } else {
-      content.style.maxHeight = "0";
-    }
-  }
-</script>
 
 <footer class="py-10 border-t border-white/5 text-center">
   <p class="font-title text-[10px] tracking-[0.3em] text-slate-600 uppercase">
-    Signal Strength: 100% // Festiverse'26
+    UDAAN Cultural Club // 2026
   </p>
 </footer>
 

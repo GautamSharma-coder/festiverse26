@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #050505; --card-bg: #0f0f0f; --accent: #ccff00; }
+        body { background-color: var(--bg-dark); font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; padding: 40px; }
+        .font-display { font-family: 'Syne', sans-serif; }
+        
+        /* Card Container */
+        .premium-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .premium-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        /* Image Badge */
+        .glass-badge {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Info Grid Box */
+        .info-grid {
+            background: #151515;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Register Button */
+        .btn-action {
+            background: var(--accent); color: black;
+            transition: all 0.3s;
+        }
+        .btn-action:hover {
+            background: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="premium-card w-full max-w-[380px] rounded-[32px] overflow-hidden group">
+        
+        <div class="relative h-64 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=800&auto=format&fit=crop" 
+                 alt="Event Cover" 
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent"></div>
+
+            <div class="absolute top-4 left-4 glass-badge px-4 py-2 rounded-full flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"></span>
+                <span class="text-[10px] font-bold text-white uppercase tracking-widest">On Campus</span>
+            </div>
+
+            <div class="absolute top-4 right-4 glass-badge w-10 h-10 rounded-full flex items-center justify-center" title="Open for All">
+                <span class="text-xs">🔓</span>
+            </div>
+        </div>
+
+        <div class="p-6 pt-2">
+            
+            <div class="inline-block border border-white/20 rounded-full px-4 py-1 mb-4">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Literature & Debate</span>
+            </div>
+
+            <h2 class="font-display text-3xl font-bold text-white mb-1 leading-tight">ABHIVYAKTI</h2>
+            <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-6">An Extempore Speaking Event</p>
+
+            <div class="info-grid rounded-2xl p-5 grid grid-cols-2 gap-y-6 gap-x-4 mb-6">
+                <div>
+                    <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-1">Date</p>
+                    <p class="text-white font-bold font-display text-lg">11 Mar</p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-1">Entry</p>
+                    <p class="text-[#ccff00] font-bold font-display text-lg">Free</p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-1">Team Size</p>
+                    <p class="text-white font-bold font-display text-lg">Individual</p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-1">Venue</p>
+                    <p class="text-white font-bold font-display text-lg">AVH Hall</p>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button class="flex-1 py-4 rounded-xl border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-colors">
+                    Rulebook
+                </button>
+                <button class="flex-[1.5] py-4 rounded-xl btn-action font-bold text-xs uppercase tracking-widest">
+                    Register Now
+                </button>
+            </div>
+
+        </div>
+    </div>
+    </body>
+</html>

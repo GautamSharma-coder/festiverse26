@@ -3,92 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Team | Festiverse'26</title>
+  <title>Team | Festiverse'26</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --accent: #818cf8; }
-    body { font-family: 'Inter', sans-serif; background: #020617; }
-    .font-title { font-family: 'Syncopate', sans-serif; }
-    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-    
-    /* Card Animations */
-    .team-card { position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    .team-card img { transition: transform 0.7s scale; filter: grayscale(100%) contrast(120%); }
-    .team-card:hover img { transform: scale(1.1); filter: grayscale(0%) contrast(100%); }
-    .team-card:hover { border-color: var(--accent); box-shadow: 0 0 30px rgba(129, 140, 248, 0.15); }
-    
-    .social-overlay {
-      background: linear-gradient(to top, rgba(2, 6, 23, 0.95), transparent);
-      transform: translateY(100%);
-      transition: transform 0.4s ease;
+    :root { --bg-dark: #050505; --accent: #ccff00; }
+    body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-dark); color: white; }
+    h1, h2, h3, .font-display { font-family: 'Syne', sans-serif; }
+    .texture-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 50;
     }
-    .team-card:hover .social-overlay { transform: translateY(0); }
+    .roll-link { overflow: hidden; height: 1.2em; display: inline-block; vertical-align: top; }
+    .roll-link span { display: block; transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1); }
+    .roll-link:hover span { transform: translateY(-100%); }
+    .roll-link span::after { content: attr(data-title); display: block; }
+    
+    .team-card { background: #0f0f0f; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; transition: all 0.3s; }
+    .team-card:hover { border-color: var(--accent); }
+    .team-number { font-family: 'Syne', sans-serif; opacity: 0.1; transition: opacity 0.3s; }
+    .team-card:hover .team-number { opacity: 0.2; color: var(--accent); }
   </style>
 </head>
+<body class="antialiased">
+<div class="texture-overlay"></div>
 
-<body class="text-slate-200 antialiased bg-[radial-gradient(circle_at_top,_#1e1b4b,_#020617)]">
-
-<nav class="fixed w-full z-50 top-0 left-0">
-  <div class="max-w-7xl mx-auto px-6 py-4">
-    <div class="glass rounded-full px-8 py-3 flex justify-between items-center">
-      <h1 class="font-title text-xl font-bold tracking-tighter text-white">
-        <a href="index.html">FESTIVERSE<span class="text-indigo-400">'26</span></a>
-      </h1>
-      <ul class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-        <li class="hover:text-white transition"><a href="index.html">Home</a></li>
-        <li class="hover:text-white transition"><a href="schedule.html">Schedule</a></li>
-        <li class="text-white">Team</li>
-      </ul>
-    </div>
+<nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+  <a href="index.html" class="font-display font-bold text-xl tracking-tighter text-white">
+    FESTIVERSE<span class="text-[#ccff00]">.</span>
+  </a>
+  <div class="hidden md:flex gap-10 font-medium text-sm text-white">
+    <a href="schedule.html" class="roll-link"><span data-title="Schedule">Schedule</span></a>
+    <a href="event.html" class="roll-link"><span data-title="Events">Events</span></a>
+    <a href="team.html" class="roll-link"><span data-title="Team">Team</span></a>
+    <a href="contact.html" class="roll-link"><span data-title="Contact">Contact</span></a>
   </div>
+  <a href="register.html" class="px-6 py-2 border border-white/20 rounded-full text-sm font-bold uppercase text-white hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all">Get Passes</a>
 </nav>
 
-<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto relative z-10">
   
   <div class="text-center mb-20">
-    <span class="text-indigo-400 font-bold text-xs tracking-[0.3em] uppercase">UDAAN Cultural Club</span>
-    <h2 class="font-title text-5xl md:text-6xl font-bold text-white mt-4">THE CREW</h2>
-    <p class="text-slate-400 mt-4 max-w-2xl mx-auto font-light">
-      Meet the visionaries and the operators making the universe spin.
-    </p>
+    <span class="text-[#ccff00] font-bold text-xs tracking-[0.3em] uppercase">UDAAN Cultural Club</span>
+    <h2 class="font-display text-5xl md:text-7xl font-bold text-white mt-4">THE CREW</h2>
   </div>
 
   <section class="mb-24">
     <div class="flex items-center gap-4 mb-10">
-      <div class="h-px bg-indigo-500 w-12"></div>
-      <h3 class="font-title text-2xl font-bold text-white tracking-widest">SENIOR COORDINATORS</h3>
-      <div class="h-px bg-slate-800 flex-1"></div>
+      <div class="h-px bg-[#ccff00] w-12"></div>
+      <h3 class="font-display text-2xl font-bold text-white tracking-widest uppercase">Senior Coordinators</h3>
+      <div class="h-px bg-[#222] flex-1"></div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="team-card glass rounded-3xl aspect-[3/4] group">
-        <div class="absolute inset-0 bg-slate-800 flex items-center justify-center">
-          <span class="text-slate-700 font-title text-8xl opacity-20">01</span>
+      <div class="team-card rounded-2xl aspect-[3/4] group flex items-end p-8">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span class="text-8xl font-bold team-number">01</span>
         </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-8">
-          <h3 class="text-2xl font-bold text-white">Alex Rivera</h3>
-          <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest mt-1">Club President</p>
-        </div>
-      </div>
-
-      <div class="team-card glass rounded-3xl aspect-[3/4] group border-indigo-500/30 shadow-[0_0_50px_-12px_rgba(79,70,229,0.2)]">
-        <div class="absolute inset-0 bg-slate-800 flex items-center justify-center">
-          <span class="text-slate-700 font-title text-8xl opacity-20">02</span>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-8">
-          <h3 class="text-2xl font-bold text-white">Samantha Lee</h3>
-          <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest mt-1">Vice President</p>
+        <div class="relative z-10">
+          <h3 class="text-2xl font-bold text-white font-display">Alex Rivera</h3>
+          <p class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mt-1">Club President</p>
         </div>
       </div>
 
-      <div class="team-card glass rounded-3xl aspect-[3/4] group">
-        <div class="absolute inset-0 bg-slate-800 flex items-center justify-center">
-          <span class="text-slate-700 font-title text-8xl opacity-20">03</span>
+      <div class="team-card rounded-2xl aspect-[3/4] group flex items-end p-8 border-[#ccff00]/30">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span class="text-8xl font-bold team-number text-[#ccff00]/20">02</span>
         </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-8">
-          <h3 class="text-2xl font-bold text-white">Rohan Das</h3>
-          <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest mt-1">General Secretary</p>
+        <div class="relative z-10">
+          <h3 class="text-2xl font-bold text-white font-display">Samantha Lee</h3>
+          <p class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mt-1">Vice President</p>
+        </div>
+      </div>
+
+      <div class="team-card rounded-2xl aspect-[3/4] group flex items-end p-8">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span class="text-8xl font-bold team-number">03</span>
+        </div>
+        <div class="relative z-10">
+          <h3 class="text-2xl font-bold text-white font-display">Rohan Das</h3>
+          <p class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mt-1">General Secretary</p>
         </div>
       </div>
     </div>
@@ -96,98 +91,45 @@
 
   <section>
     <div class="flex items-center gap-4 mb-10">
-      <div class="h-px bg-fuchsia-500 w-12"></div>
-      <h3 class="font-title text-2xl font-bold text-white tracking-widest">COORDINATORS</h3>
-      <div class="h-px bg-slate-800 flex-1"></div>
+      <div class="h-px bg-white w-12"></div>
+      <h3 class="font-display text-2xl font-bold text-white tracking-widest uppercase">Coordinators</h3>
+      <div class="h-px bg-[#222] flex-1"></div>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="team-card rounded-xl aspect-square flex flex-col justify-end p-6">
+        <h4 class="text-lg font-bold text-white leading-none font-display">Priya S.</h4>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mt-2">Logistics</p>
+      </div>
       
-      <div class="team-card glass rounded-2xl aspect-square group">
-        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
-           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
-          <h4 class="text-lg font-bold text-white leading-none">Priya S.</h4>
-          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Logistics</p>
-        </div>
+      <div class="team-card rounded-xl aspect-square flex flex-col justify-end p-6">
+        <h4 class="text-lg font-bold text-white leading-none font-display">Arjun K.</h4>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mt-2">Technical</p>
       </div>
 
-      <div class="team-card glass rounded-2xl aspect-square group">
-        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
-           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
-          <h4 class="text-lg font-bold text-white leading-none">Arjun K.</h4>
-          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Technical</p>
-        </div>
+      <div class="team-card rounded-xl aspect-square flex flex-col justify-end p-6">
+        <h4 class="text-lg font-bold text-white leading-none font-display">Neha M.</h4>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mt-2">Creative</p>
       </div>
 
-      <div class="team-card glass rounded-2xl aspect-square group">
-        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
-           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
-          <h4 class="text-lg font-bold text-white leading-none">Neha M.</h4>
-          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Creative</p>
-        </div>
+      <div class="team-card rounded-xl aspect-square flex flex-col justify-end p-6">
+        <h4 class="text-lg font-bold text-white leading-none font-display">Dev P.</h4>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mt-2">Sponsorship</p>
       </div>
 
-      <div class="team-card glass rounded-2xl aspect-square group">
-        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
-           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
-          <h4 class="text-lg font-bold text-white leading-none">Dev P.</h4>
-          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Sponsorship</p>
-        </div>
-      </div>
-
-      <div class="team-card glass rounded-2xl aspect-square group">
-        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
-           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
-          <h4 class="text-lg font-bold text-white leading-none">Tara L.</h4>
-          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Stage</p>
-        </div>
-      </div>
-
-      <div class="team-card glass rounded-2xl aspect-square group">
-        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
-           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
-          <h4 class="text-lg font-bold text-white leading-none">Kabir S.</h4>
-          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Security</p>
-        </div>
-      </div>
-
-      <div class="team-card glass rounded-2xl aspect-square group">
-        <div class="absolute inset-0 bg-slate-800/50 flex items-center justify-center">
-           <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-500 text-xs">IMG</div>
-        </div>
-        <div class="social-overlay absolute inset-0 flex flex-col justify-end p-6">
-          <h4 class="text-lg font-bold text-white leading-none">Zoya A.</h4>
-          <p class="text-slate-400 text-[10px] uppercase tracking-widest mt-2">Hospitality</p>
-        </div>
-      </div>
-
-      <a href="#" class="glass rounded-2xl aspect-square flex flex-col items-center justify-center border border-dashed border-slate-700 hover:border-indigo-500 hover:bg-white/5 transition-all group cursor-pointer">
-        <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white mb-3 group-hover:scale-110 transition-transform">+</div>
-        <span class="text-xs font-bold uppercase tracking-widest text-slate-400 group-hover:text-white">Join Us</span>
+      <a href="#" class="rounded-xl aspect-square flex flex-col items-center justify-center border border-dashed border-[#333] hover:border-[#ccff00] transition-all group cursor-pointer bg-[#0a0a0a]">
+        <div class="w-10 h-10 rounded-full bg-[#ccff00] flex items-center justify-center text-black font-bold mb-3 group-hover:scale-110 transition-transform">+</div>
+        <span class="text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-white">Join Us</span>
       </a>
-
     </div>
   </section>
 
 </main>
 
-<footer class="py-10 border-t border-white/5 text-center">
-  <p class="font-title text-[10px] tracking-[0.3em] text-slate-600 uppercase">
+<footer class="py-10 border-t border-white/10 text-center relative z-10 bg-black">
+  <p class="font-display text-xs tracking-widest text-gray-600 uppercase">
     UDAAN Cultural Club // 2026
   </p>
 </footer>
-
 </body>
 </html>

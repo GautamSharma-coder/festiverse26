@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost in Space | 404</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-dark: #050505; --accent: #ccff00; }
+    body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-dark); color: white; overflow: hidden; }
+    h1, h2, h3, .font-display { font-family: 'Syne', sans-serif; }
+    
+    /* Glitch Animation */
+    .glitch { position: relative; }
+    .glitch::before, .glitch::after {
+      content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .glitch::before { left: 2px; text-shadow: -1px 0 red; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 5s infinite linear alternate-reverse; }
+    .glitch::after { left: -2px; text-shadow: -1px 0 blue; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 2s infinite linear alternate-reverse; }
+    
+    @keyframes glitch-anim {
+      0% { clip: rect(62px, 9999px, 11px, 0); }
+      20% { clip: rect(28px, 9999px, 89px, 0); }
+      40% { clip: rect(18px, 9999px, 46px, 0); }
+      60% { clip: rect(84px, 9999px, 2px, 0); }
+      80% { clip: rect(11px, 9999px, 63px, 0); }
+      100% { clip: rect(54px, 9999px, 96px, 0); }
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen relative">
+
+  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E');"></div>
+
+  <div class="relative z-10 text-center px-6">
+    <h1 class="font-display text-9xl font-bold text-white mb-2 glitch" data-text="404">404</h1>
+    <h2 class="font-display text-2xl font-bold text-[#ccff00] uppercase tracking-widest mb-6">Signal Lost</h2>
+    
+    <p class="text-gray-500 max-w-md mx-auto mb-10 leading-relaxed">
+      You have drifted into deep space. The coordinates you are looking for do not exist in this dimension.
+    </p>
+
+    <div class="flex justify-center gap-4">
+      <a href="index.html" class="px-8 py-3 bg-[#ccff00] text-black font-bold font-display uppercase tracking-widest rounded-full hover:scale-105 transition-transform">
+        Return to Base
+      </a>
+      <a href="contact.html" class="px-8 py-3 border border-white/20 text-white font-bold font-display uppercase tracking-widest rounded-full hover:bg-white/10 transition-colors">
+        Report Glitch
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-10 text-[10px] text-gray-700 font-mono uppercase tracking-[0.2em]">
+    Error Code: V0ID_NULL_PTR // Festiverse Systems
+  </div>
+
+</body>
+</html>

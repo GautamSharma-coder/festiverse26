@@ -5,102 +5,315 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timeline | Festiverse'26</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
-    :root { --accent: #818cf8; }
-    body { font-family: 'Inter', sans-serif; background: #020617; }
-    .font-title { font-family: 'Syncopate', sans-serif; }
-    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-    .timeline-line { background: linear-gradient(to bottom, transparent, var(--accent), transparent); }
-    .day-pill.active { background: #818cf8; color: white; }
+    :root {
+      --bg-dark: #050505;
+      --bg-card: #0f0f0f;
+      --accent: #ccff00; /* Electric Lime */
+      --text-white: #ffffff;
+      --text-gray: #888888;
+    }
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      overflow-x: hidden;
+    }
+    
+    h1, h2, h3, .font-display {
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* Grain Texture Overlay */
+    .texture-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    /* Selection Color */
+    ::selection {
+      background-color: var(--accent);
+      color: black;
+    }
+
+    /* Navigation Links Hover */
+    .roll-link {
+        overflow: hidden;
+        height: 1.2em;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .roll-link span {
+        display: block;
+        transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+    .roll-link:hover span {
+        transform: translateY(-100%);
+    }
+    .roll-link span::after {
+        content: attr(data-title);
+        display: block;
+    }
+
+    /* Timeline Styling */
+    .timeline-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(255,255,255,0.1);
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-left: 3rem;
+        border-left: 1px solid transparent;
+        transition: all 0.3s ease;
+    }
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -5px; /* Adjust to center on line */
+        top: 0;
+        width: 9px;
+        height: 9px;
+        background: #333;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+    .timeline-item:hover::before {
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent);
+        transform: scale(1.2);
+    }
+    .timeline-item:hover {
+        border-left-color: var(--accent);
+    }
+
+    /* Day Tab Active State */
+    .day-btn.active {
+        background-color: var(--accent);
+        color: black;
+        border-color: var(--accent);
+    }
+
+    /* Content Fade Animation */
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease-out;
+    }
+    .tab-content.active {
+        display: block;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 
-<body class="text-slate-200 antialiased bg-[radial-gradient(ellipse_at_top_left,_#1e1b4b,_#020617)]">
+<body class="loaded">
+  <div class="texture-overlay"></div>
 
-<nav class="fixed w-full z-50 top-0 left-0">
-  <div class="max-w-7xl mx-auto px-6 py-4">
-    <div class="glass rounded-full px-8 py-3 flex justify-between items-center">
-      <h1 class="font-title text-xl font-bold tracking-tighter text-white">
-        <a href="/">FESTIVERSE<span class="text-indigo-400">'26</span></a>
-      </h1>
-      <ul class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-        <li class="hover:text-white transition"><a href="/">Home</a></li>
-        <li class="text-white">Schedule</li>
-        <li class="hover:text-white transition"><a href="register">Register</a></li>
-      </ul>
+  <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference bg-black/50 backdrop-blur-md border-b border-white/5">
+    <a href="/" class="font-display font-bold text-xl tracking-tighter">
+      FESTIVERSE<span class="text-[#ccff00]">.</span>
+    </a>
+    
+    <div class="hidden md:flex gap-10 font-medium text-sm">
+      <a href="/" class="roll-link"><span data-title="Home">Home</span></a>
+      <a href="schedule.html" class="roll-link text-[#ccff00]"><span data-title="Schedule">Schedule</span></a>
+      <a href="events.html" class="roll-link"><span data-title="Events">Events</span></a>
+      <a href="register.html" class="roll-link"><span data-title="Register">Register</span></a>
     </div>
-  </div>
-</nav>
 
-<main class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
-  <div class="text-center mb-16">
-    <h2 class="font-title text-4xl md:text-5xl font-bold text-white mb-6">THE TIMELINE</h2>
-    <div class="flex justify-center gap-4">
-      <button class="day-pill active px-6 py-2 rounded-full border border-white/10 text-xs font-bold uppercase tracking-widest transition">Day 01</button>
-      <button class="day-pill px-6 py-2 rounded-full border border-white/10 text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition">Day 02</button>
-      <button class="day-pill px-6 py-2 rounded-full border border-white/10 text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition">Day 03</button>
+    <a href="register.html" class="px-6 py-2 border border-white/20 rounded-full text-sm font-bold uppercase hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all">
+      Get Passes
+    </a>
+  </nav>
+
+  <header class="pt-40 pb-20 px-6 md:px-16 border-b border-white/10">
+    <div class="max-w-7xl mx-auto">
+        <span class="text-[#ccff00] font-bold uppercase tracking-widest text-xs mb-4 block">Event Itinerary</span>
+        <h1 class="font-display text-6xl md:text-8xl font-bold leading-none text-white">
+            THE <br> TIMELINE
+        </h1>
     </div>
-  </div>
+  </header>
 
-  <div class="relative">
-    <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-px timeline-line opacity-30"></div>
+  <main class="min-h-screen">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row">
+        
+        <aside class="md:w-1/4 px-6 md:px-0 py-10 md:py-20 md:sticky md:top-20 h-auto md:h-screen border-b md:border-b-0 md:border-r border-white/10 bg-[#050505] z-10">
+            <h3 class="font-display text-xl font-bold mb-8 px-6 hidden md:block">Select Day</h3>
+            
+            <div class="flex md:flex-col gap-4 overflow-x-auto md:overflow-visible px-6 pb-4 md:pb-0 scrollbar-hide">
+                <button onclick="switchDay('day1')" class="day-btn active w-full text-left px-6 py-4 border border-white/10 rounded-xl hover:border-white/30 transition-all group">
+                    <span class="text-xs uppercase font-bold text-gray-500 group-hover:text-white block mb-1">April 08</span>
+                    <span class="font-display text-2xl font-bold">Day 01</span>
+                </button>
 
-    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
-      <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-        <div class="glass p-6 rounded-2xl border-l-4 border-l-indigo-500">
-          <span class="text-indigo-400 font-bold text-xs tracking-widest">10:00 AM</span>
-          <h3 class="text-xl font-bold text-white mt-1">Cosmic Opening</h3>
-          <p class="text-slate-400 text-sm mt-2">The official launch of Festiverse'26 at the Main Arena.</p>
+                <button onclick="switchDay('day2')" class="day-btn w-full text-left px-6 py-4 border border-white/10 rounded-xl hover:border-white/30 transition-all group">
+                    <span class="text-xs uppercase font-bold text-gray-500 group-hover:text-white block mb-1">April 09</span>
+                    <span class="font-display text-2xl font-bold">Day 02</span>
+                </button>
+
+                <button onclick="switchDay('day3')" class="day-btn w-full text-left px-6 py-4 border border-white/10 rounded-xl hover:border-white/30 transition-all group">
+                    <span class="text-xs uppercase font-bold text-gray-500 group-hover:text-white block mb-1">April 10</span>
+                    <span class="font-display text-2xl font-bold">Day 03</span>
+                </button>
+            </div>
+        </aside>
+
+        <div class="md:w-3/4 px-6 md:px-20 py-10 md:py-20">
+            
+            <div id="day1" class="tab-content active relative pl-8 md:pl-0">
+                <div class="absolute left-8 md:left-0 top-0 bottom-0 w-px bg-white/10"></div>
+
+                <div class="timeline-item mb-16 group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">10:00 AM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">Cosmic Opening</h2>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 text-gray-400 text-sm mb-4">
+                        <span class="flex items-center gap-2">📍 Main Arena</span>
+                        <span class="flex items-center gap-2">🎤 Inauguration</span>
+                    </div>
+                    <p class="text-gray-500 max-w-xl leading-relaxed">
+                        The official launch of Festiverse'26. Witness the lighting of the torch and the opening performance by the Udaan Core Team.
+                    </p>
+                </div>
+
+                <div class="timeline-item mb-16 group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">01:30 PM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">Vocal Wars: Prelims</h2>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 text-gray-400 text-sm mb-4">
+                        <span class="flex items-center gap-2">📍 Auditorium B</span>
+                        <span class="flex items-center gap-2">🎵 Music</span>
+                    </div>
+                    <p class="text-gray-500 max-w-xl leading-relaxed">
+                        Solo and group vocalists battle for a spot in the finale. Acapella and instrumental rounds included.
+                    </p>
+                </div>
+
+                <div class="timeline-item mb-16 group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">04:00 PM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">E-Sports Arena</h2>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 text-gray-400 text-sm mb-4">
+                        <span class="flex items-center gap-2">📍 Tech Lab 2</span>
+                        <span class="flex items-center gap-2">🎮 Gaming</span>
+                    </div>
+                    <p class="text-gray-500 max-w-xl leading-relaxed">
+                        Valorant & BGMI heat-up matches begin. Bring your own peripherals for the LAN setup.
+                    </p>
+                </div>
+
+                <div class="timeline-item group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">08:00 PM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">Starlight Social</h2>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 text-gray-400 text-sm mb-4">
+                        <span class="flex items-center gap-2">📍 Open Grounds</span>
+                        <span class="flex items-center gap-2">🥂 Networking</span>
+                    </div>
+                    <p class="text-gray-500 max-w-xl leading-relaxed">
+                        Networking, snacks, and a DJ set to end Day 01. Connect with participants from other universities.
+                    </p>
+                </div>
+            </div>
+
+            <div id="day2" class="tab-content relative pl-8 md:pl-0">
+                <div class="absolute left-8 md:left-0 top-0 bottom-0 w-px bg-white/10"></div>
+                <div class="timeline-item mb-16 group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">10:00 AM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">Dance Battle</h2>
+                    <p class="text-gray-500 max-w-xl">High energy face-offs at the Main Stage.</p>
+                </div>
+                <div class="timeline-item group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">05:00 PM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">Fashion Show</h2>
+                    <p class="text-gray-500 max-w-xl">Theme: Cyberpunk 2077. Walk the ramp.</p>
+                </div>
+            </div>
+
+            <div id="day3" class="tab-content relative pl-8 md:pl-0">
+                <div class="absolute left-8 md:left-0 top-0 bottom-0 w-px bg-white/10"></div>
+                <div class="timeline-item mb-16 group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">06:00 PM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">Grand Finale</h2>
+                    <p class="text-gray-500 max-w-xl">Award distribution and closing ceremony.</p>
+                </div>
+                <div class="timeline-item group cursor-pointer">
+                    <span class="text-[#ccff00] font-mono text-sm font-bold bg-[#ccff00]/10 px-2 py-1 rounded mb-2 inline-block">09:00 PM</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4 group-hover:text-[#ccff00] transition-colors">Pro Night</h2>
+                    <p class="text-gray-500 max-w-xl">Guest performance by [Artist Name].</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  </main>
+
+  <footer class="pt-20 pb-10 px-6 md:px-16 bg-black border-t border-white/10">
+    <div class="flex flex-col md:flex-row justify-between gap-12 mb-20">
+      <div>
+        <h2 class="font-display text-3xl font-bold mb-6">FESTIVERSE<span class="text-[#ccff00]">.</span></h2>
+        <p class="text-gray-500 max-w-sm">
+          A platform for the bold, the creative, and the futuristic. 
+          Powered by UDAAN Cultural Club.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm">
+        <div>
+          <h4 class="font-bold text-white mb-4 uppercase">Navigation</h4>
+          <ul class="space-y-3 text-gray-500">
+            <li><a href="index.html" class="hover:text-[#ccff00]">Home</a></li>
+            <li><a href="events.html" class="hover:text-[#ccff00]">Events</a></li>
+            <li><a href="schedule.html" class="hover:text-[#ccff00]">Schedule</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 uppercase">Support</h4>
+          <ul class="space-y-3 text-gray-500">
+            <li><a href="contact.html" class="hover:text-[#ccff00]">Contact</a></li>
+            <li><a href="admin.html" class="hover:text-[#ccff00]">Admin</a></li>
+          </ul>
         </div>
       </div>
-      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(129,140,248,0.8)] z-10 hidden md:block"></div>
-      <div class="md:w-1/2 md:pl-12"></div>
     </div>
-
-    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
-      <div class="md:w-1/2 md:pr-12"></div>
-      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-slate-700 z-10 hidden md:block"></div>
-      <div class="md:w-1/2 md:pl-12">
-        <div class="glass p-6 rounded-2xl border-r-4 border-r-fuchsia-500">
-          <span class="text-fuchsia-400 font-bold text-xs tracking-widest">01:30 PM</span>
-          <h3 class="text-xl font-bold text-white mt-1">Vocal Wars: Prelims</h3>
-          <p class="text-slate-400 text-sm mt-2">Solo and group vocalists battle for a spot in the finale.</p>
-        </div>
-      </div>
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 uppercase font-bold tracking-widest">
+      <p>&copy; 2026 UDAAN CULTURAL CLUB</p>
+      <p>DESIGNED FOR THE FUTURE</p>
     </div>
+  </footer>
 
-    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
-      <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-        <div class="glass p-6 rounded-2xl border-l-4 border-l-indigo-500">
-          <span class="text-indigo-400 font-bold text-xs tracking-widest">04:00 PM</span>
-          <h3 class="text-xl font-bold text-white mt-1">E-Sports Arena Opens</h3>
-          <p class="text-slate-400 text-sm mt-2">Valorant & BGMI heat-up matches begin in the Tech Lab.</p>
-        </div>
-      </div>
-      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-slate-700 z-10 hidden md:block"></div>
-      <div class="md:w-1/2 md:pl-12"></div>
-    </div>
-
-    <div class="relative mb-12 flex flex-col md:flex-row items-center w-full">
-      <div class="md:w-1/2 md:pr-12"></div>
-      <div class="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(129,140,248,0.8)] z-10 hidden md:block"></div>
-      <div class="md:w-1/2 md:pl-12">
-        <div class="glass p-6 rounded-2xl border-r-4 border-r-fuchsia-500">
-          <span class="text-fuchsia-400 font-bold text-xs tracking-widest">08:00 PM</span>
-          <h3 class="text-xl font-bold text-white mt-1">Starlight Social</h3>
-          <p class="text-slate-400 text-sm mt-2">Networking, snacks, and a DJ set to end Day 01.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<footer class="py-10 border-t border-white/5 text-center">
-  <p class="font-title text-[10px] tracking-[0.3em] text-slate-600 uppercase">
-    All times are in GST // Schedule subject to celestial shifts
-  </p>
-</footer>
-
+  <script>
+    function switchDay(dayId) {
+        // 1. Remove active class from all tabs
+        document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+        
+        // 2. Add active class to clicked button
+        event.currentTarget.classList.add('active');
+        
+        // 3. Hide all content
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        // 4. Show selected content
+        document.getElementById(dayId).classList.add('active');
+        
+        // 5. Scroll to top of content on mobile
+        if(window.innerWidth < 768) {
+            document.getElementById(dayId).scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+    }
+  </script>
 </body>
 </html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Festiverse'26 | System Override</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff00ff;
+      --bg-color: #050505;
+    }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background-color: var(--bg-color);
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    
+    h1, h2, h3, .font-tech {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    /* Scanline Effect */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Cyberpunk Clip Path (Cut Corners) */
+    .cyber-card {
+      clip-path: polygon(
+        20px 0, 100% 0, 
+        100% calc(100% - 20px), calc(100% - 20px) 100%, 
+        0 100%, 0 20px
+      );
+      transition: all 0.3s ease;
+      border-left: 2px solid var(--neon-cyan);
+    }
+    .cyber-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px var(--neon-cyan);
+      border-left: 2px solid var(--neon-pink);
+    }
+
+    /* Glitch Text Animation */
+    .glitch {
+      position: relative;
+    }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg-color);
+    }
+    .glitch::before {
+      left: 2px;
+      text-shadow: -1px 0 var(--neon-pink);
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    }
+    .glitch::after {
+      left: -2px;
+      text-shadow: -1px 0 var(--neon-cyan);
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    }
+    @keyframes glitch-anim {
+      0% { clip: rect(10px, 9999px, 30px, 0); }
+      20% { clip: rect(80px, 9999px, 100px, 0); }
+      100% { clip: rect(50px, 9999px, 70px, 0); }
+    }
+    @keyframes glitch-anim-2 {
+      0% { clip: rect(60px, 9999px, 90px, 0); }
+      20% { clip: rect(10px, 9999px, 40px, 0); }
+      100% { clip: rect(100px, 9999px, 120px, 0); }
+    }
+
+    /* Grid Background */
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      perspective: 500px;
+    }
+  </style>
+</head>
+<body class="selection:bg-cyan-500 selection:text-black">
+
+  <div class="scanlines"></div>
+
+  <nav class="fixed w-full z-50 top-0 border-b border-white/10 bg-black/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-8 bg-cyan-400 animate-pulse"></div>
+        <a href="/" class="font-tech text-2xl font-bold tracking-widest text-white">
+          FESTI<span class="text-cyan-400">VERSE</span>
+        </a>
+      </div>
+
+      <div class="hidden md:flex gap-8 text-lg font-bold uppercase tracking-wider">
+        <a href="index.html" class="text-white border-b-2 border-cyan-400">Home</a>
+        <a href="schedule.html" class="text-slate-500 hover:text-cyan-400 transition-colors">Schedule</a>
+        <a href="events.html" class="text-slate-500 hover:text-cyan-400 transition-colors">Events</a>
+        <a href="contact.html" class="text-slate-500 hover:text-cyan-400 transition-colors">Comms</a>
+      </div>
+
+      <a href="register.html" class="relative overflow-hidden px-8 py-2 font-bold text-black bg-cyan-400 hover:bg-white transition-colors uppercase tracking-widest clip-button">
+        <span class="relative z-10">Initialize</span>
+      </a>
+    </div>
+  </nav>
+
+  <header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden cyber-grid">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
+    
+    <div class="relative z-10 text-center px-4">
+      <p class="text-pink-500 font-bold tracking-[0.5em] mb-4 text-sm animate-pulse">ESTABLISHING CONNECTION...</p>
+      
+      <h1 class="font-tech text-6xl md:text-9xl font-black text-white mb-6 glitch" data-text="FESTIVERSE">
+        FESTIVERSE
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-cyan-300 max-w-2xl mx-auto mb-10 font-medium tracking-wide border-l-4 border-cyan-500 pl-6 text-left md:text-center md:border-l-0 md:pl-0">
+        <span class="opacity-70">// The digital frontier awaits.</span> <br>
+        Dive into the ultimate cultural simulation.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-6">
+        <a href="register.html" class="px-10 py-4 bg-transparent border border-cyan-400 text-cyan-400 font-bold text-xl uppercase tracking-widest hover:bg-cyan-400 hover:text-black transition-all cyber-card">
+          Get Access Key
+        </a>
+        <a href="events.html" class="px-10 py-4 bg-transparent border border-pink-500 text-pink-500 font-bold text-xl uppercase tracking-widest hover:bg-pink-500 hover:text-black transition-all cyber-card">
+          Browse Data
+        </a>
+      </div>
+
+      <div class="mt-20 flex justify-center gap-4 md:gap-12 font-mono">
+        <div class="text-center">
+           <div class="text-4xl md:text-5xl font-bold text-white bg-white/5 px-4 py-2 rounded border border-white/10" id="d">00</div>
+           <div class="text-xs text-slate-500 mt-2">DAYS</div>
+        </div>
+        <div class="text-4xl text-slate-600">:</div>
+        <div class="text-center">
+           <div class="text-4xl md:text-5xl font-bold text-white bg-white/5 px-4 py-2 rounded border border-white/10" id="h">00</div>
+           <div class="text-xs text-slate-500 mt-2">HOURS</div>
+        </div>
+        <div class="text-4xl text-slate-600">:</div>
+        <div class="text-center">
+           <div class="text-4xl md:text-5xl font-bold text-white bg-white/5 px-4 py-2 rounded border border-white/10" id="m">00</div>
+           <div class="text-xs text-slate-500 mt-2">MINS</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="py-24 px-6 bg-[#0a0a0a]">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-center gap-4 mb-16">
+        <div class="w-12 h-1 bg-pink-500"></div>
+        <h2 class="font-tech text-3xl md:text-4xl font-bold text-white uppercase">System Modules</h2>
+        <div class="flex-1 h-px bg-white/10"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <a href="events.html" class="cyber-card bg-[#111] group cursor-pointer relative overflow-hidden h-96">
+           <img src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity grayscale group-hover:grayscale-0" alt="Dance">
+           <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+           <div class="absolute bottom-0 left-0 p-8 w-full">
+             <div class="text-cyan-400 text-xs font-bold tracking-[0.2em] mb-2">MODULE_01</div>
+             <h3 class="font-tech text-3xl text-white group-hover:translate-x-2 transition-transform">DANCE</h3>
+           </div>
+        </a>
+
+        <a href="events.html" class="cyber-card bg-[#111] group cursor-pointer relative overflow-hidden h-96">
+           <img src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity grayscale group-hover:grayscale-0" alt="Music">
+           <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+           <div class="absolute bottom-0 left-0 p-8 w-full">
+             <div class="text-pink-500 text-xs font-bold tracking-[0.2em] mb-2">MODULE_02</div>
+             <h3 class="font-tech text-3xl text-white group-hover:translate-x-2 transition-transform">MUSIC</h3>
+           </div>
+        </a>
+
+        <a href="events.html" class="cyber-card bg-[#111] group cursor-pointer relative overflow-hidden h-96">
+           <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity grayscale group-hover:grayscale-0" alt="Tech">
+           <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+           <div class="absolute bottom-0 left-0 p-8 w-full">
+             <div class="text-yellow-400 text-xs font-bold tracking-[0.2em] mb-2">MODULE_03</div>
+             <h3 class="font-tech text-3xl text-white group-hover:translate-x-2 transition-transform">TECH</h3>
+           </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-cyan-400 text-black font-tech font-bold py-3 overflow-hidden">
+    <div class="whitespace-nowrap animate-marquee flex gap-12 text-xl">
+      <span>/// INITIATING PROTOCOL 2026</span>
+      <span>/// CULTURAL OVERRIDE DETECTED</span>
+      <span>/// JOIN THE RESISTANCE</span>
+      <span>/// CREATIVITY UNBOUND</span>
+      <span>/// INITIATING PROTOCOL 2026</span>
+      <span>/// CULTURAL OVERRIDE DETECTED</span>
+    </div>
+  </div>
+  <style>.animate-marquee { animation: scroll 15s linear infinite; } @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }</style>
+
+  <footer class="bg-black pt-20 pb-10 border-t border-white/10 text-center">
+    <h2 class="font-tech text-4xl text-white mb-8">TERMINATE SESSION?</h2>
+    
+    <div class="flex justify-center gap-8 mb-12">
+      <a href="#" class="text-slate-500 hover:text-cyan-400 transition-colors uppercase tracking-widest text-sm">Instagram</a>
+      <a href="#" class="text-slate-500 hover:text-pink-500 transition-colors uppercase tracking-widest text-sm">Discord</a>
+      <a href="#" class="text-slate-500 hover:text-yellow-400 transition-colors uppercase tracking-widest text-sm">Twitter</a>
+    </div>
+
+    <p class="text-slate-700 text-xs font-mono">
+      SYSTEM ID: FESTIVERSE_2026 <br>
+      ALL RIGHTS RESERVED // UDAAN CLUB
+    </p>
+  </footer>
+
+  <script>
+    const target = new Date("April 8, 2026 10:00:00").getTime();
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = target - now;
+      if(diff > 0) {
+        document.getElementById("d").innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+        document.getElementById("h").innerText = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+        document.getElementById("m").innerText = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>

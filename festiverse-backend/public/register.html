@@ -5,146 +5,250 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register | Festiverse'26</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --accent: #818cf8; --glow: rgba(129, 140, 248, 0.3); }
-    body { font-family: 'Inter', sans-serif; background: #020617; }
-    .font-title { font-family: 'Syncopate', sans-serif; }
-    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-    .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; }
-    .input-field:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.1); }
+    :root { --bg-dark: #050505; --accent: #ccff00; }
+    body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-dark); color: white; }
+    h1, h2, h3, .font-display { font-family: 'Syne', sans-serif; }
+    
+    .texture-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 50;
+    }
+
+    .input-field { 
+      background: #111; 
+      border: 1px solid rgba(255,255,255,0.1); 
+      transition: all 0.3s; 
+      color: white; 
+    }
+    .input-field:focus { 
+      border-color: var(--accent); 
+      outline: none; 
+      background: #161616; 
+    }
+    
+    .btn-lime { 
+      background: var(--accent); 
+      color: black; 
+      font-weight: bold; 
+      transition: all 0.3s; 
+    }
+    .btn-lime:hover { 
+      background: white; 
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Step Styles */
+    .step-indicator { opacity: 0.3; transition: all 0.3s; }
+    .step-indicator.active { opacity: 1; color: var(--accent); }
+    
+    .hidden-step { display: none; }
+    .fade-in { animation: fadeIn 0.5s ease forwards; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
+<body class="antialiased">
+<div class="texture-overlay"></div>
 
-<body class="text-slate-200 antialiased bg-[radial-gradient(circle_at_bottom_left,_#1e1b4b,_#020617)]">
-
-<nav class="fixed w-full z-50 top-0 left-0">
-  <div class="max-w-7xl mx-auto px-6 py-4">
-    <div class="glass rounded-full px-8 py-3 flex justify-between items-center">
-      <h1 class="font-title text-xl font-bold tracking-tighter text-white">
-        <a href="index.html">FESTIVERSE<span class="text-indigo-400">'26</span></a>
-      </h1>
-      <a href="index.html" class="text-xs font-semibold uppercase tracking-widest text-slate-400 hover:text-white transition">← Back to Orbit</a>
-    </div>
-  </div>
+<nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+  <a href="index.html" class="font-display font-bold text-xl tracking-tighter text-white">
+    FESTIVERSE<span class="text-[#ccff00]">.</span>
+  </a>
+  <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">← Back to Orbit</a>
 </nav>
 
-<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto relative z-10">
+  
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
     
     <div class="lg:col-span-2">
-      <div class="glass rounded-3xl p-8 md:p-12">
-        <h2 class="font-title text-3xl font-bold text-white mb-2">SECURE YOUR SLOT</h2>
-        <p class="text-slate-400 mb-10">Fill in your coordinates to join the cultural vanguard.</p>
+      <div class="flex items-center gap-4 mb-8">
+        <div id="ind-1" class="step-indicator active font-display text-xl font-bold">01 PERSONAL INTEL</div>
+        <div class="h-px bg-white/20 w-12"></div>
+        <div id="ind-2" class="step-indicator font-display text-xl font-bold">02 EVENT PROTOCOL</div>
+      </div>
+
+      <div class="bg-[#0f0f0f] border border-white/10 rounded-2xl p-8 md:p-12 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-[#ccff00]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
         
-        <form class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-indigo-400 mb-2">Full Name</label>
-              <input type="text" placeholder="John Doe" class="input-field w-full px-6 py-4 rounded-xl text-white">
+        <form id="regForm" class="space-y-6">
+          
+          <div id="step-1" class="fade-in space-y-6">
+            <h2 class="font-display text-2xl font-bold text-white mb-6">Cadet Identity</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Full Name</label>
+                <input type="text" id="name" placeholder="Gautam Kumar" class="input-field w-full px-6 py-4 rounded-lg" required>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">College</label>
+                <input type="text" id="college" placeholder="IIT Bombay" class="input-field w-full px-6 py-4 rounded-lg" required>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Email ID</label>
+                <input type="email" id="email" placeholder="student@edu.in" class="input-field w-full px-6 py-4 rounded-lg" required>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Phone</label>
+                <input type="tel" id="phone" placeholder="+91 98765 43210" class="input-field w-full px-6 py-4 rounded-lg" required>
+              </div>
             </div>
+            <button type="button" onclick="nextStep()" class="w-full py-4 btn-lime rounded-lg font-bold font-display uppercase tracking-widest text-sm">
+              Proceed to Event Selection →
+            </button>
+          </div>
+
+          <div id="step-2" class="hidden-step space-y-6">
+            <h2 class="font-display text-2xl font-bold text-white mb-6">Mission Selection</h2>
+            
             <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-indigo-400 mb-2">University ID</label>
-              <input type="text" placeholder="U-2026-XYZ" class="input-field w-full px-6 py-4 rounded-xl text-white">
+              <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Select Event</label>
+              <select id="eventSelect" onchange="handleEventChange()" class="input-field w-full px-6 py-4 rounded-lg text-gray-300">
+                <option value="" disabled selected>-- Choose your protocol --</option>
+                <option value="Solo Dance" data-team="1">Solo Dance (Solo)</option>
+                <option value="Solo Singing" data-team="1">Solo Singing (Solo)</option>
+                <option value="Sketching" data-team="1">Sketching (Solo)</option>
+                
+                <option value="Debate" data-team="2">Debate (2 Members)</option>
+                <option value="Quiz" data-team="3">Quiz (Max 3 Members)</option>
+                <option value="Group Dance" data-team="10">Group Dance (4-10 Members)</option>
+                <option value="Drama" data-team="10">Drama (5-10 Members)</option>
+                <option value="Face Painting" data-team="2">Face Painting (2 Members)</option>
+                <option value="Rangoli" data-team="3">Rangoli (2-3 Members)</option>
+              </select>
+            </div>
+
+            <div id="teamSection" class="hidden-step space-y-6 border-t border-white/10 pt-6">
+              <div class="bg-white/5 p-4 rounded-lg border border-[#ccff00]/30">
+                <p class="text-xs text-[#ccff00] font-bold uppercase tracking-widest mb-2">⚠️ Team Protocol Initiated</p>
+                <p class="text-sm text-gray-400">This event requires a squad. You are the Team Leader (Member 1).</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Team Name</label>
+                <input type="text" id="teamName" placeholder="Ex: The Avengers" class="input-field w-full px-6 py-4 rounded-lg">
+              </div>
+
+              <div id="membersContainer" class="space-y-4">
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+              <button type="button" onclick="prevStep()" class="flex-1 py-4 border border-white/20 hover:bg-white/10 text-white rounded-lg font-bold font-display uppercase tracking-widest text-sm">
+                ← Back
+              </button>
+              <button type="submit" class="flex-1 py-4 btn-lime rounded-lg font-bold font-display uppercase tracking-widest text-sm">
+                Confirm Registration
+              </button>
             </div>
           </div>
 
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-widest text-indigo-400 mb-2">Primary Interest</label>
-            <select class="input-field w-full px-6 py-4 rounded-xl text-slate-400">
-              <option>Mainstage Dance</option>
-              <option>Vocal Wars</option>
-              <option>E-Sports (Valorant/BGMI)</option>
-              <option>Fashion Odyssey</option>
-              <option>General Spectator</option>
-            </select>
-          </div>
-
-          <button type="submit" class="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 uppercase tracking-widest">
-            Confirm Registration
-          </button>
         </form>
       </div>
     </div>
 
     <div class="space-y-8">
-      <div class="glass border-indigo-500/50 rounded-3xl p-8 relative overflow-hidden group">
-        <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-600/20 rounded-full blur-2xl"></div>
-        <span class="text-[10px] bg-indigo-500 text-white px-3 py-1 rounded-full font-bold tracking-tighter">POPULAR</span>
-        <h3 class="text-2xl font-bold text-white mt-4">Cosmic Pass</h3>
-        <p class="text-slate-400 text-sm mt-2">All-access to workshops, mainstage events, and the after-party.</p>
-        <div class="mt-6 text-3xl font-title font-bold text-white">$25</div>
+      <div class="bg-[#111] border border-[#ccff00] rounded-2xl p-8 relative">
+        <h3 class="text-xl font-bold text-white mb-4 font-display">Registration Guide</h3>
+        <ul class="space-y-4 text-sm text-gray-400 list-disc pl-4 marker:text-[#ccff00]">
+          <li>Ensure personal details match your College ID.</li>
+          <li>For team events, only the <strong>Team Leader</strong> needs to register.</li>
+          <li>Bring your unique Ticket ID to the "Grand Orion Arena" for entry.</li>
+        </ul>
       </div>
 
-      <div class="glass rounded-3xl p-8 hover:border-slate-500 transition-colors">
-        <h3 class="text-2xl font-bold text-white">Voyager Lite</h3>
-        <p class="text-slate-400 text-sm mt-2">Entry to E-Sports arena and day-time cultural exhibits.</p>
-        <div class="mt-6 text-3xl font-title font-bold text-white">$12</div>
-      </div>
-
-      <div class="p-8 rounded-3xl bg-gradient-to-br from-indigo-900/40 to-fuchsia-900/20 border border-white/5">
-        <h4 class="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-4">Venue Intel</h4>
-        <div class="space-y-4">
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg glass flex items-center justify-center text-xl">📍</div>
-            <p class="text-sm text-slate-300">Grand Orion Arena, Sector 7</p>
-          </div>
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg glass flex items-center justify-center text-xl">📅</div>
-            <p class="text-sm text-slate-300">April 8-10, 2026</p>
-          </div>
-        </div>
+      <div class="p-6 rounded-2xl bg-[#0f0f0f] border border-white/10 text-center">
+         <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Need Help?</p>
+         <p class="text-white mt-2 font-display">help@festiverse.com</p>
       </div>
     </div>
 
   </div>
 </main>
 
-<footer class="py-10 border-t border-white/5 text-center">
-  <p class="font-title text-[10px] tracking-[0.3em] text-slate-600">
-    SYSTEM STATUS: READY // REGISTRATION OPEN
+<script>
+  // --- STEP LOGIC ---
+  function nextStep() {
+    // Simple Validation for Step 1
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    
+    if(!name || !email) {
+      alert("Please complete your Personal Intel first.");
+      return;
+    }
+
+    document.getElementById('step-1').classList.add('hidden-step');
+    document.getElementById('step-2').classList.remove('hidden-step');
+    document.getElementById('step-2').classList.add('fade-in');
+    
+    document.getElementById('ind-1').classList.remove('active');
+    document.getElementById('ind-2').classList.add('active');
+  }
+
+  function prevStep() {
+    document.getElementById('step-2').classList.add('hidden-step');
+    document.getElementById('step-1').classList.remove('hidden-step');
+    document.getElementById('step-1').classList.add('fade-in');
+    
+    document.getElementById('ind-2').classList.remove('active');
+    document.getElementById('ind-1').classList.add('active');
+  }
+
+  // --- DYNAMIC EVENT LOGIC ---
+  function handleEventChange() {
+    const select = document.getElementById('eventSelect');
+    const teamSection = document.getElementById('teamSection');
+    const membersContainer = document.getElementById('membersContainer');
+    
+    // Get team size from selected option data attribute
+    const selectedOption = select.options[select.selectedIndex];
+    const maxMembers = parseInt(selectedOption.getAttribute('data-team'));
+
+    membersContainer.innerHTML = ''; // Clear previous inputs
+
+    if (maxMembers > 1) {
+      teamSection.classList.remove('hidden-step');
+      teamSection.classList.add('fade-in');
+
+      // Generate inputs for Member 2 to Max
+      for (let i = 2; i <= maxMembers; i++) {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Member ${i} Name</label>
+          <input type="text" name="member${i}" placeholder="Cadet Name" class="input-field w-full px-6 py-4 rounded-lg text-sm">
+        `;
+        membersContainer.appendChild(div);
+      }
+    } else {
+      teamSection.classList.add('hidden-step');
+    }
+  }
+
+  // --- SUBMISSION ---
+  document.getElementById('regForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.innerText = "Processing...";
+    
+    // Simulate Backend Delay
+    await new Promise(r => setTimeout(r, 1500));
+    
+    alert("REGISTRATION SUCCESSFUL!\nMission details sent to your comms channel.");
+    location.reload();
+  });
+</script>
+
+<footer class="py-10 border-t border-white/10 text-center relative z-10 bg-black">
+  <p class="font-display text-xs tracking-widest text-gray-600 uppercase">
+    System Status: Online // Step 2 of 2
   </p>
 </footer>
-<script>
-document.querySelector('form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Stop page from reloading
-
-    // 1. Gather Data
-    const formData = {
-        name: document.querySelector('input[placeholder="John Doe"]').value,
-        universityId: document.querySelector('input[placeholder="U-2026-XYZ"]').value,
-        // I added an email field to the backend, make sure to add an input for email in your HTML if missing
-        email: "student@university.edu", // Placeholder if you haven't added an email input yet
-        interest: document.querySelector('select').value
-    };
-
-    const submitBtn = document.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerText;
-    submitBtn.innerText = "Transmitting...";
-    
-    try {
-        // 2. Send to Backend
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            alert(`SUCCESS: ${result.message}\nTicket ID: ${result.ticketId}`);
-            document.querySelector('form').reset();
-        } else {
-            alert(`ERROR: ${result.message}`);
-        }
-    } catch (error) {
-        alert("CRITICAL FAILURE: Unable to reach Mission Control.");
-        console.error(error);
-    } finally {
-        submitBtn.innerText = originalText;
-    }
-});
-</script>
 </body>
 </html>

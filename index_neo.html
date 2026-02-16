@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Festiverse'26 | Pop-Culture Remix</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-paper: #f0f0f0;
+      --accent-yellow: #FEF08A;
+      --accent-pink: #F472B6;
+      --accent-blue: #60A5FA;
+      --accent-green: #4ADE80;
+      --border-black: #000000;
+    }
+    
+    body {
+      font-family: 'Space Mono', monospace;
+      background-color: var(--accent-yellow);
+      background-image: radial-gradient(#000 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: var(--border-black);
+      overflow-x: hidden;
+    }
+    
+    h1, h2, h3, .font-bold-display {
+      font-family: 'Archivo Black', sans-serif;
+    }
+
+    /* Neo-Brutalist Shadows */
+    .neo-box {
+      background-color: white;
+      border: 3px solid black;
+      box-shadow: 6px 6px 0px 0px black;
+      transition: all 0.2s ease-in-out;
+    }
+    
+    .neo-button {
+      background-color: var(--accent-blue);
+      border: 2px solid black;
+      box-shadow: 4px 4px 0px 0px black;
+      transition: all 0.1s;
+      cursor: pointer;
+    }
+    
+    .neo-button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px 0px black;
+    }
+    
+    .neo-button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px 0px black;
+    }
+
+    /* Sticker Hover Effect */
+    .sticker {
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .sticker:hover {
+      transform: scale(1.1) rotate(5deg);
+      z-index: 10;
+    }
+
+    /* Marquee Animation */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 15s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+
+<body class="selection:bg-black selection:text-white">
+
+  <nav class="fixed top-0 w-full z-50 px-4 py-4">
+    <div class="max-w-7xl mx-auto neo-box flex justify-between items-center px-6 py-3 bg-white rounded-xl">
+      <a href="/" class="flex items-center gap-2 group">
+        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white font-bold text-lg group-hover:rotate-12 transition-transform">F</div>
+        <span class="font-bold-display text-xl tracking-tight uppercase italic">Festiverse</span>
+      </a>
+
+      <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-tight">
+        <a href="index.html" class="hover:underline decoration-4 decoration-pink-400 underline-offset-4">Home</a>
+        <a href="schedule.html" class="hover:underline decoration-4 decoration-blue-400 underline-offset-4">Timeline</a>
+        <a href="events.html" class="hover:underline decoration-4 decoration-green-400 underline-offset-4">Events</a>
+      </div>
+
+      <a href="register.html" class="neo-button px-6 py-2 font-bold uppercase text-xs tracking-widest bg-black text-white hover:bg-gray-800">
+        Get Ticket
+      </a>
+    </div>
+  </nav>
+
+  <header class="min-h-screen flex flex-col items-center justify-center pt-24 px-4 relative overflow-hidden">
+    <div class="absolute top-32 left-10 md:left-32 sticker">
+       <div class="w-24 h-24 bg-pink-400 border-2 border-black rounded-full flex items-center justify-center font-bold text-xs text-center p-2 neo-shadow">
+          APRIL <br> 8-10
+       </div>
+    </div>
+    <div class="absolute bottom-32 right-10 md:right-32 sticker">
+       <div class="w-32 h-32 bg-green-400 border-2 border-black rounded-none flex items-center justify-center font-bold text-xs text-center p-2 neo-shadow rotate-12">
+          OPEN FOR <br> ALL
+       </div>
+    </div>
+
+    <div class="text-center relative z-10 max-w-4xl">
+      <div class="inline-block bg-white border-2 border-black px-4 py-1 font-bold text-xs uppercase mb-6 shadow-[4px_4px_0_0_black] -rotate-2">
+        🚀 The Ultimate College Fest
+      </div>
+      
+      <h1 class="font-bold-display text-6xl md:text-9xl text-black leading-none mb-4 drop-shadow-[4px_4px_0_white]">
+        FESTI<br>VERSE
+      </h1>
+      
+      <p class="text-lg md:text-xl font-bold bg-white inline-block px-2 border-black/10">
+        Where Pop-Culture Meets The Future.
+      </p>
+
+      <div class="mt-12 flex flex-col md:flex-row gap-6 justify-center">
+        <a href="register.html" class="neo-button bg-pink-400 px-8 py-4 text-xl font-bold uppercase text-black">
+          Grab Passes ->
+        </a>
+        <a href="events.html" class="neo-button bg-white px-8 py-4 text-xl font-bold uppercase text-black">
+          Explore Events
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="border-y-4 border-black bg-yellow-400 py-4 rotate-1 scale-105 mb-24">
+    <div class="marquee-container">
+      <div class="marquee-content font-bold-display text-4xl text-black">
+         ★ ART ★ MUSIC ★ DANCE ★ TECH ★ GAMING ★ FASHION ★ ART ★ MUSIC ★ DANCE ★ TECH ★ GAMING ★ FASHION ★ ART ★ MUSIC ★ DANCE ★ TECH ★ GAMING ★ FASHION
+      </div>
+    </div>
+  </div>
+
+  <section class="max-w-7xl mx-auto px-6 pb-24">
+    <div class="flex items-center gap-4 mb-12">
+      <div class="w-8 h-8 bg-black"></div>
+      <h2 class="font-bold-display text-4xl uppercase">The Lineup</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <a href="events.html" class="neo-box p-0 hover:-translate-y-2 group h-96 relative overflow-hidden">
+        <div class="absolute inset-0 bg-blue-400">
+           <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all mix-blend-multiply opacity-50">
+        </div>
+        <div class="relative h-full flex flex-col justify-between p-6">
+           <div class="w-12 h-12 bg-white border-2 border-black rounded-full flex items-center justify-center font-bold text-xl">01</div>
+           <div>
+             <h3 class="font-bold-display text-3xl text-white stroke-black" style="-webkit-text-stroke: 1px black;">DANCE</h3>
+             <p class="font-bold text-white bg-black inline-block px-2 mt-2">Mainstage Battles</p>
+           </div>
+        </div>
+      </a>
+
+      <a href="events.html" class="neo-box p-0 hover:-translate-y-2 group h-96 relative overflow-hidden md:col-span-2">
+        <div class="absolute inset-0 bg-pink-400">
+           <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all mix-blend-multiply opacity-50">
+        </div>
+        <div class="relative h-full flex flex-col justify-between p-6">
+           <div class="w-12 h-12 bg-white border-2 border-black rounded-full flex items-center justify-center font-bold text-xl">02</div>
+           <div>
+             <h3 class="font-bold-display text-3xl text-white stroke-black" style="-webkit-text-stroke: 1px black;">MUSIC & AUDIO</h3>
+             <p class="font-bold text-white bg-black inline-block px-2 mt-2">Rap Wars, Solo Singing & Bands</p>
+           </div>
+        </div>
+      </a>
+
+      <a href="events.html" class="neo-box p-0 hover:-translate-y-2 group h-96 relative overflow-hidden md:col-span-2">
+        <div class="absolute inset-0 bg-green-400">
+           <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all mix-blend-multiply opacity-50">
+        </div>
+        <div class="relative h-full flex flex-col justify-between p-6">
+           <div class="w-12 h-12 bg-white border-2 border-black rounded-full flex items-center justify-center font-bold text-xl">03</div>
+           <div>
+             <h3 class="font-bold-display text-3xl text-white stroke-black" style="-webkit-text-stroke: 1px black;">GAMING</h3>
+             <p class="font-bold text-white bg-black inline-block px-2 mt-2">Valorant, FIFA, BGMI</p>
+           </div>
+        </div>
+      </a>
+
+      <a href="events.html" class="neo-box bg-yellow-300 p-8 flex flex-col justify-center items-center text-center hover:-translate-y-2 group">
+        <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🎨</div>
+        <h3 class="font-bold-display text-2xl">CREATIVE<br>ARTS</h3>
+        <span class="mt-4 border-b-2 border-black pb-1">View All -></span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="bg-black text-white py-24 px-6 border-t-4 border-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-bold-display text-4xl md:text-5xl mb-12 text-white">LAUNCHING IN</h2>
+      
+      <div class="flex justify-center gap-4 md:gap-8">
+        <div class="bg-white text-black p-4 md:p-8 rounded-xl border-4 border-pink-500 shadow-[8px_8px_0_0_#ec4899]">
+          <span id="days" class="font-bold-display text-4xl md:text-6xl block">00</span>
+          <span class="font-bold uppercase text-xs">Days</span>
+        </div>
+        <div class="bg-white text-black p-4 md:p-8 rounded-xl border-4 border-blue-500 shadow-[8px_8px_0_0_#3b82f6]">
+          <span id="hours" class="font-bold-display text-4xl md:text-6xl block">00</span>
+          <span class="font-bold uppercase text-xs">Hours</span>
+        </div>
+        <div class="bg-white text-black p-4 md:p-8 rounded-xl border-4 border-green-500 shadow-[8px_8px_0_0_#22c55e]">
+          <span id="minutes" class="font-bold-display text-4xl md:text-6xl block">00</span>
+          <span class="font-bold uppercase text-xs">Mins</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-white border-t-4 border-black py-16 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+      
+      <div>
+        <h2 class="font-bold-display text-3xl uppercase italic bg-black text-white inline-block px-2 mb-4">Festiverse'26</h2>
+        <p class="font-bold text-sm max-w-xs">
+          The loudest, craziest, and most creative festival of the year. Don't miss the hype.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-12 text-sm font-bold uppercase">
+        <div class="flex flex-col gap-2">
+          <a href="index.html" class="hover:bg-yellow-300 w-fit">Home</a>
+          <a href="schedule.html" class="hover:bg-pink-300 w-fit">Timeline</a>
+          <a href="events.html" class="hover:bg-blue-300 w-fit">Events</a>
+        </div>
+        <div class="flex flex-col gap-2">
+          <a href="register.html" class="hover:bg-green-300 w-fit">Register</a>
+          <a href="contact.html" class="hover:bg-purple-300 w-fit">Contact</a>
+          <a href="admin.html" class="hover:bg-red-300 w-fit">Admin</a>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t-2 border-dashed border-black flex justify-between items-center text-xs font-bold uppercase">
+      <span>© 2026 Udaan Club</span>
+      <span>Made with ⚡ energy</span>
+    </div>
+  </footer>
+
+  <script>
+    // Countdown Timer
+    const eventDate = new Date("April 8, 2026 10:00:00").getTime();
+    
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = eventDate - now;
+
+      if (diff > 0) {
+        document.getElementById("days").innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+        document.getElementById("hours").innerText = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>

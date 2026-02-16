@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Control | Festiverse'26</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-dark: #050505; --accent: #ccff00; }
+    body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-dark); color: white; }
+    h1, h2, h3, .font-display { font-family: 'Syne', sans-serif; }
+    
+    .texture-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 50;
+    }
+
+    .input-field { 
+      background: #111; 
+      border: 1px solid rgba(255,255,255,0.1); 
+      transition: all 0.3s; 
+      color: white; 
+    }
+    .input-field:focus { 
+      border-color: var(--accent); 
+      outline: none; 
+      background: #161616; 
+    }
+    
+    .btn-lime { 
+      background: var(--accent); 
+      color: black; 
+      font-weight: bold; 
+      transition: all 0.3s; 
+    }
+    .btn-lime:hover { 
+      background: white; 
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Tab Switcher Styles */
+    .auth-tab {
+      border-bottom: 2px solid transparent;
+      color: #666;
+      transition: all 0.3s;
+    }
+    .auth-tab.active {
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .hidden-form { display: none; }
+    .fade-in { animation: fadeIn 0.4s ease forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+<div class="texture-overlay"></div>
+
+<nav class="absolute top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+  <a href="index.html" class="font-display font-bold text-xl tracking-tighter text-white">
+    FESTIVERSE<span class="text-[#ccff00]">.</span>
+  </a>
+  <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">Back to Home</a>
+</nav>
+
+<main class="flex-grow flex items-center justify-center px-6 relative z-10 py-20">
+  
+  <div class="w-full max-w-md bg-[#0f0f0f] border border-white/10 rounded-2xl p-8 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-32 h-32 bg-[#ccff00]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="text-center mb-8">
+      <h2 class="font-display text-3xl font-bold text-white mb-2">ACCESS CONTROL</h2>
+      <p class="text-xs text-gray-500 uppercase tracking-widest">Identify Yourself Cadet</p>
+    </div>
+
+    <div class="flex mb-8 border-b border-white/10">
+      <button onclick="switchMode('login')" id="tab-login" class="auth-tab active flex-1 pb-4 text-sm font-bold uppercase tracking-widest">Login</button>
+      <button onclick="switchMode('signup')" id="tab-signup" class="auth-tab flex-1 pb-4 text-sm font-bold uppercase tracking-widest">Sign Up</button>
+    </div>
+
+    <form id="form-login" class="fade-in space-y-5">
+      <div>
+        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Email Identity</label>
+        <input type="email" placeholder="student@university.edu" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+      </div>
+      
+      <div>
+        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Passcode</label>
+        <input type="password" placeholder="••••••••" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+      </div>
+
+      <div class="flex justify-between items-center text-xs">
+        <label class="flex items-center gap-2 cursor-pointer text-gray-400 hover:text-white">
+          <input type="checkbox" class="accent-[#ccff00] bg-transparent border-white/20 rounded"> 
+          <span>Keep me active</span>
+        </label>
+        <a href="#" class="text-[#ccff00] hover:underline">Lost Access?</a>
+      </div>
+
+      <button type="submit" class="w-full py-4 btn-lime rounded-lg font-bold font-display uppercase tracking-widest text-sm">
+        Enter System
+      </button>
+    </form>
+
+    <form id="form-signup" class="hidden-form space-y-5">
+      <div>
+        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Full Name</label>
+        <input type="text" placeholder="Gautam Kumar" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+      </div>
+
+      <div>
+        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">College ID</label>
+        <input type="text" placeholder="U-2026-XYZ" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+      </div>
+
+      <div>
+        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Email Identity</label>
+        <input type="email" placeholder="student@university.edu" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+      </div>
+      
+      <div>
+        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Create Passcode</label>
+        <input type="password" placeholder="••••••••" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+      </div>
+
+      <button type="submit" class="w-full py-4 btn-lime rounded-lg font-bold font-display uppercase tracking-widest text-sm">
+        Register Identity
+      </button>
+      
+      <p class="text-center text-xs text-gray-500">
+        By registering, you accept the <a href="#" class="text-white hover:text-[#ccff00] underline">Festiverse Protocols</a>.
+      </p>
+    </form>
+
+  </div>
+</main>
+
+<script>
+  function switchMode(mode) {
+    const loginForm = document.getElementById('form-login');
+    const signupForm = document.getElementById('form-signup');
+    const loginTab = document.getElementById('tab-login');
+    const signupTab = document.getElementById('tab-signup');
+
+    if (mode === 'login') {
+      loginForm.classList.remove('hidden-form');
+      loginForm.classList.add('fade-in');
+      signupForm.classList.add('hidden-form');
+      
+      loginTab.classList.add('active');
+      signupTab.classList.remove('active');
+    } else {
+      signupForm.classList.remove('hidden-form');
+      signupForm.classList.add('fade-in');
+      loginForm.classList.add('hidden-form');
+      
+      signupTab.classList.add('active');
+      loginTab.classList.remove('active');
+    }
+  }
+
+  // Handle Login Submit
+  document.getElementById('form-login').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const original = btn.innerText;
+    btn.innerText = "AUTHENTICATING...";
+    
+    setTimeout(() => {
+      alert("ACCESS GRANTED.");
+      btn.innerText = original;
+      window.location.href = 'index.html'; // Redirect to home
+    }, 1500);
+  });
+
+  // Handle Signup Submit
+  document.getElementById('form-signup').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const original = btn.innerText;
+    btn.innerText = "REGISTERING...";
+    
+    setTimeout(() => {
+      alert("IDENTITY VERIFIED. Welcome to the system.");
+      btn.innerText = original;
+      switchMode('login'); // Switch to login after signup
+    }, 1500);
+  });
+</script>
+
+</body>
+</html>
