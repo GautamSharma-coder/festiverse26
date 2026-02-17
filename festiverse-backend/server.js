@@ -140,7 +140,7 @@ app.get('/team', (req, res) => {
 });
 
 app.get('/events', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'event.html'));
+    res.sendFile(path.join(__dirname, 'public', 'events.html'));
 });
 
 app.get('/contact', (req, res) => {
