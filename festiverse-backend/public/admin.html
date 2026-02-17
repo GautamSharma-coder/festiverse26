@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mission Control | Festiverse Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #818cf8;
@@ -137,7 +135,6 @@
             </div>
 
             <div id="view-gallery" class="hidden">
-                <!-- Upload Form -->
                 <div class="glass p-6 rounded-2xl mb-8">
                     <h3 class="text-xl font-bold text-white mb-4">Upload New Image</h3>
                     <form id="upload-form" onsubmit="uploadImage(event)"
@@ -167,7 +164,6 @@
                     </form>
                 </div>
 
-                <!-- Image List -->
                 <div class="glass rounded-2xl overflow-hidden">
                     <table class="w-full text-left text-sm text-slate-400">
                         <thead class="bg-white/5 text-xs uppercase font-bold text-white">
@@ -210,12 +206,12 @@
                     body: JSON.stringify({ password })
                 });
 
+                if (!res.ok) throw new Error("Login Failed");
+
                 const data = await res.json();
 
                 if (data.success) {
-                    // SAVE TOKEN TO BROWSER
                     localStorage.setItem('adminToken', data.token);
-
                     document.getElementById('login-overlay').classList.add('hidden');
                     document.getElementById('dashboard').classList.remove('hidden');
                     loadData();
@@ -224,7 +220,7 @@
                     errorMsg.classList.remove('hidden');
                 }
             } catch (err) {
-                errorMsg.innerText = "Server Connection Failed";
+                errorMsg.innerText = "Connection Failed. Check Server.";
                 errorMsg.classList.remove('hidden');
             }
         }
@@ -242,39 +238,60 @@
                 return;
             }
 
-            // Add Authorization Header
             const headers = { ...options.headers, 'Authorization': token };
-            const response = await fetch(url, { ...options, headers });
-
-            if (response.status === 401 || response.status === 403) {
-                logout(); // Token expired or invalid
-                return null;
+            try {
+                const response = await fetch(url, { ...options, headers });
+                if (response.status === 401 || response.status === 403) {
+                    logout(); // Token expired or invalid
+                    return null;
+                }
+                return response;
+            } catch (error) {
+                return null; // Handle network errors gracefully
             }
-            return response;
         }
 
-        // --- DATA LOADING ---
+        // --- DATA LOADING (FIXED "Unexpected Token <" ERROR) ---
         async function loadData() {
             try {
+                // Helper to safely parse JSON or return empty array if server errors (HTML response)
+                const safeJson = async (response) => {
+                    if (!response || !response.ok) return [];
+                    try {
+                        return await response.json();
+                    } catch (e) {
+                        console.warn("Invalid JSON received (Server Error?)", e);
+                        return [];
+                    }
+                };
+
                 const regRes = await authFetch('/api/admin/registrations');
-                const registrations = await regRes.json();
-
                 const msgRes = await authFetch('/api/admin/messages');
-                const messages = await msgRes.json();
+                const imgRes = await fetch('/api/images'); 
 
-                const imgRes = await fetch('/api/images'); // Public endpoint can be used, or create admin specific
-                const images = await imgRes.json();
+                const registrations = await safeJson(regRes);
+                const messages = await safeJson(msgRes);
+                const images = await safeJson(imgRes);
 
-                renderRegistrations(registrations);
-                renderMessages(messages);
-                renderImages(images);
+                // Only update UI if we have valid arrays
+                if (Array.isArray(registrations)) {
+                    renderRegistrations(registrations);
+                    document.getElementById('total-reg').innerText = registrations.length;
+                    document.getElementById('total-rev').innerText = "₹" + (registrations.length * 500).toLocaleString();
+                }
 
-                document.getElementById('total-reg').innerText = registrations.length;
-                document.getElementById('total-rev').innerText = "₹" + (registrations.length * 500).toLocaleString();
-                document.getElementById('total-msg').innerText = messages.length;
-                document.getElementById('total-img').innerText = images.length;
+                if (Array.isArray(messages)) {
+                    renderMessages(messages);
+                    document.getElementById('total-msg').innerText = messages.length;
+                }
+
+                if (Array.isArray(images)) {
+                    renderImages(images);
+                    document.getElementById('total-img').innerText = images.length;
+                }
+
             } catch (err) {
-                console.error(err);
+                console.error("Critical Load Error:", err);
             }
         }
 
@@ -283,16 +300,12 @@
         async function deleteItem(type, id) {
             if (!confirm("Are you sure you want to delete this?")) return;
 
-
-
             let endpoint;
             if (type === 'reg') endpoint = `/api/admin/registrations/${id}`;
             else if (type === 'msg') endpoint = `/api/admin/messages/${id}`;
             else if (type === 'img') endpoint = `/api/admin/images/${id}`;
 
             const res = await authFetch(endpoint, { method: 'DELETE' });
-
-
             if (res && res.ok) loadData();
         }
 
@@ -324,9 +337,11 @@
                     body: formData
                 });
 
+                if (!res.ok) throw new Error("Upload failed (Check file size/server)");
+
                 const data = await res.json();
 
-                if (res.ok && data.success) {
+                if (data.success) {
                     e.target.reset();
                     loadData();
                     alert("Upload Successful");
@@ -335,7 +350,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                alert("Error uploading");
+                alert("Error uploading: " + err.message);
             } finally {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
@@ -343,7 +358,7 @@
         }
 
 
-        // --- RENDERING (Same as before) ---
+        // --- RENDERING ---
         function renderRegistrations(data) {
             const tbody = document.getElementById('reg-table-body');
             tbody.innerHTML = '';
@@ -352,8 +367,8 @@
                 tbody.innerHTML += `
                 <tr class="hover:bg-white/5 transition-colors">
                     <td class="px-6 py-4 font-bold text-white">${reg.name}</td>
-                    <td class="px-6 py-4">${reg.universityId}</td>
-                    <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-bold bg-indigo-500/20 text-indigo-300">${reg.interest}</span></td>
+                    <td class="px-6 py-4">${reg.universityId || '-'}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-bold bg-indigo-500/20 text-indigo-300">${reg.event || reg.interest || 'N/A'}</span></td>
                     <td class="px-6 py-4 ${statusColor} font-bold">${reg.status || 'Registered'}</td>
                     <td class="px-6 py-4 text-right space-x-4">
                         <button onclick="toggleStatus('${reg._id}', '${reg.status || 'Registered'}')" class="btn-icon text-xl" title="Toggle Status">✅</button>
@@ -396,7 +411,7 @@
         }
 
 
-        // --- TABS (Same as before) ---
+        // --- TABS ---
         function switchTab(tab) {
             const regView = document.getElementById('view-registrations');
             const msgView = document.getElementById('view-messages');
