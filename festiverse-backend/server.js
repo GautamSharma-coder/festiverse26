@@ -316,5 +316,34 @@ app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
+<<<<<<< HEAD
 // --- START SERVER ---
 app.listen(PORT, () => console.log(`🚀 Festiverse Server running on http://localhost:${PORT}`));
+=======
+app.get('/schedule', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'schedule.html'));
+});
+
+app.get('/team', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'team.html'));
+});
+
+app.get('/events', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'events.html'));
+});
+
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+});
+
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+// Fallback: Redirect random URLs back to home
+app.get(/(.*)/, (req, res) => {
+    res.redirect('/');
+});
+
+app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+>>>>>>> a4e06d05704612aa379714a69dc0e8213d04f4c7
