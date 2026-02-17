@@ -86,14 +86,25 @@
     </div>
 
     <form id="form-login" class="fade-in space-y-5">
+      <button type="button" onclick="googleAuth()" class="w-full py-3 rounded-lg font-bold font-display uppercase tracking-widest text-xs flex items-center justify-center gap-3 bg-white text-black hover:bg-gray-200 transition-all mb-2">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4" alt="Google">
+        Continue with Google
+      </button>
+
+      <div class="flex items-center gap-4">
+        <div class="h-px bg-white/10 flex-1"></div>
+        <span class="text-[10px] uppercase text-gray-600 font-bold">Or manually</span>
+        <div class="h-px bg-white/10 flex-1"></div>
+      </div>
+
       <div>
         <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Email Identity</label>
-        <input type="email" placeholder="student@university.edu" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+        <input type="email" id="login-email" placeholder="student@university.edu" class="input-field w-full px-5 py-3 rounded-lg text-sm" required>
       </div>
       
       <div>
         <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Passcode</label>
-        <input type="password" placeholder="••••••••" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+        <input type="password" id="login-pass" placeholder="••••••••" class="input-field w-full px-5 py-3 rounded-lg text-sm" required>
       </div>
 
       <div class="flex justify-between items-center text-xs">
@@ -110,24 +121,35 @@
     </form>
 
     <form id="form-signup" class="hidden-form space-y-5">
+      <button type="button" onclick="googleAuth()" class="w-full py-3 rounded-lg font-bold font-display uppercase tracking-widest text-xs flex items-center justify-center gap-3 bg-white text-black hover:bg-gray-200 transition-all mb-2">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4" alt="Google">
+        Sign Up with Google
+      </button>
+
+      <div class="flex items-center gap-4">
+        <div class="h-px bg-white/10 flex-1"></div>
+        <span class="text-[10px] uppercase text-gray-600 font-bold">Or manually</span>
+        <div class="h-px bg-white/10 flex-1"></div>
+      </div>
+
       <div>
         <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Full Name</label>
-        <input type="text" placeholder="Gautam Kumar" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+        <input type="text" id="signup-name" placeholder="Gautam Kumar" class="input-field w-full px-5 py-3 rounded-lg text-sm" required>
       </div>
 
       <div>
         <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">College ID</label>
-        <input type="text" placeholder="U-2026-XYZ" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+        <input type="text" id="signup-collegeId" placeholder="U-2026-XYZ" class="input-field w-full px-5 py-3 rounded-lg text-sm" required>
       </div>
 
       <div>
         <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Email Identity</label>
-        <input type="email" placeholder="student@university.edu" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+        <input type="email" id="signup-email" placeholder="student@university.edu" class="input-field w-full px-5 py-3 rounded-lg text-sm" required>
       </div>
       
       <div>
         <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Create Passcode</label>
-        <input type="password" placeholder="••••••••" class="input-field w-full px-5 py-3 rounded-lg text-sm">
+        <input type="password" id="signup-pass" placeholder="••••••••" class="input-field w-full px-5 py-3 rounded-lg text-sm" required>
       </div>
 
       <button type="submit" class="w-full py-4 btn-lime rounded-lg font-bold font-display uppercase tracking-widest text-sm">
@@ -143,6 +165,7 @@
 </main>
 
 <script>
+  // --- TABS LOGIC ---
   function switchMode(mode) {
     const loginForm = document.getElementById('form-login');
     const signupForm = document.getElementById('form-signup');
@@ -166,32 +189,88 @@
     }
   }
 
-  // Handle Login Submit
-  document.getElementById('form-login').addEventListener('submit', (e) => {
+  // --- GOOGLE AUTH (Simulation - Backend not configured for OAuth yet) ---
+  function googleAuth() {
+    alert("⚠️ SYSTEM NOTE: Google Protocol offline. Please use manual entry.");
+  }
+
+  // --- API HELPER ---
+  async function apiRequest(endpoint, data) {
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    } catch (err) {
+        console.error("Connection Error:", err);
+        return { success: false, message: "Server connection failed." };
+    }
+  }
+
+  // --- LOGIN LOGIC ---
+  document.getElementById('form-login').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const original = btn.innerText;
-    btn.innerText = "AUTHENTICATING...";
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalText = btn.innerText;
     
-    setTimeout(() => {
-      alert("ACCESS GRANTED.");
-      btn.innerText = original;
-      window.location.href = 'index.html'; // Redirect to home
-    }, 1500);
+    // UI Feedback
+    btn.innerText = "AUTHENTICATING...";
+    btn.disabled = true;
+
+    // Gather Data
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-pass').value;
+
+    // Send Request
+    const result = await apiRequest('/api/auth/login', { email, password });
+
+    if (result.success) {
+        // Save Session
+        localStorage.setItem('userToken', result.token);
+        localStorage.setItem('userData', JSON.stringify(result.user));
+        
+        alert("ACCESS GRANTED. Welcome back.");
+        window.location.href = 'dashboard.html'; // Redirect to dashboard
+    } else {
+        alert("ACCESS DENIED: " + result.message);
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
   });
 
-  // Handle Signup Submit
-  document.getElementById('form-signup').addEventListener('submit', (e) => {
+  // --- SIGNUP LOGIC ---
+  document.getElementById('form-signup').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const original = btn.innerText;
-    btn.innerText = "REGISTERING...";
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalText = btn.innerText;
     
-    setTimeout(() => {
-      alert("IDENTITY VERIFIED. Welcome to the system.");
-      btn.innerText = original;
-      switchMode('login'); // Switch to login after signup
-    }, 1500);
+    // UI Feedback
+    btn.innerText = "INITIALIZING...";
+    btn.disabled = true;
+
+    // Gather Data
+    const name = document.getElementById('signup-name').value;
+    const collegeId = document.getElementById('signup-collegeId').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-pass').value;
+
+    // Send Request
+    const result = await apiRequest('/api/auth/signup', { name, collegeId, email, password });
+
+    if (result.success) {
+        // Save Session (Auto-login after signup)
+        localStorage.setItem('userToken', result.token);
+        localStorage.setItem('userData', JSON.stringify(result.user));
+        
+        alert("IDENTITY VERIFIED. Welcome to the system.");
+        window.location.href = 'dashboard.html'; // Redirect to dashboard
+    } else {
+        alert("REGISTRATION FAILED: " + result.message);
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
   });
 </script>
 

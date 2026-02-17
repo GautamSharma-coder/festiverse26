@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rulebook | Festiverse'26</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-dark: #050505; --accent: #ccff00; }
+    body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-dark); color: white; }
+    h1, h2, h3, .font-display { font-family: 'Syne', sans-serif; }
+    
+    .texture-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 50;
+    }
+
+    /* Accordion */
+    .rule-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .rule-header.active { color: var(--accent); }
+    .rule-header.active .icon { transform: rotate(45deg); color: var(--accent); }
+    
+    .download-card {
+        background: #111; border: 1px solid rgba(255,255,255,0.1);
+        transition: all 0.3s;
+    }
+    .download-card:hover { border-color: var(--accent); }
+  </style>
+</head>
+<body class="antialiased">
+<div class="texture-overlay"></div>
+
+<nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+  <a href="index.html" class="font-display font-bold text-xl tracking-tighter text-white">
+    FESTIVERSE<span class="text-[#ccff00]">.</span>
+  </a>
+  <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">← Back</a>
+</nav>
+
+<main class="pt-32 pb-20 px-6 max-w-5xl mx-auto relative z-10">
+  
+  <div class="mb-16">
+    <h2 class="font-display text-5xl md:text-7xl font-bold text-white">MISSION <span class="text-[#ccff00]">DIRECTIVES</span></h2>
+    <p class="text-gray-500 mt-4 text-lg">Detailed protocols for all competitive events and general conduct.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    
+    <div class="space-y-4">
+      <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Official Documents</h3>
+      
+      <a href="#" class="download-card flex items-center gap-4 p-4 rounded-xl group">
+        <div class="w-10 h-10 rounded-full bg-[#222] flex items-center justify-center group-hover:bg-[#ccff00] group-hover:text-black transition-colors">↓</div>
+        <div>
+          <h4 class="font-bold text-white text-sm">General Rulebook</h4>
+          <p class="text-[10px] text-gray-500">PDF • 2.4 MB</p>
+        </div>
+      </a>
+
+      <a href="#" class="download-card flex items-center gap-4 p-4 rounded-xl group">
+        <div class="w-10 h-10 rounded-full bg-[#222] flex items-center justify-center group-hover:bg-[#ccff00] group-hover:text-black transition-colors">↓</div>
+        <div>
+          <h4 class="font-bold text-white text-sm">Judging Criteria</h4>
+          <p class="text-[10px] text-gray-500">PDF • 1.1 MB</p>
+        </div>
+      </a>
+
+      <a href="#" class="download-card flex items-center gap-4 p-4 rounded-xl group">
+        <div class="w-10 h-10 rounded-full bg-[#222] flex items-center justify-center group-hover:bg-[#ccff00] group-hover:text-black transition-colors">↓</div>
+        <div>
+          <h4 class="font-bold text-white text-sm">Schedule Matrix</h4>
+          <p class="text-[10px] text-gray-500">PNG • 4.5 MB</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="md:col-span-2 space-y-6">
+      
+      <div class="border-b border-white/10 pb-6">
+        <button onclick="toggleRule(this)" class="rule-header w-full flex justify-between items-center text-left group">
+          <span class="font-display text-2xl font-bold text-white group-hover:text-[#ccff00] transition-colors">01. Code of Conduct</span>
+          <span class="icon text-2xl text-gray-500 transition-transform">+</span>
+        </button>
+        <div class="rule-content">
+          <div class="pt-4 text-gray-400 text-sm leading-relaxed space-y-2">
+            <p>• All participants must carry their University ID cards at all times.</p>
+            <p>• Any form of harassment or unruly behavior will lead to immediate disqualification and removal from the premises.</p>
+            <p>• Alcohol and illegal substances are strictly prohibited inside the "Grand Orion Arena".</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-white/10 pb-6">
+        <button onclick="toggleRule(this)" class="rule-header w-full flex justify-between items-center text-left group">
+          <span class="font-display text-2xl font-bold text-white group-hover:text-[#ccff00] transition-colors">02. Event Policies</span>
+          <span class="icon text-2xl text-gray-500 transition-transform">+</span>
+        </button>
+        <div class="rule-content">
+          <div class="pt-4 text-gray-400 text-sm leading-relaxed space-y-2">
+            <p>• Participants must report to the venue 30 minutes before their slot.</p>
+            <p>• Judges' decisions are final and binding. No appeals will be entertained.</p>
+            <p>• For team events, substitutions are only allowed with prior written approval from the Core Committee.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-white/10 pb-6">
+        <button onclick="toggleRule(this)" class="rule-header w-full flex justify-between items-center text-left group">
+          <span class="font-display text-2xl font-bold text-white group-hover:text-[#ccff00] transition-colors">03. Tech & Gaming</span>
+          <span class="icon text-2xl text-gray-500 transition-transform">+</span>
+        </button>
+        <div class="rule-content">
+          <div class="pt-4 text-gray-400 text-sm leading-relaxed space-y-2">
+            <p>• BYOD (Bring Your Own Device) is mandatory for Hackathon participants unless stated otherwise.</p>
+            <p>• E-Sports: Use of aimbots, scripts, or any external assistance will result in a permanent ban.</p>
+            <p>• Stable WiFi will be provided, but having a backup hotspot is recommended.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+  function toggleRule(btn) {
+    btn.classList.toggle('active');
+    const content = btn.nextElementSibling;
+    if (btn.classList.contains('active')) {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } else {
+      content.style.maxHeight = "0";
+    }
+  }
+</script>
+
+<footer class="py-10 border-t border-white/10 text-center relative z-10 bg-black">
+  <p class="font-display text-xs tracking-widest text-gray-600 uppercase">
+    Failure to comply will result in mission abort.
+  </p>
+</footer>
+</body>
+</html>

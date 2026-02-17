@@ -1,29 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mission Control | Festiverse Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syncopate:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
-        :root { --accent: #818cf8; }
-        body { font-family: 'Inter', sans-serif; background: #020617; }
-        .font-title { font-family: 'Syncopate', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .hidden { display: none !important; }
+        :root {
+            --accent: #818cf8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #020617;
+        }
+
+        .font-title {
+            font-family: 'Syncopate', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         /* Action Buttons */
-        .btn-icon { cursor: pointer; transition: transform 0.2s; }
-        .btn-icon:hover { transform: scale(1.2); }
+        .btn-icon {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-icon:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
+
 <body class="text-slate-200 antialiased">
 
     <div id="login-overlay" class="fixed inset-0 z-50 bg-[#020617] flex justify-center items-center">
         <div class="glass p-10 rounded-2xl text-center max-w-sm w-full mx-4">
             <h2 class="font-title text-2xl font-bold text-white mb-6">SECURITY CHECK</h2>
-            <input type="password" id="admin-pass" placeholder="Enter Access Code" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white mb-4 focus:border-indigo-500 focus:outline-none">
-            <button onclick="checkAuth()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition-all">UNLOCK SYSTEM</button>
+            <input type="password" id="admin-pass" placeholder="Enter Access Code"
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white mb-4 focus:border-indigo-500 focus:outline-none">
+            <button onclick="checkAuth()"
+                class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition-all">UNLOCK
+                SYSTEM</button>
             <p id="error-msg" class="text-red-500 text-xs mt-4 hidden">Access Denied</p>
         </div>
     </div>
@@ -35,12 +66,13 @@
                     <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
                     <h1 class="font-title text-xl font-bold text-white">MISSION CONTROL</h1>
                 </div>
-                <button onclick="logout()" class="text-xs font-bold text-red-400 uppercase tracking-widest">Terminate Session</button>
+                <button onclick="logout()" class="text-xs font-bold text-red-400 uppercase tracking-widest">Terminate
+                    Session</button>
             </div>
         </nav>
 
         <main class="max-w-7xl mx-auto px-6 py-10">
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                 <div class="glass p-6 rounded-2xl border-l-4 border-indigo-500">
                     <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Registrations</p>
@@ -54,12 +86,22 @@
                     <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Messages</p>
                     <h3 id="total-msg" class="text-4xl font-title font-bold text-white mt-2">0</h3>
                 </div>
+                <div class="glass p-6 rounded-2xl border-l-4 border-amber-500">
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Total Images</p>
+                    <h3 id="total-img" class="text-4xl font-title font-bold text-white mt-2">0</h3>
+                </div>
             </div>
 
+
             <div class="flex gap-4 mb-6 border-b border-white/10 pb-4">
-                <button onclick="switchTab('registrations')" id="tab-reg" class="text-white font-bold border-b-2 border-indigo-500 pb-1">Registrations</button>
-                <button onclick="switchTab('messages')" id="tab-msg" class="text-slate-500 font-bold hover:text-white pb-1">Messages</button>
+                <button onclick="switchTab('registrations')" id="tab-reg"
+                    class="text-white font-bold border-b-2 border-indigo-500 pb-1">Registrations</button>
+                <button onclick="switchTab('messages')" id="tab-msg"
+                    class="text-slate-500 font-bold hover:text-white pb-1">Messages</button>
+                <button onclick="switchTab('gallery')" id="tab-gal"
+                    class="text-slate-500 font-bold hover:text-white pb-1">Gallery</button>
             </div>
+
 
             <div id="view-registrations" class="glass rounded-2xl overflow-hidden">
                 <div class="overflow-x-auto">
@@ -94,124 +136,220 @@
                 </div>
             </div>
 
+            <div id="view-gallery" class="hidden">
+                <!-- Upload Form -->
+                <div class="glass p-6 rounded-2xl mb-8">
+                    <h3 class="text-xl font-bold text-white mb-4">Upload New Image</h3>
+                    <form id="upload-form" onsubmit="uploadImage(event)"
+                        class="flex flex-col md:flex-row gap-4 items-end">
+                        <div class="flex-1 w-full">
+                            <label class="block text-xs uppercase text-slate-400 mb-1">Image File</label>
+                            <input type="file" name="image" required
+                                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white">
+                        </div>
+                        <div class="flex-1 w-full">
+                            <label class="block text-xs uppercase text-slate-400 mb-1">Title</label>
+                            <input type="text" name="title" placeholder="e.g. Concert Night" required
+                                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white">
+                        </div>
+                        <div class="flex-1 w-full">
+                            <label class="block text-xs uppercase text-slate-400 mb-1">Category</label>
+                            <select name="category"
+                                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white">
+                                <option value="Concert">Concert</option>
+                                <option value="Competition">Competition</option>
+                                <option value="Crowd">Crowd</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit"
+                            class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-2.5 rounded-lg transition-all">UPLOAD</button>
+                    </form>
+                </div>
+
+                <!-- Image List -->
+                <div class="glass rounded-2xl overflow-hidden">
+                    <table class="w-full text-left text-sm text-slate-400">
+                        <thead class="bg-white/5 text-xs uppercase font-bold text-white">
+                            <tr>
+                                <th class="px-6 py-4">Preview</th>
+                                <th class="px-6 py-4">Title</th>
+                                <th class="px-6 py-4">Category</th>
+                                <th class="px-6 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gallery-table-body" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </div>
+
+
         </main>
     </div>
 
     <script>
-    // --- AUTHENTICATION ---
-    
-    // Check if we already have a token when page loads
-    window.onload = () => {
-        if(localStorage.getItem('adminToken')) {
-            document.getElementById('login-overlay').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            loadData();
-        }
-    };
+        // --- AUTHENTICATION ---
 
-    async function checkAuth() {
-        const password = document.getElementById('admin-pass').value;
-        const errorMsg = document.getElementById('error-msg');
-
-        try {
-            const res = await fetch('/api/admin/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password })
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-                // SAVE TOKEN TO BROWSER
-                localStorage.setItem('adminToken', data.token);
-                
+        // Check if we already have a token when page loads
+        window.onload = () => {
+            if (localStorage.getItem('adminToken')) {
                 document.getElementById('login-overlay').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
                 loadData();
-            } else {
-                errorMsg.innerText = "Access Denied: Invalid Credentials";
+            }
+        };
+
+        async function checkAuth() {
+            const password = document.getElementById('admin-pass').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    // SAVE TOKEN TO BROWSER
+                    localStorage.setItem('adminToken', data.token);
+
+                    document.getElementById('login-overlay').classList.add('hidden');
+                    document.getElementById('dashboard').classList.remove('hidden');
+                    loadData();
+                } else {
+                    errorMsg.innerText = "Access Denied: Invalid Credentials";
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorMsg.innerText = "Server Connection Failed";
                 errorMsg.classList.remove('hidden');
             }
-        } catch (err) {
-            errorMsg.innerText = "Server Connection Failed";
-            errorMsg.classList.remove('hidden');
-        }
-    }
-
-    function logout() {
-        localStorage.removeItem('adminToken');
-        location.reload();
-    }
-
-    // --- HELPER: FETCH WITH TOKEN ---
-    async function authFetch(url, options = {}) {
-        const token = localStorage.getItem('adminToken');
-        if (!token) {
-            logout();
-            return;
         }
 
-        // Add Authorization Header
-        const headers = { ...options.headers, 'Authorization': token };
-        const response = await fetch(url, { ...options, headers });
-
-        if (response.status === 401 || response.status === 403) {
-            logout(); // Token expired or invalid
-            return null;
+        function logout() {
+            localStorage.removeItem('adminToken');
+            location.reload();
         }
-        return response;
-    }
 
-    // --- DATA LOADING ---
-    async function loadData() {
-        try {
-            const regRes = await authFetch('/api/admin/registrations');
-            const registrations = await regRes.json();
-            
-            const msgRes = await authFetch('/api/admin/messages');
-            const messages = await msgRes.json();
-            
-            renderRegistrations(registrations);
-            renderMessages(messages);
-            
-            document.getElementById('total-reg').innerText = registrations.length;
-            document.getElementById('total-rev').innerText = "₹" + (registrations.length * 500).toLocaleString();
-            document.getElementById('total-msg').innerText = messages.length;
-        } catch (err) { 
-            console.error(err);
+        // --- HELPER: FETCH WITH TOKEN ---
+        async function authFetch(url, options = {}) {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                logout();
+                return;
+            }
+
+            // Add Authorization Header
+            const headers = { ...options.headers, 'Authorization': token };
+            const response = await fetch(url, { ...options, headers });
+
+            if (response.status === 401 || response.status === 403) {
+                logout(); // Token expired or invalid
+                return null;
+            }
+            return response;
         }
-    }
 
-    // --- ACTIONS (CRUD) ---
-    async function deleteItem(type, id) {
-        if(!confirm("Are you sure you want to delete this?")) return;
-        
-        const endpoint = type === 'reg' ? `/api/admin/registrations/${id}` : `/api/admin/messages/${id}`;
-        const res = await authFetch(endpoint, { method: 'DELETE' });
-        
-        if(res && res.ok) loadData();
-    }
+        // --- DATA LOADING ---
+        async function loadData() {
+            try {
+                const regRes = await authFetch('/api/admin/registrations');
+                const registrations = await regRes.json();
 
-    async function toggleStatus(id, currentStatus) {
-        const newStatus = currentStatus === 'Registered' ? 'Checked In' : 'Registered';
-        
-        const res = await authFetch(`/api/admin/registrations/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: newStatus })
-        });
+                const msgRes = await authFetch('/api/admin/messages');
+                const messages = await msgRes.json();
 
-        if(res && res.ok) loadData();
-    }
+                const imgRes = await fetch('/api/images'); // Public endpoint can be used, or create admin specific
+                const images = await imgRes.json();
 
-    // --- RENDERING (Same as before) ---
-    function renderRegistrations(data) {
-        const tbody = document.getElementById('reg-table-body');
-        tbody.innerHTML = '';
-        data.forEach(reg => {
-            const statusColor = reg.status === 'Checked In' ? 'text-emerald-400' : 'text-slate-400';
-            tbody.innerHTML += `
+                renderRegistrations(registrations);
+                renderMessages(messages);
+                renderImages(images);
+
+                document.getElementById('total-reg').innerText = registrations.length;
+                document.getElementById('total-rev').innerText = "₹" + (registrations.length * 500).toLocaleString();
+                document.getElementById('total-msg').innerText = messages.length;
+                document.getElementById('total-img').innerText = images.length;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+
+        // --- ACTIONS (CRUD) ---
+        async function deleteItem(type, id) {
+            if (!confirm("Are you sure you want to delete this?")) return;
+
+
+
+            let endpoint;
+            if (type === 'reg') endpoint = `/api/admin/registrations/${id}`;
+            else if (type === 'msg') endpoint = `/api/admin/messages/${id}`;
+            else if (type === 'img') endpoint = `/api/admin/images/${id}`;
+
+            const res = await authFetch(endpoint, { method: 'DELETE' });
+
+
+            if (res && res.ok) loadData();
+        }
+
+        async function toggleStatus(id, currentStatus) {
+            const newStatus = currentStatus === 'Registered' ? 'Checked In' : 'Registered';
+
+            const res = await authFetch(`/api/admin/registrations/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            });
+
+            if (res && res.ok) loadData();
+        }
+
+        async function uploadImage(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "UPLOADING...";
+            submitBtn.disabled = true;
+
+            try {
+                const token = localStorage.getItem('adminToken');
+                const res = await fetch('/api/admin/images', {
+                    method: 'POST',
+                    headers: { 'Authorization': token },
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    e.target.reset();
+                    loadData();
+                    alert("Upload Successful");
+                } else {
+                    alert("Upload Failed: " + (data.message || "Unknown Error"));
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error uploading");
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+
+        // --- RENDERING (Same as before) ---
+        function renderRegistrations(data) {
+            const tbody = document.getElementById('reg-table-body');
+            tbody.innerHTML = '';
+            data.forEach(reg => {
+                const statusColor = reg.status === 'Checked In' ? 'text-emerald-400' : 'text-slate-400';
+                tbody.innerHTML += `
                 <tr class="hover:bg-white/5 transition-colors">
                     <td class="px-6 py-4 font-bold text-white">${reg.name}</td>
                     <td class="px-6 py-4">${reg.universityId}</td>
@@ -222,14 +360,14 @@
                         <button onclick="deleteItem('reg', '${reg._id}')" class="btn-icon text-xl" title="Delete">🗑️</button>
                     </td>
                 </tr>`;
-        });
-    }
+            });
+        }
 
-    function renderMessages(data) {
-        const tbody = document.getElementById('msg-table-body');
-        tbody.innerHTML = '';
-        data.forEach(msg => {
-            tbody.innerHTML += `
+        function renderMessages(data) {
+            const tbody = document.getElementById('msg-table-body');
+            tbody.innerHTML = '';
+            data.forEach(msg => {
+                tbody.innerHTML += `
                 <tr class="hover:bg-white/5 transition-colors">
                     <td class="px-6 py-4 text-xs font-mono">${msg.date}</td>
                     <td class="px-6 py-4 font-bold text-white">${msg.name} <br><span class="text-xs text-slate-500 font-normal">${msg.email}</span></td>
@@ -238,26 +376,54 @@
                         <button onclick="deleteItem('msg', '${msg.id}')" class="btn-icon text-xl" title="Delete">🗑️</button>
                     </td>
                 </tr>`;
-        });
-    }
-
-    // --- TABS (Same as before) ---
-    function switchTab(tab) {
-        const regView = document.getElementById('view-registrations');
-        const msgView = document.getElementById('view-messages');
-        const regTab = document.getElementById('tab-reg');
-        const msgTab = document.getElementById('tab-msg');
-
-        if(tab === 'registrations') {
-            regView.classList.remove('hidden'); msgView.classList.add('hidden');
-            regTab.className = 'text-white font-bold border-b-2 border-indigo-500 pb-1';
-            msgTab.className = 'text-slate-500 font-bold hover:text-white pb-1';
-        } else {
-            regView.classList.add('hidden'); msgView.classList.remove('hidden');
-            msgTab.className = 'text-white font-bold border-b-2 border-indigo-500 pb-1';
-            regTab.className = 'text-slate-500 font-bold hover:text-white pb-1';
+            });
         }
-    }
-</script>
+
+        function renderImages(data) {
+            const tbody = document.getElementById('gallery-table-body');
+            tbody.innerHTML = '';
+            data.forEach(img => {
+                tbody.innerHTML += `
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="px-6 py-4"><img src="${img.url}" class="h-16 w-16 object-cover rounded-lg border border-white/10"></td>
+                    <td class="px-6 py-4 font-bold text-white">${img.title}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-bold bg-amber-500/20 text-amber-300">${img.category}</span></td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="deleteItem('img', '${img._id}')" class="btn-icon text-xl" title="Delete">🗑️</button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+
+        // --- TABS (Same as before) ---
+        function switchTab(tab) {
+            const regView = document.getElementById('view-registrations');
+            const msgView = document.getElementById('view-messages');
+            const galView = document.getElementById('view-gallery');
+            const regTab = document.getElementById('tab-reg');
+            const msgTab = document.getElementById('tab-msg');
+            const galTab = document.getElementById('tab-gal');
+
+            // Reset
+            regView.classList.add('hidden'); msgView.classList.add('hidden'); galView.classList.add('hidden');
+            regTab.className = 'text-slate-500 font-bold hover:text-white pb-1';
+            msgTab.className = 'text-slate-500 font-bold hover:text-white pb-1';
+            galTab.className = 'text-slate-500 font-bold hover:text-white pb-1';
+
+            if (tab === 'registrations') {
+                regView.classList.remove('hidden');
+                regTab.className = 'text-white font-bold border-b-2 border-indigo-500 pb-1';
+            } else if (tab === 'messages') {
+                msgView.classList.remove('hidden');
+                msgTab.className = 'text-white font-bold border-b-2 border-indigo-500 pb-1';
+            } else if (tab === 'gallery') {
+                galView.classList.remove('hidden');
+                galTab.className = 'text-white font-bold border-b-2 border-indigo-500 pb-1';
+            }
+        }
+
+    </script>
 </body>
+
 </html>

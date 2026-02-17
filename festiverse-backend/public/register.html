@@ -84,20 +84,22 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Full Name</label>
-                <input type="text" id="name" placeholder="Gautam Kumar" class="input-field w-full px-6 py-4 rounded-lg" required>
+                <input type="text" id="name" placeholder="Loading..." class="input-field w-full px-6 py-4 rounded-lg bg-[#0a0a0a] text-gray-400 cursor-not-allowed" readonly>
               </div>
               <div>
-                <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">College</label>
-                <input type="text" id="college" placeholder="IIT Bombay" class="input-field w-full px-6 py-4 rounded-lg" required>
+                <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">College Name</label>
+                <input type="text" id="college" placeholder="e.g. IIT Delhi" class="input-field w-full px-6 py-4 rounded-lg" required>
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Email ID</label>
-                <input type="email" id="email" placeholder="student@edu.in" class="input-field w-full px-6 py-4 rounded-lg" required>
+                 <input type="email" id="email" placeholder="Loading..." class="input-field w-full px-6 py-4 rounded-lg bg-[#0a0a0a] text-gray-400 cursor-not-allowed" readonly>
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase tracking-widest text-[#ccff00] mb-2">Phone</label>
                 <input type="tel" id="phone" placeholder="+91 98765 43210" class="input-field w-full px-6 py-4 rounded-lg" required>
               </div>
+              
+              <input type="hidden" id="universityId">
             </div>
             <button type="button" onclick="nextStep()" class="w-full py-4 btn-lime rounded-lg font-bold font-display uppercase tracking-widest text-sm">
               Proceed to Event Selection →
@@ -173,30 +175,74 @@
 </main>
 
 <script>
+  // --- AUTH CHECK & AUTOFILL ---
+  window.onload = function() {
+    const token = localStorage.getItem('userToken');
+    const userStr = localStorage.getItem('userData');
+
+    // 1. If not logged in, redirect to Auth
+    if (!token || !userStr) {
+        alert("🔒 SYSTEM LOCKED: Authentication Required.\nRedirecting to Access Control...");
+        window.location.href = 'auth.html';
+        return;
+    }
+
+    // 2. Parse Data
+    const user = JSON.parse(userStr);
+
+    // 3. Auto-fill form fields
+    if(user.name) document.getElementById('name').value = user.name;
+    if(user.email) document.getElementById('email').value = user.email;
+    if(user.collegeId) document.getElementById('universityId').value = user.collegeId;
+  };
+
+  // --- STATE MANAGEMENT ---
+  let formData = {
+    name: "",
+    college: "",
+    email: "",
+    phone: "",
+    universityId: ""
+  };
+
   // --- STEP LOGIC ---
   function nextStep() {
-    // Simple Validation for Step 1
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    
-    if(!name || !email) {
-      alert("Please complete your Personal Intel first.");
+    // 1. Capture Step 1 Values
+    const name = document.getElementById('name').value.trim();
+    const college = document.getElementById('college').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const universityId = document.getElementById('universityId').value.trim();
+
+    // 2. Simple Validation
+    if (!name || !college || !email || !phone) {
+      alert("⚠️ Please complete all Personal Intel fields.");
       return;
     }
 
+    // 3. Save to state
+    formData = { name, college, email, phone, universityId };
+
+    // 4. UI Transition
     document.getElementById('step-1').classList.add('hidden-step');
-    document.getElementById('step-2').classList.remove('hidden-step');
-    document.getElementById('step-2').classList.add('fade-in');
+    document.getElementById('step-1').classList.remove('fade-in');
     
+    const step2 = document.getElementById('step-2');
+    step2.classList.remove('hidden-step');
+    step2.classList.add('fade-in');
+
     document.getElementById('ind-1').classList.remove('active');
     document.getElementById('ind-2').classList.add('active');
   }
 
   function prevStep() {
     document.getElementById('step-2').classList.add('hidden-step');
-    document.getElementById('step-1').classList.remove('hidden-step');
-    document.getElementById('step-1').classList.add('fade-in');
-    
+    document.getElementById('step-2').classList.remove('fade-in');
+
+    const step1 = document.getElementById('step-1');
+    step1.classList.remove('hidden-step');
+    step1.classList.add('fade-in');
+
     document.getElementById('ind-2').classList.remove('active');
     document.getElementById('ind-1').classList.add('active');
   }
@@ -206,23 +252,23 @@
     const select = document.getElementById('eventSelect');
     const teamSection = document.getElementById('teamSection');
     const membersContainer = document.getElementById('membersContainer');
-    
+
     // Get team size from selected option data attribute
     const selectedOption = select.options[select.selectedIndex];
-    const maxMembers = parseInt(selectedOption.getAttribute('data-team'));
+    const maxMembers = parseInt(selectedOption.getAttribute('data-team') || 1);
 
     membersContainer.innerHTML = ''; // Clear previous inputs
 
     if (maxMembers > 1) {
       teamSection.classList.remove('hidden-step');
-      teamSection.classList.add('fade-in');
-
-      // Generate inputs for Member 2 to Max
+      
+      // Generate inputs for Member 2 to Max (Member 1 is the leader/user)
       for (let i = 2; i <= maxMembers; i++) {
         const div = document.createElement('div');
+        div.className = "fade-in"; // Add animation
         div.innerHTML = `
           <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Member ${i} Name</label>
-          <input type="text" name="member${i}" placeholder="Cadet Name" class="input-field w-full px-6 py-4 rounded-lg text-sm">
+          <input type="text" class="team-member-input input-field w-full px-6 py-4 rounded-lg text-sm" placeholder="Cadet Name" required>
         `;
         membersContainer.appendChild(div);
       }
@@ -231,17 +277,67 @@
     }
   }
 
-  // --- SUBMISSION ---
+  // --- BACKEND CONNECTION (SUBMISSION) ---
   document.getElementById('regForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const btn = e.target.querySelector('button[type="submit"]');
-    btn.innerText = "Processing...";
+    const originalText = btn.innerText;
+    btn.innerText = "Transmitting...";
+    btn.disabled = true;
+
+    // 1. Gather Step 2 Data
+    const event = document.getElementById('eventSelect').value;
+    const teamName = document.getElementById('teamName').value.trim();
     
-    // Simulate Backend Delay
-    await new Promise(r => setTimeout(r, 1500));
+    // 2. Gather Team Members
+    const teamMembers = [];
+    // Always add the leader (User) as the first member
+    teamMembers.push(formData.name);
     
-    alert("REGISTRATION SUCCESSFUL!\nMission details sent to your comms channel.");
-    location.reload();
+    // Add other members if they exist
+    const memberInputs = document.querySelectorAll('.team-member-input');
+    memberInputs.forEach(input => {
+        if(input.value.trim()) teamMembers.push(input.value.trim());
+    });
+
+    // 3. Construct Payload
+    const payload = {
+        ...formData,       // Spread step 1 data (name, college, etc)
+        event,             // Event Name
+        teamName,          // Team Name (optional for solo)
+        teamMembers        // Array of names
+    };
+
+    try {
+        const token = localStorage.getItem('userToken');
+        
+        // 4. Send to Backend
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': token 
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(`✅ MISSION CONFIRMED!\nTicket ID: ${result.ticketId}`);
+            window.location.href = 'dashboard.html'; // Redirect to Dashboard to see the new card
+        } else {
+            alert(`❌ ERROR: ${result.message}`);
+        }
+
+    } catch (error) {
+        console.error('Submission Error:', error);
+        alert("❌ CRITICAL FAILURE: Unable to contact server.");
+    } finally {
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
   });
 </script>
 

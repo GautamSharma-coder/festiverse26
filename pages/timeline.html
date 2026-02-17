@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline | Festiverse'26</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-dark: #050505; --accent: #ccff00; }
+    body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-dark); color: white; }
+    h1, h2, h3, .font-display { font-family: 'Syne', sans-serif; }
+    
+    .texture-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 50;
+    }
+
+    /* Day Tabs */
+    .day-tab {
+        border-bottom: 2px solid rgba(255,255,255,0.1);
+        color: #666;
+        transition: all 0.3s;
+    }
+    .day-tab:hover { color: white; }
+    .day-tab.active {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    /* Timeline Item Animation */
+    .timeline-item {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    /* Staggered Delays */
+    .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+    .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+    }
+    .glass-panel:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--accent);
+    }
+  </style>
+</head>
+<body class="antialiased">
+<div class="texture-overlay"></div>
+
+<nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+  <a href="index.html" class="font-display font-bold text-xl tracking-tighter text-white">
+    FESTIVERSE<span class="text-[#ccff00]">.</span>
+  </a>
+  <div class="hidden md:flex gap-10 font-medium text-sm text-white">
+    <a href="schedule.html" class="text-[#ccff00]">Schedule</a>
+    <a href="events.html" class="hover:text-[#ccff00] transition">Events</a>
+    <a href="team.html" class="hover:text-[#ccff00] transition">Team</a>
+  </div>
+  <a href="register.html" class="px-6 py-2 border border-white/20 rounded-full text-sm font-bold uppercase text-white hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all">Get Passes</a>
+</nav>
+
+<main class="pt-32 pb-20 px-6 max-w-5xl mx-auto relative z-10">
+
+  <div class="text-center mb-16">
+    <span class="text-[#ccff00] font-bold text-xs tracking-[0.3em] uppercase">Operations Log</span>
+    <h2 class="font-display text-5xl md:text-7xl font-bold text-white mt-4">MISSION TIMELINE</h2>
+  </div>
+
+  <div class="flex justify-center gap-12 mb-16 border-b border-white/10">
+    <button onclick="switchDay(1)" id="tab-1" class="day-tab active pb-4 text-sm font-bold uppercase tracking-widest">
+        Day 01 <span class="text-xs font-normal opacity-50 block mt-1">Apr 08</span>
+    </button>
+    <button onclick="switchDay(2)" id="tab-2" class="day-tab pb-4 text-sm font-bold uppercase tracking-widest">
+        Day 02 <span class="text-xs font-normal opacity-50 block mt-1">Apr 09</span>
+    </button>
+    <button onclick="switchDay(3)" id="tab-3" class="day-tab pb-4 text-sm font-bold uppercase tracking-widest">
+        Day 03 <span class="text-xs font-normal opacity-50 block mt-1">Apr 10</span>
+    </button>
+  </div>
+
+  <div id="schedule-container" class="space-y-4 relative">
+     </div>
+
+</main>
+
+<script>
+    // --- SCHEDULE DATA ---
+    const schedule = {
+        1: [
+            { time: "09:00 AM", event: "Inauguration Ceremony", venue: "Main Auditorium", type: "General" },
+            { time: "11:00 AM", event: "Hackathon: CodeX Begins", venue: "Computer Center", type: "Tech" },
+            { time: "01:00 PM", event: "Natraj: Solo Dance", venue: "Open Air Theatre", type: "Cultural" },
+            { time: "03:00 PM", event: "RoboWars: Round 1", venue: "Quadrangle", type: "Tech" },
+            { time: "06:00 PM", event: "Battle of Bands", venue: "Main Stage", type: "Music" }
+        ],
+        2: [
+            { time: "10:00 AM", event: "Quiz: Brainstorm", venue: "Seminar Hall 1", type: "Lit" },
+            { time: "12:00 PM", event: "Street Play: Awaaz", venue: "Campus Main Road", type: "Drama" },
+            { time: "02:00 PM", event: "Face Painting Competition", venue: "Art Gallery", type: "Arts" },
+            { time: "04:00 PM", event: "Gaming: Valorant Finals", venue: "Lab 2", type: "Gaming" },
+            { time: "07:00 PM", event: "Fashion Show: Vogue", venue: "Main Stage", type: "Fashion" }
+        ],
+        3: [
+            { time: "10:00 AM", event: "Treasure Hunt", venue: "Start Point: Library", type: "Fun" },
+            { time: "01:00 PM", event: "Group Dance Finals", venue: "Main Auditorium", type: "Cultural" },
+            { time: "04:00 PM", event: "Hackathon Results", venue: "Seminar Hall 2", type: "Tech" },
+            { time: "06:00 PM", event: "Closing Ceremony", venue: "Main Stage", type: "General" },
+            { time: "08:00 PM", event: "Star Night: DJ Snake", venue: "Main Ground", type: "Pro-Night" }
+        ]
+    };
+
+    function renderSchedule(day) {
+        const container = document.getElementById('schedule-container');
+        container.innerHTML = ''; // Clear current
+
+        const events = schedule[day];
+
+        events.forEach(item => {
+            // Determine type color
+            let typeColor = "text-gray-500";
+            if(item.type === 'Tech') typeColor = "text-blue-400";
+            if(item.type === 'Cultural') typeColor = "text-pink-400";
+            if(item.type === 'Pro-Night') typeColor = "text-[#ccff00]";
+
+            const row = `
+            <div class="timeline-item glass-panel p-6 rounded-xl flex flex-col md:flex-row gap-6 items-start md:items-center group">
+                <div class="md:w-32 flex-shrink-0">
+                    <span class="text-[#ccff00] font-bold font-display text-xl">${item.time}</span>
+                </div>
+                
+                <div class="flex-grow">
+                    <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-[#ccff00] transition-colors">${item.event}</h3>
+                    <p class="text-sm text-gray-400 flex items-center gap-2">
+                        <span>📍 ${item.venue}</span>
+                        <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                        <span class="${typeColor} uppercase text-[10px] font-bold tracking-widest border border-current px-2 rounded-full">${item.type}</span>
+                    </p>
+                </div>
+
+                <div class="flex-shrink-0 w-full md:w-auto">
+                    <a href="register.html" class="block w-full md:w-auto text-center px-6 py-3 border border-white/20 rounded-lg text-xs font-bold uppercase hover:bg-white hover:text-black transition-all">
+                        Join Protocol
+                    </a>
+                </div>
+            </div>`;
+            
+            container.innerHTML += row;
+        });
+    }
+
+    function switchDay(day) {
+        // Update Tabs
+        document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(`tab-${day}`).classList.add('active');
+
+        // Render Data
+        renderSchedule(day);
+    }
+
+    // Init
+    window.onload = () => renderSchedule(1);
+</script>
+
+<footer class="py-10 border-t border-white/10 text-center relative z-10 bg-black mt-20">
+  <p class="font-display text-xs tracking-widest text-gray-600 uppercase">
+    Syncing... Time Zone: IST // Festiverse'26
+  </p>
+</footer>
+</body>
+</html>

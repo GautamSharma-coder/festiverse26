@@ -1,420 +1,791 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Festiverse'26 | Premium Dark</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
-    :root {
-      --bg-dark: #050505;
-      --bg-card: #0f0f0f;
-      --accent: #ccff00; /* Electric Lime */
-      --text-white: #ffffff;
-      --text-gray: #888888;
-    }
-    
-    body {
-      font-family: 'Space-Grotesk', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-white);
-      overflow-x: hidden;
-    }
-    
-    h1, h2, h3, .font-display {
-      font-family: 'Syne', sans-serif;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Festiverse'26 | Premium Dark</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    /* Grain Texture Overlay */
-    .texture-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 50;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-    /* Custom Selection */
-    ::selection {
-      background-color: var(--accent);
-      color: black;
-    }
+    <style>
+      :root {
+        --bg-dark: #050505;
+        --bg-card: #0f0f0f;
+        --accent: #ccff00; /* Electric Lime */
+        --text-white: #ffffff;
+        --text-gray: #888888;
+      }
 
-    /* Marquee Animations */
-    .marquee-container {
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-white);
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      .font-display {
+        font-family: "Syne", sans-serif;
+      }
+
+      /* Grain Texture Overlay */
+      .texture-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 50;
+      }
+
+      /* Custom Selection */
+      ::selection {
+        background-color: var(--accent);
+        color: black;
+      }
+
+      /* Marquee Animations */
+      .marquee-container {
         display: flex;
         overflow: hidden;
         user-select: none;
         gap: 1.5rem; /* 24px gap */
-        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    }
-    
-    .marquee-content {
+        mask-image: linear-gradient(
+          to right,
+          transparent,
+          black 10%,
+          black 90%,
+          transparent
+        );
+      }
+
+      .marquee-content {
         flex-shrink: 0;
         display: flex;
         gap: 1.5rem;
         min-width: 100%;
-    }
+      }
 
-    .scroll-left {
+      .scroll-left {
         animation: scrollLeft 30s linear infinite;
-    }
-    
-    .scroll-right {
+      }
+
+      .scroll-right {
         animation: scrollRight 30s linear infinite;
-    }
+      }
 
-    .marquee-container:hover .marquee-content {
+      .marquee-container:hover .marquee-content {
         animation-play-state: paused;
-    }
+      }
 
-    @keyframes scrollLeft {
-        from { transform: translateX(0); }
-        to { transform: translateX(-100%); }
-    }
+      @keyframes scrollLeft {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
 
-    @keyframes scrollRight {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(0); }
-    }
+      @keyframes scrollRight {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
 
-    /* Button Hover Effect */
-    .btn-lime {
-      position: relative;
-      overflow: hidden;
-      transition: color 0.4s;
-    }
-    .btn-lime::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%; width: 100%; height: 100%;
-      background: var(--accent);
-      transition: transform 0.4s cubic-bezier(0.85, 0, 0.15, 1);
-      z-index: -1;
-    }
-    .btn-lime:hover::before {
-      transform: translateX(100%);
-    }
-    .btn-lime:hover {
-      color: black;
-    }
+      /* Button Hover Effect */
+      .btn-lime {
+        position: relative;
+        overflow: hidden;
+        transition: color 0.4s;
+      }
+      .btn-lime::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--accent);
+        transition: transform 0.4s cubic-bezier(0.85, 0, 0.15, 1);
+        z-index: -1;
+      }
+      .btn-lime:hover::before {
+        transform: translateX(100%);
+      }
+      .btn-lime:hover {
+        color: black;
+      }
 
-    /* Image Reveal Animation */
-    .reveal-img {
-      clip-path: inset(0 0 100% 0);
-      transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
-    }
-    .loaded .reveal-img {
-      clip-path: inset(0 0 0 0);
-    }
-    
-    /* Rolling Text on Hover */
-    .roll-link {
+      /* Image Reveal Animation */
+      .reveal-img {
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      .loaded .reveal-img {
+        clip-path: inset(0 0 0 0);
+      }
+
+      /* Rolling Text on Hover */
+      .roll-link {
         overflow: hidden;
         height: 1.2em;
         display: inline-block;
         vertical-align: top;
-    }
-    .roll-link span {
+      }
+      .roll-link span {
         display: block;
         transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-    }
-    .roll-link:hover span {
+      }
+      .roll-link:hover span {
         transform: translateY(-100%);
-    }
-    .roll-link span::after {
+      }
+      .roll-link span::after {
         content: attr(data-title);
         display: block;
-    }
-  </style>
-</head>
-
-<body class="loaded">
-  <div class="texture-overlay"></div>
-
-  <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
-    <a href="/" class="font-display font-bold text-xl tracking-tighter">
-      FESTIVERSE<span class="text-[#ccff00]">.</span>
-    </a>
-    
-    <div class="hidden md:flex gap-10 font-medium text-sm">
-      <a href="schedule.html" class="roll-link"><span data-title="Schedule">Schedule</span></a>
-      <a href="events.html" class="roll-link"><span data-title="Events">Events</span></a>
-      <a href="team.html" class="roll-link"><span data-title="Team">Team</span></a>
-      <a href="contact.html" class="roll-link"><span data-title="Contact">Contact</span></a>
-    </div>
-
-    <a href="register.html" class="px-6 py-2 border border-white/20 rounded-full text-sm font-bold uppercase hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all">
-      Get Passes
-    </a>
-  </nav>
-
-  <header class="relative min-h-screen flex flex-col justify-end pb-20 px-6 md:px-16 pt-32">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-10">
-      <h1 class="font-display text-[20vw] font-bold leading-none text-transparent stroke-text">2026</h1>
-    </div>
-    <style>.stroke-text { -webkit-text-stroke: 2px white; }</style>
-
-    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
-      <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#ccff00]/30 bg-[#ccff00]/10 text-[#ccff00] text-xs font-bold uppercase mb-6">
-          <span class="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"></span>
-          Live in 35 Days
-        </div>
-        <h1 class="font-display text-6xl md:text-8xl font-bold leading-[0.9] mb-8">
-          CULTURE <br>
-          IS <span class="text-[#ccff00]">CHAOS.</span>
-        </h1>
-        <p class="text-gray-400 max-w-md text-lg leading-relaxed">
-          Join the collision of art, music, and technology. 
-          The biggest cultural festival of the year at Grand Orion Arena.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-6 md:items-end">
-         <div class="flex gap-4">
-             <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
-                 <span class="block font-display text-2xl font-bold text-white" id="days">00</span>
-                 <span class="text-xs text-gray-500 uppercase">Days</span>
-             </div>
-             <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
-                 <span class="block font-display text-2xl font-bold text-white" id="hours">00</span>
-                 <span class="text-xs text-gray-500 uppercase">Hrs</span>
-             </div>
-             <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
-                 <span class="block font-display text-2xl font-bold text-white" id="mins">00</span>
-                 <span class="text-xs text-gray-500 uppercase">Mins</span>
-             </div>
-         </div>
-         <div class="flex gap-4">
-           <a href="register.html" class="btn-lime px-8 py-4 bg-white text-black font-display font-bold text-xl rounded-lg border border-transparent z-10">
-             Register Now
-           </a>
-           <a href="events.html" class="px-8 py-4 bg-transparent text-white border border-white/20 font-display font-bold text-xl rounded-lg hover:bg-white/5 transition-colors">
-             View Events
-           </a>
-         </div>
-      </div>
-    </div>
-  </header>
-
-  <div class="border-y border-white/10 bg-[#ccff00] overflow-hidden py-4 rotate-1 scale-105 origin-left">
-    <div class="flex gap-8 whitespace-nowrap text-black font-display font-bold text-2xl uppercase marquee-container">
-        <div class="marquee-content scroll-left">
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-        </div>
-        <div class="marquee-content scroll-left">
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
-        </div>
-    </div>
-  </div>
-
-  <section class="py-24 px-6 md:px-16">
-    <div class="flex justify-between items-end mb-16">
-      <h2 class="font-display text-4xl md:text-5xl font-bold">Featured <span class="text-[#ccff00]">Protocols</span></h2>
-      <a href="events.html" class="hidden md:block text-sm font-bold border-b border-[#ccff00] pb-1 hover:text-[#ccff00] transition-colors">View All Categories ↗</a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
-      <a href="events.html" class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5">
-        <img src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?q=80&w=800&auto=format&fit=crop" class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-        <div class="absolute bottom-6 left-6 z-10">
-           <span class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block">01</span>
-           <h3 class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform">Dance</h3>
-        </div>
-      </a>
-      <a href="events.html" class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5 md:border-l-0">
-        <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=800&auto=format&fit=crop" class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-        <div class="absolute bottom-6 left-6 z-10">
-           <span class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block">02</span>
-           <h3 class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform">Music</h3>
-        </div>
-      </a>
-      <a href="events.html" class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5 md:border-l-0">
-        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=800&auto=format&fit=crop" class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-        <div class="absolute bottom-6 left-6 z-10">
-           <span class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block">03</span>
-           <h3 class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform">Gaming</h3>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <section class="py-24 border-t border-white/10 bg-[#080808] overflow-hidden">
-    <div class="px-6 md:px-16 mb-16">
-      <h2 class="font-display text-4xl md:text-5xl font-bold mb-2">Past <span class="text-[#ccff00]">Glimpse</span></h2>
-      <p class="text-gray-500 font-medium">Archive footage from the 2025 dimension.</p>
-    </div>
-
-    <div class="marquee-container mb-6">
-        <div class="marquee-content scroll-left">
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Concert</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Vibes</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Finale</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Solo</div>
-            </div>
-        </div>
-        <div class="marquee-content scroll-left">
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Concert</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Vibes</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Finale</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Solo</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="marquee-container">
-        <div class="marquee-content scroll-right">
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Crowd</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Backstage</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Lights</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Energy</div>
-            </div>
-        </div>
-        <div class="marquee-content scroll-right">
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Crowd</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Backstage</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Lights</div>
-            </div>
-            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
-                <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Energy</div>
-            </div>
-        </div>
-    </div>
-  </section>
-
-  <section class="py-24 border-y border-white/10 bg-[#0a0a0a] text-center px-6">
-    <p class="text-[#ccff00] font-bold uppercase tracking-widest mb-4">Don't Miss Out</p>
-    <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-10 max-w-4xl mx-auto">
-      READY TO START THE <br> <span class="bg-[#ccff00] text-black">REVOLUTION?</span>
-    </h2>
-    <a href="register.html" class="inline-block bg-white text-black font-display font-bold text-xl px-12 py-5 rounded-full hover:scale-105 hover:bg-[#ccff00] transition-all duration-300">
-      Secure Your Spot
-    </a>
-  </section>
-
-  <footer class="pt-20 pb-10 px-6 md:px-16 bg-black">
-    <div class="flex flex-col md:flex-row justify-between gap-12 mb-20">
-      <div>
-        <h2 class="font-display text-3xl font-bold mb-6">FESTIVERSE<span class="text-[#ccff00]">.</span></h2>
-        <p class="text-gray-500 max-w-sm">
-          A platform for the bold, the creative, and the futuristic. 
-          Powered by UDAAN Cultural Club.
-        </p>
-      </div>
-      
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm">
-        <div>
-          <h4 class="font-bold text-white mb-4 uppercase">Navigation</h4>
-          <ul class="space-y-3 text-gray-500">
-            <li><a href="index.html" class="hover:text-[#ccff00]">Home</a></li>
-            <li><a href="events.html" class="hover:text-[#ccff00]">Events</a></li>
-            <li><a href="schedule.html" class="hover:text-[#ccff00]">Schedule</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold text-white mb-4 uppercase">Support</h4>
-          <ul class="space-y-3 text-gray-500">
-            <li><a href="contact.html" class="hover:text-[#ccff00]">Contact</a></li>
-            <li><a href="#" class="hover:text-[#ccff00]">FAQ</a></li>
-            <li><a href="admin.html" class="hover:text-[#ccff00]">Admin</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold text-white mb-4 uppercase">Socials</h4>
-          <ul class="space-y-3 text-gray-500">
-            <li><a href="#" class="hover:text-[#ccff00]">Instagram</a></li>
-            <li><a href="#" class="hover:text-[#ccff00]">Twitter</a></li>
-            <li><a href="#" class="hover:text-[#ccff00]">LinkedIn</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    
-    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 uppercase font-bold tracking-widest">
-      <p>&copy; 2026 UDAAN CULTURAL CLUB</p>
-      <p>DESIGNED FOR THE FUTURE</p>
-    </div>
-  </footer>
-
-  <script>
-    // Timer Logic
-    const targetDate = new Date("April 8, 2026 10:00:00").getTime();
-    
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-
-        document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-        document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-        document.getElementById("mins").innerText = m < 10 ? "0" + m : m;
       }
-    }
+    </style>
+  </head>
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
+  <body class="loaded">
+    <div class="texture-overlay"></div>
+
+    <nav
+      class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference"
+    >
+      <a href="/" class="font-display font-bold text-xl tracking-tighter">
+        FESTIVERSE<span class="text-[#ccff00]">.</span>
+      </a>
+
+      <div class="hidden md:flex gap-10 font-medium text-sm">
+        <a href="schedule.html" class="roll-link"
+          ><span data-title="Schedule">Schedule</span></a
+        >
+        <a href="events.html" class="roll-link"
+          ><span data-title="Events">Events</span></a
+        >
+        <a href="gallery.html" class="roll-link"
+          ><span data-title="Gallery">Gallery</span></a
+        >
+
+        <a href="team.html" class="roll-link"
+          ><span data-title="Team">Team</span></a
+        >
+        <a href="contact.html" class="roll-link"
+          ><span data-title="Contact">Contact</span></a
+        >
+      </div>
+
+      <a
+        href="register.html"
+        class="px-6 py-2 border border-white/20 rounded-full text-sm font-bold uppercase hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all"
+      >
+        Get Passes
+      </a>
+    </nav>
+
+    <header
+      class="relative min-h-screen flex flex-col justify-end pb-20 px-6 md:px-16 pt-32"
+    >
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-10"
+      >
+        <h1
+          class="font-display text-[20vw] font-bold leading-none text-transparent stroke-text"
+        >
+          2026
+        </h1>
+      </div>
+      <style>
+        .stroke-text {
+          -webkit-text-stroke: 2px white;
+        }
+      </style>
+
+      <div
+        class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-end"
+      >
+        <div>
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#ccff00]/30 bg-[#ccff00]/10 text-[#ccff00] text-xs font-bold uppercase mb-6"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"
+            ></span>
+            Live in 35 Days
+          </div>
+          <h1
+            class="font-display text-6xl md:text-8xl font-bold leading-[0.9] mb-8"
+          >
+            CULTURE <br />
+            IS <span class="text-[#ccff00]">CHAOS.</span>
+          </h1>
+          <p class="text-gray-400 max-w-md text-lg leading-relaxed">
+            Join the collision of art, music, and technology. The biggest
+            cultural festival of the year at Grand Orion Arena.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-6 md:items-end">
+          <div class="flex gap-4">
+            <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
+              <span
+                class="block font-display text-2xl font-bold text-white"
+                id="days"
+                >00</span
+              >
+              <span class="text-xs text-gray-500 uppercase">Days</span>
+            </div>
+            <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
+              <span
+                class="block font-display text-2xl font-bold text-white"
+                id="hours"
+                >00</span
+              >
+              <span class="text-xs text-gray-500 uppercase">Hrs</span>
+            </div>
+            <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
+              <span
+                class="block font-display text-2xl font-bold text-white"
+                id="mins"
+                >00</span
+              >
+              <span class="text-xs text-gray-500 uppercase">Mins</span>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <a
+              href="register.html"
+              class="btn-lime px-8 py-4 bg-white text-black font-display font-bold text-xl rounded-lg border border-transparent z-10"
+            >
+              Register Now
+            </a>
+            <a
+              href="events.html"
+              class="px-8 py-4 bg-transparent text-white border border-white/20 font-display font-bold text-xl rounded-lg hover:bg-white/5 transition-colors"
+            >
+              View Events
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div
+      class="border-y border-white/10 bg-[#ccff00] overflow-hidden py-4 rotate-1 scale-105 origin-left"
+    >
+      <div
+        class="flex gap-8 whitespace-nowrap text-black font-display font-bold text-2xl uppercase marquee-container"
+      >
+        <div class="marquee-content scroll-left">
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+        </div>
+        <div class="marquee-content scroll-left">
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+          <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="py-24 px-6 md:px-16">
+      <div class="flex justify-between items-end mb-16">
+        <h2 class="font-display text-4xl md:text-5xl font-bold">
+          Featured <span class="text-[#ccff00]">Protocols</span>
+        </h2>
+        <a
+          href="events.html"
+          class="hidden md:block text-sm font-bold border-b border-[#ccff00] pb-1 hover:text-[#ccff00] transition-colors"
+          >View All Categories ↗</a
+        >
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+        <a
+          href="events.html"
+          class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?q=80&w=800&auto=format&fit=crop"
+            class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
+          ></div>
+          <div class="absolute bottom-6 left-6 z-10">
+            <span
+              class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block"
+              >01</span
+            >
+            <h3
+              class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform"
+            >
+              Dance
+            </h3>
+          </div>
+        </a>
+        <a
+          href="events.html"
+          class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5 md:border-l-0"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=800&auto=format&fit=crop"
+            class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
+          ></div>
+          <div class="absolute bottom-6 left-6 z-10">
+            <span
+              class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block"
+              >02</span
+            >
+            <h3
+              class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform"
+            >
+              Music
+            </h3>
+          </div>
+        </a>
+        <a
+          href="events.html"
+          class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5 md:border-l-0"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=800&auto=format&fit=crop"
+            class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
+          ></div>
+          <div class="absolute bottom-6 left-6 z-10">
+            <span
+              class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block"
+              >03</span
+            >
+            <h3
+              class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform"
+            >
+              Gaming
+            </h3>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section
+      class="py-24 border-t border-white/10 bg-[#080808] overflow-hidden"
+    >
+      <div class="px-6 md:px-16 mb-16 flex justify-between items-end">
+        <div>
+          <h2 class="font-display text-4xl md:text-5xl font-bold mb-2">
+            Past <span class="text-[#ccff00]">Glimpse</span>
+          </h2>
+          <p class="text-gray-500 font-medium">
+            Archive footage from the 2025 dimension.
+          </p>
+        </div>
+        <a
+          href="gallery.html"
+          class="hidden md:block text-sm font-bold border-b border-[#ccff00] pb-1 hover:text-[#ccff00] transition-colors"
+        >
+          View Full Archive ↗
+        </a>
+      </div>
+
+      <div class="marquee-container mb-6">
+        <div class="marquee-content scroll-left">
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Concert
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Vibes
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Finale
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Solo
+            </div>
+          </div>
+        </div>
+        <div class="marquee-content scroll-left">
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Concert
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Vibes
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Finale
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Solo
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="marquee-container">
+        <div class="marquee-content scroll-right">
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Crowd
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Backstage
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Lights
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Energy
+            </div>
+          </div>
+        </div>
+        <div class="marquee-content scroll-right">
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Crowd
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Backstage
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Lights
+            </div>
+          </div>
+          <div
+            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            />
+            <div
+              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
+            >
+              Energy
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-20 bg-[#050505] border-b border-white/5 relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#ccff00]/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <p class="text-gray-500 text-xs font-bold uppercase tracking-[0.3em] mb-8">Official Organizer</p>
+        
+        <div class="inline-flex items-center justify-center gap-6 md:gap-8 group cursor-default">
+            <div class="text-right">
+                <h2 class="font-display text-5xl md:text-7xl font-bold text-white tracking-tighter group-hover:text-[#ccff00] transition-colors duration-300">
+                  UDAAN
+                </h2>
+            </div>
+            
+            <div class="h-16 w-1 bg-white/10 rotate-12 group-hover:bg-[#ccff00] group-hover:rotate-0 transition-all duration-500"></div>
+            
+            <div class="text-left">
+                <p class="text-white font-bold text-lg md:text-2xl leading-none">THE CULTURAL</p>
+                <p class="text-gray-500 font-bold text-lg md:text-2xl leading-none group-hover:text-white transition-colors">CLUB</p>
+            </div>
+        </div>
+
+        <p class="mt-8 text-xs text-gray-600 font-mono uppercase tracking-widest">
+          Est. 2020 // GEC Samastipur
+        </p>
+    </div>
+  </section>
+
+    <section
+      class="py-24 border-y border-white/10 bg-[#0a0a0a] text-center px-6"
+    >
+      <p class="text-[#ccff00] font-bold uppercase tracking-widest mb-4">
+        Don't Miss Out
+      </p>
+      <h2
+        class="font-display text-4xl md:text-7xl font-bold text-white mb-10 max-w-4xl mx-auto"
+      >
+        READY TO START THE <br />
+        <span class="bg-[#ccff00] text-black">REVOLUTION?</span>
+      </h2>
+      <a
+        href="register.html"
+        class="inline-block bg-white text-black font-display font-bold text-xl px-12 py-5 rounded-full hover:scale-105 hover:bg-[#ccff00] transition-all duration-300"
+      >
+        Secure Your Spot
+      </a>
+    </section>
+
+    <footer class="pt-20 pb-10 px-6 md:px-16 bg-black">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-20">
+        <div>
+          <h2 class="font-display text-3xl font-bold mb-6">
+            FESTIVERSE<span class="text-[#ccff00]">.</span>
+          </h2>
+          <p class="text-gray-500 max-w-sm">
+            A platform for the bold, the creative, and the futuristic. Powered
+            by UDAAN Cultural Club.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm">
+          <div>
+            <h4 class="font-bold text-white mb-4 uppercase">Navigation</h4>
+            <ul class="space-y-3 text-gray-500">
+              <li>
+                <a href="index.html" class="hover:text-[#ccff00]">Home</a>
+              </li>
+              <li>
+                <a href="events.html" class="hover:text-[#ccff00]">Events</a>
+              </li>
+              <li>
+                <a href="schedule.html" class="hover:text-[#ccff00]"
+                  >Schedule</a
+                >
+              </li>
+              <li>
+                <a href="gallery.html" class="hover:text-[#ccff00]">Gallery</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-white mb-4 uppercase">Support</h4>
+            <ul class="space-y-3 text-gray-500">
+              <li>
+                <a href="contact.html" class="hover:text-[#ccff00]">Contact</a>
+              </li>
+              <li><a href="#" class="hover:text-[#ccff00]">FAQ</a></li>
+              <li>
+                <a href="admin.html" class="hover:text-[#ccff00]">Admin</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-white mb-4 uppercase">Socials</h4>
+            <ul class="space-y-3 text-gray-500">
+              <li><a href="#" class="hover:text-[#ccff00]">Instagram</a></li>
+              <li><a href="#" class="hover:text-[#ccff00]">Twitter</a></li>
+              <li><a href="#" class="hover:text-[#ccff00]">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 uppercase font-bold tracking-widest"
+      >
+        <p>&copy; 2026 UDAAN CULTURAL CLUB</p>
+        <p>DESIGNED FOR THE FUTURE</p>
+      </div>
+    </footer>
+
+    <script>
+      // Timer Logic
+      const targetDate = new Date("April 8, 2026 10:00:00").getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference > 0) {
+          const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+          const h = Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          );
+          const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+          document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+          document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+          document.getElementById("mins").innerText = m < 10 ? "0" + m : m;
+        }
+      }
+
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+    </script>
+    <script>
+      // Check if user is logged in
+      const token = localStorage.getItem("userToken");
+      if (token) {
+        const authBtn = document.querySelector('a[href="register.html"]');
+        if (authBtn) {
+          authBtn.innerText = "DASHBOARD";
+          authBtn.href = "dashboard.html";
+          authBtn.classList.remove(
+            "bg-transparent",
+            "hover:bg-[#ccff00]",
+            "hover:text-black",
+          );
+          authBtn.classList.add(
+            "bg-[#ccff00]",
+            "text-black",
+            "border-transparent",
+          );
+        }
+      }
+    </script>
+  </body>
 </html>
