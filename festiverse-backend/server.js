@@ -115,15 +115,21 @@ app.post('/api/auth/signup', async (req, res) => {
     try {
         const { name, collegeId, email, password } = req.body;
         const existingUser = await User.findOne({ email });
-        if (existingUser) return res.status(400).json({ success: false, message: "Email already registered." });
+        
+        if (existingUser) {
+            return res.status(400).json({ success: false, message: "Email already registered." });
+        }
 
         const newUser = new User({ name, collegeId, email, password });
         await newUser.save();
 
         const token = jwt.sign({ id: newUser._id, role: 'student' }, JWT_SECRET, { expiresIn: '24h' });
-        res.status(201).json({ success: true, message: "Account created!", token, user: { name, email } });
+        res.status(201).json({ success: true, message: "Account created!", token, user: { name, email, collegeId } });
+        
     } catch (err) {
-        res.status(500).json({ success: false, message: "Server Error" });
+        // IMPROVED ERROR LOGGING FOR VERCEL
+        console.error("SIGNUP ERROR:", err); 
+        res.status(500).json({ success: false, message: "Server Error: " + err.message });
     }
 });
 
@@ -137,8 +143,9 @@ app.post('/api/auth/login', async (req, res) => {
         }
 
         const token = jwt.sign({ id: user._id, role: 'student' }, JWT_SECRET, { expiresIn: '24h' });
-        res.json({ success: true, message: "Welcome back!", token, user: { name: user.name, email: user.email } });
+        res.json({ success: true, message: "Welcome back!", token, user: { name: user.name, email: user.email, collegeId: user.collegeId } });
     } catch (err) {
+        console.error("LOGIN ERROR:", err);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 });
