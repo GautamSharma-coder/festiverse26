@@ -279,8 +279,9 @@
       </div>
     </header>
 
+    <div class="overflow-hidden w-full">
     <div
-      class="border-y border-white/10 bg-[#ccff00] overflow-hidden py-4 rotate-1 scale-105 origin-left"
+      class="border-y border-white/10 bg-[#ccff00] py-4 rotate-1 scale-105 origin-center"
     >
       <div
         class="flex gap-8 whitespace-nowrap text-black font-display font-bold text-2xl uppercase marquee-container"
@@ -298,6 +299,7 @@
           <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
         </div>
       </div>
+    </div>
     </div>
 
     <section class="py-24 px-6 md:px-16">
@@ -405,226 +407,16 @@
         </a>
       </div>
 
-      <div class="marquee-container mb-6">
-        <div class="marquee-content scroll-left">
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Concert
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Vibes
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Finale
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Solo
-            </div>
-          </div>
-        </div>
-        <div class="marquee-content scroll-left">
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Concert
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Vibes
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Finale
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Solo
-            </div>
-          </div>
-        </div>
+      <!-- Row 1: scrolls left — populated from /api/images -->
+      <div class="marquee-container mb-6" id="glimpse-row-1">
+        <div class="marquee-content scroll-left" id="glimpse-track-1a"></div>
+        <div class="marquee-content scroll-left" id="glimpse-track-1b"></div>
       </div>
 
-      <div class="marquee-container">
-        <div class="marquee-content scroll-right">
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Crowd
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Backstage
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Lights
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Energy
-            </div>
-          </div>
-        </div>
-        <div class="marquee-content scroll-right">
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Crowd
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Backstage
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Lights
-            </div>
-          </div>
-          <div
-            class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-            <div
-              class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase"
-            >
-              Energy
-            </div>
-          </div>
-        </div>
+      <!-- Row 2: scrolls right — populated from /api/images -->
+      <div class="marquee-container" id="glimpse-row-2">
+        <div class="marquee-content scroll-right" id="glimpse-track-2a"></div>
+        <div class="marquee-content scroll-right" id="glimpse-track-2b"></div>
       </div>
     </section>
     <section class="py-20 bg-[#050505] border-b border-white/5 relative overflow-hidden">
@@ -736,6 +528,62 @@
         <p>DESIGNED FOR THE FUTURE</p>
       </div>
     </footer>
+
+    <script>
+      // Past Glimpse — load images from backend
+      async function loadPastGlimpse() {
+        const FALLBACK = [
+          { url: 'https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop', title: 'Concert', category: 'Concert' },
+          { url: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', title: 'Vibes', category: 'Concert' },
+          { url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop', title: 'Finale', category: 'Concert' },
+          { url: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop', title: 'Solo', category: 'Competition' },
+          { url: 'https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop', title: 'Crowd', category: 'Concert' },
+          { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop', title: 'Backstage', category: 'Competition' },
+          { url: 'https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop', title: 'Lights', category: 'Concert' },
+          { url: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop', title: 'Energy', category: 'Competition' },
+        ];
+
+        let images = FALLBACK;
+        try {
+          const res = await fetch('/api/images');
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) images = data;
+          }
+        } catch (e) { /* network error — fall through to fallback */ }
+
+        // Split images across the two rows; repeat enough times to fill marquee
+        const half = Math.ceil(images.length / 2);
+        const row1 = images.slice(0, half);
+        const row2 = images.slice(half);
+
+        // If either row is empty, clone from the other
+        const fill1 = row1.length ? row1 : images;
+        const fill2 = row2.length ? row2 : images;
+
+        function buildCard(img) {
+          return `
+            <div class="flex-shrink-0 w-[220px] h-[140px] rounded-xl overflow-hidden border border-white/10 relative group">
+              <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" loading="lazy"/>
+              <div class="absolute bottom-2 left-2 bg-black/80 px-2 py-0.5 text-[10px] font-bold text-[#ccff00] uppercase">${img.category || img.title}</div>
+            </div>`;
+        }
+
+        function populateTrack(trackId, items) {
+          // Repeat cards until we have at least 4 (ensures smooth loop)
+          const repeated = [];
+          while (repeated.length < 4) repeated.push(...items);
+          document.getElementById(trackId).innerHTML = repeated.map(buildCard).join('');
+        }
+
+        populateTrack('glimpse-track-1a', fill1);
+        populateTrack('glimpse-track-1b', fill1);
+        populateTrack('glimpse-track-2a', fill2);
+        populateTrack('glimpse-track-2b', fill2);
+      }
+
+      loadPastGlimpse();
+    </script>
 
     <script>
       // Timer Logic

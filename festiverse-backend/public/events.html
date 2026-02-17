@@ -305,5 +305,26 @@
     Protocol Updated: 2026 // Ready for Launch
   </p>
 </footer>
+<script>
+      // Check if user is logged in
+      const token = localStorage.getItem("userToken");
+      if (token) {
+        const authBtn = document.querySelector('a[href="register.html"]');
+        if (authBtn) {
+          authBtn.innerText = "DASHBOARD";
+          authBtn.href = "dashboard.html";
+          authBtn.classList.remove(
+            "bg-transparent",
+            "hover:bg-[#ccff00]",
+            "hover:text-black",
+          );
+          authBtn.classList.add(
+            "bg-[#ccff00]",
+            "text-black",
+            "border-transparent",
+          );
+        }
+      }
+    </script>
 </body>
 </html>
