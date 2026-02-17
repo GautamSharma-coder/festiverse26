@@ -12,14 +12,41 @@ const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_key";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 
-// --- MONGODB CONNECTION ---
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("🔥 MongoDB Connected Successfully"))
-    .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+// --- ROBUST DATABASE CONNECTION (FIX FOR VERCEL) ---
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false, // Don't wait for connection to be ready before failing
+      serverSelectionTimeoutMS: 5000, // Fail fast if no connection
+    };
+
+    cached.promise = mongoose.connect(process.env.MONGO_URI, opts).then((mongoose) => {
+      console.log("🔥 New MongoDB Connection Established");
+      return mongoose;
+    });
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
+  return cached.conn;
+}
 
 // --- SCHEMAS ---
-
-// 1. Event Registration Schema
 const registrationSchema = new mongoose.Schema({
     name: String,
     college: String,
@@ -33,7 +60,6 @@ const registrationSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
-// 2. User Schema (For Dashboard Auth)
 const userSchema = new mongoose.Schema({
     name: String,
     collegeId: String,
@@ -43,7 +69,6 @@ const userSchema = new mongoose.Schema({
     joinedAt: { type: Date, default: Date.now }
 });
 
-// 3. Message Schema (Contact Form)
 const messageSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -51,9 +76,6 @@ const messageSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
-const Registration = mongoose.model('Registration', registrationSchema);
-const User = mongoose.model('User', userSchema);
-const Message = mongoose.model('Message', messageSchema);
 const imageSchema = new mongoose.Schema({
     filename: String,
     url: String,
@@ -61,11 +83,18 @@ const imageSchema = new mongoose.Schema({
     category: String,
     uploadedAt: { type: Date, default: Date.now }
 });
-const Image = mongoose.model('Image', imageSchema);
+
+// Models
+// Note: We check if the model exists before compiling to prevent "OverwriteModelError" in hot reloads
+const Registration = mongoose.models.Registration || mongoose.model('Registration', registrationSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+const Message = mongoose.models.Message || mongoose.model('Message', messageSchema);
+const Image = mongoose.models.Image || mongoose.model('Image', imageSchema);
 
 // --- MIDDLEWARE ---
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Increased limit to 10mb to prevent "Payload Too Large" errors
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
@@ -97,6 +126,18 @@ const verifyToken = (req, res, next) => {
     });
 };
 
+// --- DATABASE MIDDLEWARE ---
+// Ensure DB is connected before processing ANY API route
+app.use('/api', async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        console.error("DB Connection Failed:", err);
+        res.status(500).json({ success: false, message: "Database Connection Error" });
+    }
+});
+
 // --- API ROUTES ---
 
 // 1. ADMIN LOGIN
@@ -127,7 +168,6 @@ app.post('/api/auth/signup', async (req, res) => {
         res.status(201).json({ success: true, message: "Account created!", token, user: { name, email, collegeId } });
         
     } catch (err) {
-        // IMPROVED ERROR LOGGING FOR VERCEL
         console.error("SIGNUP ERROR:", err); 
         res.status(500).json({ success: false, message: "Server Error: " + err.message });
     }
@@ -206,7 +246,7 @@ app.get('/api/admin/messages', verifyToken, async (req, res) => {
     } catch (err) { res.status(500).json({ error: "Fetch error" }); }
 });
 
-// Admin Actions (Delete/Update)
+// Admin Actions
 app.delete('/api/admin/registrations/:id', verifyToken, async (req, res) => {
     await Registration.findByIdAndDelete(req.params.id);
     res.json({ success: true });
@@ -223,10 +263,7 @@ app.delete('/api/admin/messages/:id', verifyToken, async (req, res) => {
     res.json({ success: true });
 });
 
-
 // 6. IMAGE MANAGEMENT ROUTES
-
-// Public: Get all images
 app.get('/api/images', async (req, res) => {
     try {
         const images = await Image.find().sort({ uploadedAt: -1 });
@@ -234,17 +271,13 @@ app.get('/api/images', async (req, res) => {
     } catch (err) { res.status(500).json({ error: "Fetch error" }); }
 });
 
-// 7. USER DATA: GET MY REGISTRATIONS
+// 7. USER DATA
 app.get('/api/my-registrations', verifyToken, async (req, res) => {
     try {
-        // 1. Find the user based on the Token ID
         const user = await User.findById(req.user.id);
         if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-        // 2. Find registrations matching the user's email
-        // (Using email links the Account to the Event Registration)
         const registrations = await Registration.find({ email: user.email }).sort({ timestamp: -1 });
-
         res.json({ success: true, registrations });
     } catch (err) {
         console.error("Fetch Error:", err);
@@ -285,7 +318,6 @@ app.delete('/api/admin/images/:id', verifyToken, async (req, res) => {
     } catch (err) { res.status(500).json({ success: false, message: "Delete error" }); }
 });
 
-// Admin: Update Image details
 app.put('/api/admin/images/:id', verifyToken, async (req, res) => {
     try {
         const { title, category } = req.body;
@@ -294,8 +326,7 @@ app.put('/api/admin/images/:id', verifyToken, async (req, res) => {
     } catch (err) { res.status(500).json({ success: false, message: "Update error" }); }
 });
 
-// --- PAGE ROUTES (Clean URLs) ---
-
+// --- PAGE ROUTES ---
 const pages = {
     '/': 'index.html',
     '/register': 'register.html',
@@ -317,8 +348,6 @@ Object.entries(pages).forEach(([route, file]) => {
     });
 });
 
-// --- 404 HANDLER (FIXED) ---
-// This middleware catches any request that wasn't handled by the routes above
 app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
@@ -328,5 +357,4 @@ if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => console.log(`🚀 Festiverse Server running on http://localhost:${PORT}`));
 }
 
-// Export the app for Vercel
 module.exports = app;
