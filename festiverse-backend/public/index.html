@@ -171,11 +171,66 @@
       content: attr(data-title);
       display: block;
     }
+    /* SVG Outline Animation */
+    .animate-stroke {
+      fill: transparent;
+      stroke-width: 3px;
+      /* Large dash array to cover the huge letters */
+      stroke-dasharray: 3000; 
+      stroke-dashoffset: 3000;
+      animation: strokeDraw 9s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+    }
+
+    @keyframes strokeDraw {
+      0% {
+        stroke-dashoffset: 3000;
+        stroke: #ffffff;
+        opacity: 0.3;
+      }
+      50% {
+        stroke: #ffffff;
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: 0;
+        stroke: var(--accent); /* Uses your Lime Green variable */
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 
 <body class="loaded">
   <div class="texture-overlay"></div>
+ <div id="loader" class="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden">
+  
+  <div id="loader-left" class="relative w-1/2 h-full bg-[#050505] transition-transform duration-1000 ease-[cubic-bezier(0.8,0,0.2,1)] border-r border-[#ccff00]/20">
+    <div class="absolute inset-0 bg-[url('./assets/images/loading-image.png')] bg-no-repeat bg-center"
+         style="background-size: 200% auto; background-position: 0% center;">
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+  </div>
+
+  <div id="loader-right" class="relative w-1/2 h-full bg-[#050505] transition-transform duration-1000 ease-[cubic-bezier(0.8,0,0.2,1)] border-l border-[#ccff00]/20">
+    <div class="absolute inset-0 bg-[url('./assets/images/loading-image.png')] bg-no-repeat bg-center"
+         style="background-size: 200% auto; background-position: 100% center;">
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+  </div>
+
+  <div id="loader-content" class="absolute z-20 flex flex-col items-center gap-4 transition-opacity duration-500">
+    <h1 class="font-display text-6xl md:text-8xl font-bold text-white tracking-tighter drop-shadow-2xl">
+      FESTIVERSE<span class="text-[#ccff00]">.</span>
+    </h1>
+    
+    <div class="w-64 h-1 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+      <div id="progress-bar" class="h-full bg-[#ccff00] w-0 transition-all duration-[2000ms] ease-out shadow-[0_0_15px_#ccff00]"></div>
+    </div>
+    
+    <div class="font-mono text-[#ccff00] text-xs font-bold tracking-[0.3em] uppercase">Initializing</div>
+  </div>
+
+</div>
 
   <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
     <a href="/" class="font-display font-bold text-xl tracking-tighter">
@@ -201,11 +256,17 @@
     
     <div class="absolute inset-0 bg-[url('./assets/images/bg-image.png')] bg-cover bg-center opacity-30">
     </div>
-    <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-20">
-      <h1 class="font-display text-[13vw] font-bold leading-none text-transparent stroke-text">
-        FESTIVERSE
-      </h1>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full select-none pointer-events-none opacity-30 z-0">
+      <svg viewBox="0 0 1000 220" class="w-full h-auto overflow-visible">
+        <text 
+          x="50%" 
+          y="50%" 
+          dy=".35em" 
+          text-anchor="middle"
+          class="font-display font-bold text-[160px] animate-stroke">
+          FESTIVERSE
+        </text>
+      </svg>
     </div>
     <style>
       .stroke-text {
@@ -541,6 +602,37 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+    // LOADING SPLIT LOGIC
+  document.addEventListener("DOMContentLoaded", () => {
+    
+    // 1. Animate the Progress Bar immediately
+    setTimeout(() => {
+      document.getElementById('progress-bar').style.width = "100%";
+    }, 100);
+
+    // 2. Wait for load (simulated 2.5s here)
+    setTimeout(() => {
+      const loaderContent = document.getElementById('loader-content');
+      const leftPanel = document.getElementById('loader-left');
+      const rightPanel = document.getElementById('loader-right');
+      const loader = document.getElementById('loader');
+
+      // Step A: Fade out the text
+      loaderContent.classList.add('opacity-0');
+
+      // Step B: Split the curtains (after text fades)
+      setTimeout(() => {
+        leftPanel.style.transform = "translateX(-100%)";
+        rightPanel.style.transform = "translateX(100%)";
+        
+        // Step C: Remove loader from DOM so it doesn't block clicks
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 1000); // Wait for the split animation to finish
+      }, 500);
+
+    }, 2500); // Total Loading Time
+  });
   </script>
   <script>
     // Check if user is logged in
