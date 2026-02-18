@@ -3,269 +3,426 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Festiverse'26 | Enter the Void</title>
+  <title>Festiverse'26 | Premium Dark</title>
   <script src="https://cdn.tailwindcss.com"></script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&family=Unbounded:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --accent-primary: #a855f7; /* Purple 500 */
-      --accent-secondary: #06b6d4; /* Cyan 500 */
-      --bg-dark: #000000;
+      --bg-dark: #050505;
+      --accent: #ccff00; /* Electric Lime */
+      --text-white: #ffffff;
     }
     
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       background-color: var(--bg-dark);
-      color: #f8fafc;
+      color: var(--text-white);
       overflow-x: hidden;
+      /* Prevent scrolling while loading */
+      overflow-y: hidden; 
     }
     
     h1, h2, h3, .font-display {
-      font-family: 'Unbounded', sans-serif;
+      font-family: 'Syne', sans-serif;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #000; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    /* PRELOADER STYLES */
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
     
-    /* Star Background Animation */
-    .star-bg {
-      background-image: 
-        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
-        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
-        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
-      background-size: 550px 550px, 350px 350px, 250px 250px;
-      background-position: 0 0, 40px 60px, 130px 270px;
-      animation: starMove 120s linear infinite;
+    .loader-content {
+        text-align: center;
+        overflow: hidden;
     }
     
-    @keyframes starMove {
-      from { background-position: 0 0, 40px 60px, 130px 270px; }
-      to { background-position: 550px 550px, 390px 410px, 680px 820px; }
+    .counter {
+        font-family: 'Syne', sans-serif;
+        font-size: 8vw;
+        font-weight: 800;
+        color: var(--accent);
+        line-height: 1;
+        position: relative;
     }
 
-    /* Glitch Text Effect Hover */
-    .hover-glitch:hover {
-      animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-      color: var(--accent-secondary);
-    }
-    @keyframes glitch {
-      0% { transform: translate(0) }
-      20% { transform: translate(-2px, 2px) }
-      40% { transform: translate(-2px, -2px) }
-      60% { transform: translate(2px, 2px) }
-      80% { transform: translate(2px, -2px) }
-      100% { transform: translate(0) }
+    .loading-text {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        margin-top: 1rem;
+        color: #555;
     }
 
-    /* Card Hover Reveal */
-    .event-item {
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.4s ease;
+    /* Hide Loader Class */
+    body.loaded {
+        overflow-y: auto;
     }
-    .event-item:hover {
-      background: rgba(255,255,255,0.05);
-      padding-left: 20px;
-      border-color: var(--accent-primary);
+    
+    body.loaded #preloader {
+        transform: translateY(-100%);
     }
+
+    /* Hero Animation Delayed */
+    .hero-element {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+    }
+    
+    body.loaded .hero-element {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Stagger Delays */
+    body.loaded .delay-100 { transition-delay: 0.5s; }
+    body.loaded .delay-200 { transition-delay: 0.7s; }
+    body.loaded .delay-300 { transition-delay: 0.9s; }
+
+    /* Existing Styles */
+    .texture-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    ::selection { background-color: var(--accent); color: black; }
+    
+    .marquee-container { display: flex; overflow: hidden; user-select: none; gap: 1.5rem; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+    .marquee-content { flex-shrink: 0; display: flex; gap: 1.5rem; min-width: 100%; }
+    .scroll-left { animation: scrollLeft 30s linear infinite; }
+    .scroll-right { animation: scrollRight 30s linear infinite; }
+    .marquee-container:hover .marquee-content { animation-play-state: paused; }
+    @keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+    @keyframes scrollRight { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+    .btn-lime { position: relative; overflow: hidden; transition: color 0.4s; }
+    .btn-lime::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent); transition: transform 0.4s cubic-bezier(0.85, 0, 0.15, 1); z-index: -1; }
+    .btn-lime:hover::before { transform: translateX(100%); }
+    .btn-lime:hover { color: black; }
+
+    .reveal-img { clip-path: inset(0 0 100% 0); transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1); }
+    body.loaded .reveal-img { clip-path: inset(0 0 0 0); }
+    
+    .roll-link { overflow: hidden; height: 1.2em; display: inline-block; vertical-align: top; }
+    .roll-link span { display: block; transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1); }
+    .roll-link:hover span { transform: translateY(-100%); }
+    .roll-link span::after { content: attr(data-title); display: block; }
   </style>
 </head>
 
-<body class="star-bg selection:bg-cyan-500 selection:text-black">
+<body>
+  
+  <div id="preloader">
+      <div class="loader-content">
+          <div class="counter" id="counter">0%</div>
+          <div class="loading-text">System Initialization</div>
+      </div>
+  </div>
 
-  <nav class="fixed top-0 w-full z-50 mix-blend-difference px-6 py-6 flex justify-between items-center">
-    <a href="/" class="font-display font-black text-2xl tracking-tighter text-white hover-glitch">
-      FV<span class="text-purple-500">'26</span>
+  <div class="texture-overlay"></div>
+
+  <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+    <a href="/" class="font-display font-bold text-xl tracking-tighter">
+      FESTIVERSE<span class="text-[#ccff00]">.</span>
     </a>
     
-    <div class="hidden md:flex gap-12 font-bold text-sm uppercase tracking-widest">
-      <a href="schedule.html" class="hover:text-purple-400 transition-colors">Timeline</a>
-      <a href="events.html" class="hover:text-cyan-400 transition-colors">Protocols</a>
-      <a href="team.html" class="hover:text-pink-400 transition-colors">Crew</a>
+    <div class="hidden md:flex gap-10 font-medium text-sm">
+      <a href="schedule.html" class="roll-link"><span data-title="Schedule">Schedule</span></a>
+      <a href="events.html" class="roll-link"><span data-title="Events">Events</span></a>
+      <a href="team.html" class="roll-link"><span data-title="Team">Team</span></a>
+      <a href="contact.html" class="roll-link"><span data-title="Contact">Contact</span></a>
     </div>
 
-    <a href="register.html" class="px-6 py-2 border border-white rounded-full text-xs font-bold uppercase hover:bg-white hover:text-black transition-all">
-      Join Mission
+    <a href="register.html" class="px-6 py-2 border border-white/20 rounded-full text-sm font-bold uppercase hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all">
+      Get Passes
     </a>
   </nav>
 
-  <header class="relative min-h-screen flex flex-col justify-center px-6 md:px-20 pt-20">
-    <div class="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-80 h-80 bg-cyan-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+  <header class="relative min-h-screen flex flex-col justify-end pb-20 px-6 md:px-16 pt-32">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-10">
+      <h1 class="font-display text-[20vw] font-bold leading-none text-transparent stroke-text hero-element">2026</h1>
+    </div>
+    <style>.stroke-text { -webkit-text-stroke: 2px white; }</style>
 
-    <span class="text-cyan-400 font-bold tracking-[0.4em] text-xs mb-4 animate-pulse">SYSTEM ONLINE</span>
-    
-    <h1 class="font-display text-[15vw] leading-[0.85] font-white text-white mix-blend-overlay opacity-80 select-none">
-      FESTI
-    </h1>
-    <h1 class="font-display text-[15vw] leading-[0.85] font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-white to-cyan-500 relative z-10">
-      VERSE
-    </h1>
-    
-    <div class="mt-12 md:ml-auto max-w-xl text-right">
-      <p class="text-xl md:text-2xl text-slate-400 font-light leading-relaxed mb-8">
-        The universe is expanding. <br>
-        <span class="text-white font-medium">April 8-10, 2026</span> at the Grand Orion Arena.
-      </p>
-      
-      <div class="flex justify-end gap-6 items-center">
-         <div class="flex gap-4 text-center">
-            <div>
-               <div id="d" class="font-display text-3xl font-bold">00</div>
-               <div class="text-[10px] text-slate-500 uppercase">Days</div>
-            </div>
-            <div class="text-2xl opacity-30">:</div>
-            <div>
-               <div id="h" class="font-display text-3xl font-bold">00</div>
-               <div class="text-[10px] text-slate-500 uppercase">Hrs</div>
-            </div>
+    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
+      <div>
+        <div class="hero-element delay-100 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#ccff00]/30 bg-[#ccff00]/10 text-[#ccff00] text-xs font-bold uppercase mb-6">
+          <span class="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"></span>
+          Live in 35 Days
+        </div>
+        <h1 class="hero-element delay-200 font-display text-6xl md:text-8xl font-bold leading-[0.9] mb-8">
+          CULTURE <br>
+          IS <span class="text-[#ccff00]">CHAOS.</span>
+        </h1>
+        <p class="hero-element delay-300 text-gray-400 max-w-md text-lg leading-relaxed">
+          Join the collision of art, music, and technology. 
+          The biggest cultural festival of the year at Grand Orion Arena.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-6 md:items-end hero-element delay-300">
+         <div class="flex gap-4">
+             <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
+                 <span class="block font-display text-2xl font-bold text-white" id="days">00</span>
+                 <span class="text-xs text-gray-500 uppercase">Days</span>
+             </div>
+             <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
+                 <span class="block font-display text-2xl font-bold text-white" id="hours">00</span>
+                 <span class="text-xs text-gray-500 uppercase">Hrs</span>
+             </div>
+             <div class="bg-[#1a1a1a] p-4 rounded-2xl text-center min-w-[80px]">
+                 <span class="block font-display text-2xl font-bold text-white" id="mins">00</span>
+                 <span class="text-xs text-gray-500 uppercase">Mins</span>
+             </div>
          </div>
-         
-         <a href="register.html" class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-black text-2xl hover:scale-110 transition-transform duration-300">
-           ↘
-         </a>
+         <div class="flex gap-4">
+           <a href="register.html" class="btn-lime px-8 py-4 bg-white text-black font-display font-bold text-xl rounded-lg border border-transparent z-10">
+             Register Now
+           </a>
+           <a href="events.html" class="px-8 py-4 bg-transparent text-white border border-white/20 font-display font-bold text-xl rounded-lg hover:bg-white/5 transition-colors">
+             View Events
+           </a>
+         </div>
       </div>
     </div>
   </header>
 
-  <section class="py-20 px-6 md:px-20 border-t border-white/10 bg-black relative z-10">
-    <div class="flex flex-col md:flex-row justify-between items-end mb-16">
-       <h2 class="font-display text-4xl md:text-6xl font-bold uppercase text-white">Event<br>Modules</h2>
-       <p class="text-slate-500 text-sm uppercase tracking-widest mt-4 md:mt-0">Select your trajectory</p>
+  <div class="hero-element delay-300 border-y border-white/10 bg-[#ccff00] overflow-hidden py-4 rotate-1 scale-105 origin-left">
+    <div class="flex gap-8 whitespace-nowrap text-black font-display font-bold text-2xl uppercase marquee-container">
+        <div class="marquee-content scroll-left">
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+        </div>
+        <div class="marquee-content scroll-left">
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+            <span>• Dance • Music • Drama • Fine Arts • Gaming • Fashion •</span>
+        </div>
+    </div>
+  </div>
+
+  <section class="py-24 px-6 md:px-16">
+    <div class="flex justify-between items-end mb-16">
+      <h2 class="font-display text-4xl md:text-5xl font-bold">Featured <span class="text-[#ccff00]">Protocols</span></h2>
+      <a href="events.html" class="hidden md:block text-sm font-bold border-b border-[#ccff00] pb-1 hover:text-[#ccff00] transition-colors">View All Categories ↗</a>
     </div>
 
-    <div class="flex flex-col">
-      <a href="events.html" class="event-item group py-10 flex flex-col md:flex-row justify-between items-center cursor-pointer">
-        <div class="flex items-center gap-6">
-           <span class="text-slate-700 font-display text-4xl font-black group-hover:text-purple-500 transition-colors">01</span>
-           <h3 class="text-3xl md:text-5xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-cyan-400 transition-all">Dance & Rhythm</h3>
-        </div>
-        <div class="mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 text-sm font-bold text-slate-300">
-           Explore Category <span>→</span>
-        </div>
-      </a>
-
-      <a href="events.html" class="event-item group py-10 flex flex-col md:flex-row justify-between items-center cursor-pointer">
-        <div class="flex items-center gap-6">
-           <span class="text-slate-700 font-display text-4xl font-black group-hover:text-cyan-500 transition-colors">02</span>
-           <h3 class="text-3xl md:text-5xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-500 transition-all">Vocal & Audio</h3>
-        </div>
-        <div class="mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 text-sm font-bold text-slate-300">
-           Explore Category <span>→</span>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+      <a href="events.html" class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5">
+        <img src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?q=80&w=800&auto=format&fit=crop" class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+        <div class="absolute bottom-6 left-6 z-10">
+           <span class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block">01</span>
+           <h3 class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform">Dance</h3>
         </div>
       </a>
-
-      <a href="events.html" class="event-item group py-10 flex flex-col md:flex-row justify-between items-center cursor-pointer">
-        <div class="flex items-center gap-6">
-           <span class="text-slate-700 font-display text-4xl font-black group-hover:text-green-500 transition-colors">03</span>
-           <h3 class="text-3xl md:text-5xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-green-400 group-hover:to-emerald-500 transition-all">Gaming Arena</h3>
-        </div>
-        <div class="mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 text-sm font-bold text-slate-300">
-           Explore Category <span>→</span>
+      <a href="events.html" class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5 md:border-l-0">
+        <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=800&auto=format&fit=crop" class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+        <div class="absolute bottom-6 left-6 z-10">
+           <span class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block">02</span>
+           <h3 class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform">Music</h3>
         </div>
       </a>
-      
-      <a href="events.html" class="event-item group py-10 flex flex-col md:flex-row justify-between items-center cursor-pointer">
-        <div class="flex items-center gap-6">
-           <span class="text-slate-700 font-display text-4xl font-black group-hover:text-pink-500 transition-colors">04</span>
-           <h3 class="text-3xl md:text-5xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-rose-500 transition-all">Fine Arts</h3>
-        </div>
-        <div class="mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 text-sm font-bold text-slate-300">
-           Explore Category <span>→</span>
+      <a href="events.html" class="group relative aspect-[3/4] overflow-hidden bg-[#111] border border-white/5 md:border-l-0">
+        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=800&auto=format&fit=crop" class="reveal-img w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+        <div class="absolute bottom-6 left-6 z-10">
+           <span class="text-[#ccff00] text-xs font-bold uppercase tracking-widest mb-2 block">03</span>
+           <h3 class="font-display text-3xl font-bold group-hover:translate-x-2 transition-transform">Gaming</h3>
         </div>
       </a>
-    </div>
-  </section>
-
-  <section class="py-20 bg-neutral-950 overflow-hidden">
-    <div class="max-w-[1920px] mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-3 h-[80vh]">
-        
-        <div class="relative group border-r border-white/10 overflow-hidden">
-           <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
-           <div class="absolute inset-0 flex items-center justify-center">
-             <h3 class="font-display text-4xl font-black text-white bg-black/50 backdrop-blur-sm px-6 py-2 border border-white/20 -rotate-90 md:rotate-0">Highlights</h3>
-           </div>
-        </div>
-
-        <div class="relative group border-r border-white/10 overflow-hidden bg-black flex flex-col justify-center items-center text-center p-8">
-           <div class="w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent mb-8"></div>
-           <h2 class="font-display text-5xl font-black text-white mb-6">UDAAN<br>CLUB</h2>
-           <p class="text-slate-400 max-w-xs leading-relaxed">
-             Crafting experiences that transcend the ordinary. Join the cultural revolution.
-           </p>
-           <a href="register.html" class="mt-8 px-8 py-3 bg-white text-black font-bold uppercase hover:bg-purple-500 hover:text-white transition-colors">
-             Register Now
-           </a>
-           <div class="w-full h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent mt-8"></div>
-        </div>
-
-        <div class="relative group overflow-hidden">
-           <img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
-           <div class="absolute inset-0 flex items-center justify-center">
-             <h3 class="font-display text-4xl font-black text-white bg-black/50 backdrop-blur-sm px-6 py-2 border border-white/20 rotate-90 md:rotate-0">Gallery</h3>
-           </div>
-        </div>
-
-      </div>
     </div>
   </section>
 
-  <footer class="bg-black pt-20 pb-10 border-t border-white/10">
-    <div class="container mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-start gap-12">
-        <div>
-          <h2 class="font-display text-2xl font-bold text-white mb-2">FESTIVERSE</h2>
-          <p class="text-slate-500 text-xs uppercase tracking-widest">Est. 2026 // Earth Coordinate: IND</p>
+  <section class="py-24 border-t border-white/10 bg-[#080808] overflow-hidden">
+    <div class="px-6 md:px-16 mb-16">
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-2">Past <span class="text-[#ccff00]">Glimpse</span></h2>
+      <p class="text-gray-500 font-medium">Archive footage from the 2025 dimension.</p>
+    </div>
+
+    <div class="marquee-container mb-6">
+        <div class="marquee-content scroll-left">
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Concert</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Vibes</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Finale</div>
+            </div>
         </div>
-        
-        <div class="flex gap-12 text-sm text-slate-400">
-          <ul class="space-y-2">
-            <li><a href="index.html" class="hover:text-white">Home</a></li>
-            <li><a href="schedule.html" class="hover:text-white">Schedule</a></li>
-          </ul>
-          <ul class="space-y-2">
-            <li><a href="events.html" class="hover:text-white">Events</a></li>
-            <li><a href="register.html" class="hover:text-white">Register</a></li>
-          </ul>
-          <ul class="space-y-2">
-            <li><a href="contact.html" class="hover:text-white">Contact</a></li>
-            <li><a href="admin.html" class="hover:text-white">Admin</a></li>
-          </ul>
+        <div class="marquee-content scroll-left">
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1470229722913-7ea051c24efc?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Concert</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Vibes</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Finale</div>
+            </div>
         </div>
-      </div>
-      
-      <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-[10px] text-slate-600 uppercase font-bold tracking-widest">
-          © 2026 Udaan Cultural Club. All Rights Reserved.
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-content scroll-right">
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Crowd</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Backstage</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Lights</div>
+            </div>
+        </div>
+        <div class="marquee-content scroll-right">
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Crowd</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Backstage</div>
+            </div>
+            <div class="min-w-[350px] aspect-video rounded-xl overflow-hidden border border-white/10 relative group">
+                <img src="https://images.unsplash.com/photo-1459749411177-369eae8693bb?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-4 left-4 bg-black/80 px-2 py-1 text-xs font-bold text-[#ccff00] uppercase">Lights</div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="py-24 border-y border-white/10 bg-[#0a0a0a] text-center px-6">
+    <p class="text-[#ccff00] font-bold uppercase tracking-widest mb-4">Don't Miss Out</p>
+    <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-10 max-w-4xl mx-auto">
+      READY TO START THE <br> <span class="text-gray-600">REVOLUTION?</span>
+    </h2>
+    <a href="register.html" class="inline-block bg-white text-black font-display font-bold text-xl px-12 py-5 rounded-full hover:scale-105 hover:bg-[#ccff00] transition-all duration-300">
+      Secure Your Spot
+    </a>
+  </section>
+
+  <footer class="pt-20 pb-10 px-6 md:px-16 bg-black">
+    <div class="flex flex-col md:flex-row justify-between gap-12 mb-20">
+      <div>
+        <h2 class="font-display text-3xl font-bold mb-6">FESTIVERSE<span class="text-[#ccff00]">.</span></h2>
+        <p class="text-gray-500 max-w-sm">
+          A platform for the bold, the creative, and the futuristic. 
+          Powered by UDAAN Cultural Club.
         </p>
-        <div class="flex gap-4">
-          <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span class="text-[10px] text-green-500 uppercase font-bold tracking-widest">Servers Operational</span>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-12 text-sm">
+        <div>
+          <h4 class="font-bold text-white mb-4 uppercase">Navigation</h4>
+          <ul class="space-y-3 text-gray-500">
+            <li><a href="index.html" class="hover:text-[#ccff00]">Home</a></li>
+            <li><a href="events.html" class="hover:text-[#ccff00]">Events</a></li>
+            <li><a href="schedule.html" class="hover:text-[#ccff00]">Schedule</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 uppercase">Support</h4>
+          <ul class="space-y-3 text-gray-500">
+            <li><a href="contact.html" class="hover:text-[#ccff00]">Contact</a></li>
+            <li><a href="#" class="hover:text-[#ccff00]">FAQ</a></li>
+            <li><a href="admin.html" class="hover:text-[#ccff00]">Admin</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 uppercase">Socials</h4>
+          <ul class="space-y-3 text-gray-500">
+            <li><a href="#" class="hover:text-[#ccff00]">Instagram</a></li>
+            <li><a href="#" class="hover:text-[#ccff00]">Twitter</a></li>
+            <li><a href="#" class="hover:text-[#ccff00]">LinkedIn</a></li>
+          </ul>
         </div>
       </div>
+    </div>
+    
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 uppercase font-bold tracking-widest">
+      <p>&copy; 2026 UDAAN CULTURAL CLUB</p>
+      <p>DESIGNED FOR THE FUTURE</p>
     </div>
   </footer>
 
   <script>
-    // Countdown Script
-    const target = new Date("April 8, 2026 10:00:00").getTime();
-    
-    setInterval(() => {
-      const now = new Date().getTime();
-      const diff = target - now;
-      
-      if(diff > 0) {
-        document.getElementById("d").innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-        document.getElementById("h").innerText = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-      }
-    }, 1000);
-  </script>
+    // PRELOADER LOGIC
+    document.addEventListener("DOMContentLoaded", () => {
+        const counter = document.getElementById("counter");
+        let count = 0;
+        
+        // Simulating loading
+        const interval = setInterval(() => {
+            count += Math.floor(Math.random() * 5) + 1;
+            if (count > 100) count = 100;
+            
+            counter.innerText = count + "%";
+            
+            if (count === 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    document.body.classList.add("loaded");
+                }, 500);
+            }
+        }, 30);
+    });
 
+    // Countdown Timer
+    const targetDate = new Date("April 8, 2026 10:00:00").getTime();
+    
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+        if(document.getElementById("days")) {
+            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+            document.getElementById("mins").innerText = m < 10 ? "0" + m : m;
+        }
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
